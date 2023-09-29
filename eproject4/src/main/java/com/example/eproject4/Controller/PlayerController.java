@@ -24,6 +24,8 @@ public class PlayerController {
     public String listPlayers(Model model){
         List<Player> players = playerService.getAll();
         model.addAttribute("players", players);
+        model.addAttribute("overlay_title", "Players");
+        model.addAttribute("title", "Players");
         return "customer_players";
     }
 }
