@@ -21,7 +21,7 @@ public class Player {
 
     private String name;
     private String avatarImg;
-    private Integer dateOfBirth;
+    private Date dateOfBirth;
     private String national;
     private String position;
     private Integer number;

@@ -24,6 +24,6 @@ public class PlayerController {
     public String listPlayers(Model model){
         List<Player> players = playerService.getAll();
         model.addAttribute("players", players);
-        return "user/players";
+        return "customer_players";
     }
 }
