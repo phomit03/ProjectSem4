@@ -1,57 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<!--<head>-->
-<!--  <title> Test</title>-->
-<!--  <meta charset="utf-8">-->
-<!--  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+<head th:replace="customer_fragments::head-fragment">
 
-<!--  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">-->
-
-<!--  <link rel="stylesheet" th:href="@{/user/fonts/icomoon/style.css}">-->
-<!--  <link rel="stylesheet" th:href="@{/user/css/bootstrap/bootstrap.css}">-->
-<!--  <link rel="stylesheet" th:href="@{/user/css/jquery-ui.css}">-->
-<!--  <link rel="stylesheet" th:href="@{/user/css/owl.carousel.min.css}">-->
-<!--  <link rel="stylesheet" th:href="@{/user/css/owl.theme.default.min.css}">-->
-<!--  <link rel="stylesheet" th:href="@{/user/css/owl.theme.default.min.css}">-->
-<!--  <link rel="stylesheet" th:href="@{/user/css/jquery.fancybox.min.css}">-->
-<!--  <link rel="stylesheet" th:href="@{/user/css/bootstrap-datepicker.css}">-->
-<!--  <link rel="stylesheet" th:href="@{/user/fonts/flaticon/font/flaticon.css}">-->
-<!--  <link rel="stylesheet" th:href="@{/user/css/aos.css}">-->
-<!--  <link rel="stylesheet" th:href="@{/user/css/style.css}">-->
-<!--</head>-->
-
-<head th:replace="customer_fragments::head"></head>
+</head>
 
 <body>
 
   <div class="site-wrap">
 
-    <div class="site-mobile-menu site-navbar-target">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close">
-          <span class="icon-close2 js-menu-toggle"></span>
-        </div>
-      </div>
-      <div class="site-mobile-menu-body"></div>
-    </div>
-
-
-    <header th:replace="customer_fragments::header"></header>
-
-    <div class="hero overlay" style="background-image: url('images/bg_3.jpg');">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-5 mx-auto text-center">
-            <h1 class="text-white">Players</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, molestias repudiandae pariatur.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
+    <div th:replace="customer_fragments::top-fragment"></div>
+    
     <div class="site-section">
       <div class="container">
         <div class="row">
@@ -71,7 +30,7 @@
         <div class="owl-4-slider owl-carousel">
           <div class="item">
             <div class="video-media">
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
+              <img th:src="@{/user/images/img_1.jpg}" alt="Image" class="img-fluid">
               <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
                 <span class="icon mr-3">
                   <span class="icon-play"></span>
@@ -85,7 +44,7 @@
           </div>
           <div class="item">
             <div class="video-media">
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
+              <img th:src="@{/user/images/img_2.jpg}" alt="Image" class="img-fluid">
               <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
                 <span class="icon mr-3">
                   <span class="icon-play"></span>
@@ -99,7 +58,7 @@
           </div>
           <div class="item">
             <div class="video-media">
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
+              <img th:src="@{/user/images/img_3.jpg}" alt="Image" class="img-fluid">
               <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
                 <span class="icon mr-3">
                   <span class="icon-play"></span>
@@ -114,7 +73,7 @@
 
           <div class="item">
             <div class="video-media">
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
+              <img th:src="@{/user/images/img_1.jpg}" alt="Image" class="img-fluid">
               <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
                 <span class="icon mr-3">
                   <span class="icon-play"></span>
@@ -128,7 +87,7 @@
           </div>
           <div class="item">
             <div class="video-media">
-              <img src="images/img_2.jpg" alt="Image" class="img-fluid">
+              <img th:src="@{/user/images/img_2.jpg}" alt="Image" class="img-fluid">
               <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
                 <span class="icon mr-3">
                   <span class="icon-play"></span>
@@ -142,7 +101,7 @@
           </div>
           <div class="item">
             <div class="video-media">
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
+              <img th:src="@{/user/images/img_3.jpg}" alt="Image" class="img-fluid">
               <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
                 <span class="icon mr-3">
                   <span class="icon-play"></span>
@@ -159,8 +118,6 @@
       </div>
     </div>
 
-
-
     <div class="container site-section">
       <div class="row">
         <div class="col-6 title-section">
@@ -171,7 +128,7 @@
         <div class="col-lg-6">
           <div class="custom-media d-flex">
             <div class="img mr-4">
-              <img src="images/img_1.jpg" alt="Image" class="img-fluid">
+              <img th:src="@{/user/images/img_1.jpg}" alt="Image" class="img-fluid">
             </div>
             <div class="text">
               <span class="meta">May 20, 2020</span>
@@ -184,7 +141,7 @@
         <div class="col-lg-6">
           <div class="custom-media d-flex">
             <div class="img mr-4">
-              <img src="images/img_3.jpg" alt="Image" class="img-fluid">
+              <img th:src="@{/user/images/img_3.jpg}" alt="Image" class="img-fluid">
             </div>
             <div class="text">
               <span class="meta">May 20, 2020</span>
@@ -197,103 +154,11 @@
       </div>
     </div>
 
-
-
-    <footer class="footer-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-3">
-            <div class="widget mb-3">
-              <h3>News</h3>
-              <ul class="list-unstyled links">
-                <li><a href="#">All</a></li>
-                <li><a href="#">Club News</a></li>
-                <li><a href="#">Media Center</a></li>
-                <li><a href="#">Video</a></li>
-                <li><a href="#">RSS</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="widget mb-3">
-              <h3>Tickets</h3>
-              <ul class="list-unstyled links">
-                <li><a href="#">Online Ticket</a></li>
-                <li><a href="#">Payment and Prices</a></li>
-                <li><a href="#">Contact &amp; Booking</a></li>
-                <li><a href="#">Tickets</a></li>
-                <li><a href="#">Coupon</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="widget mb-3">
-              <h3>Matches</h3>
-              <ul class="list-unstyled links">
-                <li><a href="#">Standings</a></li>
-                <li><a href="#">World Cup</a></li>
-                <li><a href="#">La Lega</a></li>
-                <li><a href="#">Hyper Cup</a></li>
-                <li><a href="#">World League</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="col-lg-3">
-            <div class="widget mb-3">
-              <h3>Social</h3>
-              <ul class="list-unstyled links">
-                <li><a href="#">Twitter</a></li>
-                <li><a href="#">Facebook</a></li>
-                <li><a href="#">Instagram</a></li>
-                <li><a href="#">Youtube</a></li>
-              </ul>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="row text-center">
-          <div class="col-md-12">
-            <div class=" pt-5">
-              <p>
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                Copyright &copy;
-                <script>
-                  document.write(new Date().getFullYear());
-                </script> All rights reserved | This template is made with <i class="icon-heart"
-                  aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-              </p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </footer>
-
-
+    <div th:replace="customer_fragments::bot-fragment"></div>
 
   </div>
-  <!-- .site-wrap -->
 
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/jquery-ui.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/jquery.countdown.min.js"></script>
-  <script src="js/bootstrap-datepicker.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.fancybox.min.js"></script>
-  <script src="js/jquery.sticky.js"></script>
-  <script src="js/jquery.mb.YTPlayer.min.js"></script>
-
-
-  <script src="js/main.js"></script>
+  <div th:replace="customer_fragments::script-fragment"></div>
 
 </body>
 
