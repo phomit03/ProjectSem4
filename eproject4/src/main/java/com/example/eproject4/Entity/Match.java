@@ -1,5 +1,6 @@
 package com.example.eproject4.Entity;
 
+import com.example.eproject4.utils.MapToDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,22 +12,24 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
-@Entity
-@Table(name = "match")
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Entity
+@Table(name = "matches")
 public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @MapToDTO
     private Date date;
+    @MapToDTO
     private Time time;
+    @MapToDTO
     private String stadium;
+    @MapToDTO
     private Integer status;
+    @MapToDTO
     private Timestamp created_at;
+    @MapToDTO
     private Timestamp updated_at;
 }
-
-
-

@@ -37,41 +37,28 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Country</th>
-                            <th scope="col">ZIP</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Stadium</th>
                             <th scope="col">Status</th>
+                            <th scope="col">Created at</th>
+                            <th scope="col">Updated at</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>jhon@email.com</td>
-                            <td>USA</td>
-                            <td>123</td>
-                            <td>Member</td>
+                        <tbody th:if="${matches != null and #lists.size(matches) > 0}">
+                        <tr th:each="match, iterStat : ${matches}">
+                            <td th:text="${iterStat.index + 1}"></td>
+                            <td th:text="${match.date}"></td>
+                            <td th:text="${match.time}"></td>
+                            <td th:text="${match.stadium}"></td>
+                            <td th:text="${match.status}"></td>
+                            <td th:text="${match.created_at}"></td>
+                            <td th:text="${match.updated_at}"></td>
                         </tr>
+                        </tbody>
+                        <tbody th:if="${matches == null or #lists.size(matches) == 0}">
                         <tr>
-                            <th scope="row">2</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>mark@email.com</td>
-                            <td>UK</td>
-                            <td>456</td>
-                            <td>Member</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>jacob@email.com</td>
-                            <td>AU</td>
-                            <td>789</td>
-                            <td>Member</td>
+                            <td colspan="7" style="text-align: center; padding: 10px 0px;">Không có dữ liệu</td>
                         </tr>
                         </tbody>
                     </table>
