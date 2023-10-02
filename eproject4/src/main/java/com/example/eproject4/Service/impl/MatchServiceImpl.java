@@ -4,31 +4,31 @@ import com.example.eproject4.DTO.MatchDTO;
 import com.example.eproject4.Entity.Match;
 import com.example.eproject4.Repository.MatchRepository;
 import com.example.eproject4.Service.MatchService;
+import com.example.eproject4.utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MatchServiceImpl implements MatchService {
+    private final ModelToDtoConverter modelToDtoConverter;
     private final MatchRepository matchRepository;
 
     @Autowired
-    public MatchServiceImpl(MatchRepository matchRepository) {
+    public MatchServiceImpl(ModelToDtoConverter modelToDtoConverter, MatchRepository matchRepository) {
+        this.modelToDtoConverter = modelToDtoConverter;
         this.matchRepository = matchRepository;
     }
 
     @Override
     public List<MatchDTO> getAllMatches() {
         List<Match> matches = matchRepository.findAll();
-        List<MatchDTO> matchDTOs = new ArrayList<>();
 
-        for (Match match : matches) {
-            matchDTOs.add(convertToDTO(match));
-        }
-
-        return matchDTOs;
+        return matches.stream()
+                .map(match -> modelToDtoConverter.convertToDto(match, MatchDTO.class))
+                .collect(Collectors.toList());
     }
 
     @Override

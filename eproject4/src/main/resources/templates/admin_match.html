@@ -52,13 +52,13 @@
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>John</td>
-                                    <td>USA</td>
-                                    <td>123</td>
-                                    <td>Member</td>
+                                <tbody th:if="${matches != null and #lists.size(matches) > 0}">
+                                <tr th:each="match, iterStat : ${matches}">
+                                    <td th:text="${iterStat.index + 1}"></td>
+                                    <td th:text="${match.date}"></td>
+                                    <td th:text="${match.time}"></td>
+                                    <td th:text="${match.stadium}"></td>
+                                    <td th:text="${match.status}"></td>
                                     <td style="display: flex; gap: 20px;">
                                         <a th:href="@{/admin}">
                                             <i class="fas fa-pencil-alt"></i>
@@ -72,20 +72,25 @@
                                     </td>
                                 </tr>
                                 </tbody>
+                                <tbody th:if="${matches == null or #lists.size(matches) == 0}">
+                                <tr>
+                                    <td colspan="7" style="text-align: center; padding: 10px 0px;">Không có dữ liệu</td>
+                                </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!--/END CONTENT-->
-
     </div>
-    <!-- Content End -->
+    <!--/END CONTENT-->
+</div>
+<!-- Content End -->
 
 
-    <!-- Back to Top -->
-    <div th:replace="admin_fragments::back-to-top"></div>
+<!-- Back to Top -->
+<div th:replace="admin_fragments::back-to-top"></div>
 </div>
 
 <div th:replace="admin_fragments::script"></div>

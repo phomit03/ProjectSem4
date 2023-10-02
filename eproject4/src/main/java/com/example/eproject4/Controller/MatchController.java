@@ -14,18 +14,28 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 public class MatchController {
-    private final MatchRepository matchRepository;
+    private final MatchService matchService;
 
 
     @Autowired
-    public MatchController(MatchService matchService, MatchRepository matchRepository) {
-        this.matchRepository = matchRepository;
+    public MatchController(MatchService matchService) {
+        this.matchService = matchService;
     }
     @RequestMapping("/match")
-    public String match(Model model) {
-//        List<Match> matches = matchRepository.findAll();
-//        model.addAttribute("matches", matches);
-//        model.addAttribute("title", "Matches");
+    public String match(Model model, @RequestParam(defaultValue = "1") int page) {
+        int pageSize = 20;
+        List<MatchDTO> allMatches = matchService.getAllMatches();
+
+        int totalItems = allMatches.size();
+        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+
+        List<MatchDTO> matches = allMatches.subList((page - 1) * pageSize, Math.min(page * pageSize, totalItems));
+
+        model.addAttribute("matches", matches);
+        model.addAttribute("title", "Matches");
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+
         return "admin_match";
     }
 
