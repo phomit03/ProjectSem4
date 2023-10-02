@@ -1,38 +1,68 @@
 package com.example.eproject4.Controller;
 
+import com.example.eproject4.DTO.MatchDTO;
 import com.example.eproject4.Entity.Match;
+import com.example.eproject4.Repository.MatchRepository;
+import com.example.eproject4.Service.MatchService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@RestController
+@RequestMapping("/admin")
 public class MatchController {
-    public void createMatch(Match match) {
-        // Tạo một trận đấu mới
-        match.save();
+    private final MatchRepository matchRepository;
+
+
+    @Autowired
+    public MatchController(MatchService matchService, MatchRepository matchRepository) {
+        this.matchRepository = matchRepository;
+    }
+    @RequestMapping("/match")
+    public String match(Model model) {
+//        List<Match> matches = matchRepository.findAll();
+//        model.addAttribute("matches", matches);
+//        model.addAttribute("title", "Matches");
+        return "admin_match";
     }
 
-    public Match getMatch(int matchId) {
-        // Lấy thông tin về một trận đấu dựa trên ID
-        Match match = Match.get(matchId);
-        return match;
-    }
-
-    public void updateMatch(int matchId, Match matchData) {
-        // Cập nhật thông tin trận đấu dựa trên ID
-        Match match = Match.get(matchId);
-        if (match != null) {
-            match.update(matchData);
-        } else {
-            // Xử lý khi không tìm thấy trận đấu
-            System.out.println("Không tìm thấy trận đấu");
-        }
-    }
-
-    public void deleteMatch(int matchId) {
-        // Xóa một trận đấu dựa trên ID
-        Match match = Match.get(matchId);
-        if (match != null) {
-            match.delete();
-        } else {
-            // Xử lý khi không tìm thấy trận đấu
-            System.out.println("Không tìm thấy trận đấu");
-        }
-    }
+//    @GetMapping
+//    public ResponseEntity<List<MatchDTO>> getAllMatches() {
+//        List<MatchDTO> matches = matchService.getAllMatches();
+//        return new ResponseEntity<>(matches, HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/{id}")
+//    public ResponseEntity<MatchDTO> getMatchById(@PathVariable Long id) {
+//        MatchDTO match = matchService.getMatchById(id);
+//        if (match != null) {
+//            return new ResponseEntity<>(match, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
+//
+//    @PostMapping
+//    public ResponseEntity<MatchDTO> createMatch(@RequestBody MatchDTO matchDTO) {
+//        MatchDTO createdMatch = matchService.createMatch(matchDTO);
+//        return new ResponseEntity<>(createdMatch, HttpStatus.CREATED);
+//    }
+//
+//    @PutMapping("/{id}")
+//    public ResponseEntity<MatchDTO> updateMatch(@PathVariable Long id, @RequestBody MatchDTO matchDTO) {
+//        MatchDTO updatedMatch = matchService.updateMatch(id, matchDTO);
+//        if (updatedMatch != null) {
+//            return new ResponseEntity<>(updatedMatch, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Void> deleteMatch(@PathVariable Long id) {
+//        matchService.deleteMatch(id);
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
 }
