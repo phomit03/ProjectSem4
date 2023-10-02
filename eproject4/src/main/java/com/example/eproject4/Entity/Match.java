@@ -19,6 +19,7 @@ import java.util.Date;
 public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @MapToDTO
     private int id;
     @MapToDTO
     private Date date;
