@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin_fragments::head"></head>
+
+<body>
+<div class="container-fluid position-relative d-flex p-0">
+    <!-- Spinner Start -->
+    <!--        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">-->
+    <!--            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">-->
+    <!--                <span class="sr-only">Loading...</span>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!-- Spinner End -->
+
+
+    <!-- Sidebar Start -->
+    <div th:replace="admin_fragments::sidebar"></div>
+    <!-- Sidebar End -->
+
+
+    <!-- Content Start -->
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav th:replace="admin_fragments::navbar"></nav>
+        <!-- Navbar End -->
+
+
+        <!--CONTENT HERE-->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4">
+                <div class="col-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Responsive Table</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Stadium</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Created at</th>
+                            <th scope="col">Updated at</th>
+                        </tr>
+                        </thead>
+                        <tbody th:if="${matches != null and #lists.size(matches) > 0}">
+                        <tr th:each="match, iterStat : ${matches}">
+                            <td th:text="${iterStat.index + 1}"></td>
+                            <td th:text="${match.date}"></td>
+                            <td th:text="${match.time}"></td>
+                            <td th:text="${match.stadium}"></td>
+                            <td th:text="${match.status}"></td>
+                            <td th:text="${match.created_at}"></td>
+                            <td th:text="${match.updated_at}"></td>
+                        </tr>
+                        </tbody>
+                        <tbody th:if="${matches == null or #lists.size(matches) == 0}">
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 10px 0px;">Không có dữ liệu</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+        <!--/END CONTENT-->
+
+        <!-- Footer Start -->
+        <div th:replace="admin_fragments::footer"></div>
+        <!-- Footer End -->
+    </div>
+    <!-- Content End -->
+
+
+    <!-- Back to Top -->
+    <div th:replace="admin_fragments::back-to-top"></div>
+</div>
+
+<div th:replace="admin_fragments::script"></div>
+</body>
+
+</html>
