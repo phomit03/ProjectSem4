@@ -5,12 +5,13 @@ import com.example.eproject4.Entity.Match;
 import com.example.eproject4.Repository.MatchRepository;
 import com.example.eproject4.Service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/admin")
 public class MatchController {
     private final MatchRepository matchRepository;
