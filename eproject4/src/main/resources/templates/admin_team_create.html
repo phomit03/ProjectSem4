@@ -5,15 +5,6 @@
 
 <body>
 <div class="container-fluid position-relative d-flex p-0">
-    <!-- Spinner Start -->
-    <!--        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">-->
-    <!--            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">-->
-    <!--                <span class="sr-only">Loading...</span>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!-- Spinner End -->
-
-
     <!-- Sidebar Start -->
     <div th:replace="admin_fragments::sidebar"></div>
     <!-- Sidebar End -->
@@ -25,61 +16,79 @@
         <nav th:replace="admin_fragments::navbar"></nav>
         <!-- Navbar End -->
 
+
+        <!--CONTENT HERE-->
         <div class="container-fluid pt-4 px-4">
-            <div class="row g-4">
-                <div class="col-sm-12">
+            <div class="row g-4" style="display: flex; justify-content: center;">
+                <div class="col-sm-12 col-xl-8">
                     <div class="bg-secondary rounded h-100 p-4">
+                        <div class="mb-4">
+                            <span style="font-weight: bold">CREATE TEAM</span>
+                            <a class="mb-4" style="float: right;" th:href="@{/admin/team}">
+                                <i class="fas fa-arrow-left"></i>
+                            </a>
+                        </div>
                         <form th:action="@{/admin/team/create/save}" method="post" enctype="multipart/form-data">
-                            <h6 class="mb-4">Create Team</h6>
-
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="name" placeholder="Team name" name="name">
-                                <label for="name">Name</label>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="name" placeholder="Team name" name="name">
+                                </div>
                             </div>
-
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="coach" placeholder="Coach name" name="coach">
-                                <label for="coach">Coach</label>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Logo Team</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" style="padding-top: 1rem;" type="file" id="logo_img"
+                                           name="logo_img">
+                                </div>
                             </div>
-
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="stadium" placeholder="Stadium" name="stadium">
-                                <label for="stadium">Stadium</label>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Coach</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="coach" placeholder="Coach name"
+                                           name="coach">
+                                </div>
                             </div>
-
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="valuation" placeholder="Valuation" name="valuation">
-                                <label for="valuation">Valuation</label>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Home Stadium</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="home_stadium" placeholder="Home stadium"
+                                           name="home_stadium">
+                                </div>
                             </div>
-
-                            <div class="form-floating mb-3">
-                                <select class="form-select" id="status" name="status" aria-label="Floating label select example">
-                                    <option value="1" selected>Active</option>
-                                    <option value="2">Inactive</option>
-                                </select>
-                                <label for="status">Status</label>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Club Valuation</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="club_valuation" placeholder="Valuation"
+                                           name="club_valuation">
+                                </div>
                             </div>
-
-                            <div class="col-md-4">
-                                <div class="form-floating mb-3">
-                                    <input class="form-control bg-dark" style="padding-top: 1rem;" type="file" id="logo" name="logo">
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Status</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" id="status" name="status" aria-label="Floating label select example">-->
+                                        <option value="1" selected>active</option>
+                                        <option value="2">inactive</option>
+                                    </select>
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <div class="mb-4" style="float: right">
+                                <button type="submit" class="btn btn-primary">Create</button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        <!--/END CONTENT-->
+
     </div>
-    <!--/END CONTENT-->
-</div>
-<!-- Content End -->
+    <!-- Content End -->
 
 
-<!-- Back to Top -->
-<div th:replace="admin_fragments::back-to-top"></div>
+    <!-- Back to Top -->
+    <div th:replace="admin_fragments::back-to-top"></div>
 </div>
 
 <div th:replace="admin_fragments::script"></div>
