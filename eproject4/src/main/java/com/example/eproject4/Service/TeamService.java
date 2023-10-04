@@ -24,7 +24,9 @@ import java.util.stream.Collectors;
 public class TeamService {
     @Autowired
     private Helper helper;
+    @Autowired
     private final ModelToDtoConverter modelToDtoConverter;
+    @Autowired
     private final TeamRepository teamRepository;
 
     public TeamService(ModelToDtoConverter modelToDtoConverter, TeamRepository teamRepository) {
@@ -52,5 +54,10 @@ public class TeamService {
         team.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
 
         return teamRepository.save(team);
+    }
+
+    public TeamDTO getTeamById(Long id) {
+        Team team = teamRepository.getById(id);
+        return null;
     }
 }
