@@ -5,15 +5,6 @@
 
 <body>
 <div class="container-fluid position-relative d-flex p-0">
-    <!-- Spinner Start -->
-    <!--        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">-->
-    <!--            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">-->
-    <!--                <span class="sr-only">Loading...</span>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!-- Spinner End -->
-
-
     <!-- Sidebar Start -->
     <div th:replace="admin_fragments::sidebar"></div>
     <!-- Sidebar End -->
@@ -33,27 +24,27 @@
                     <div class="bg-secondary rounded h-100 p-4">
                         <div class="mb-4">
                             <span style="font-weight: bold">CREATE MATCH</span>
-                            <a class="mb-4" style="float: right;" th:href="@{/admin/match}">
+                            <a class="mb-4" style="float: right;" th:href="@{/admin/matches}">
                                 <i class="fas fa-arrow-left"></i>
                             </a>
                         </div>
-                        <form>
+                        <form th:action="@{/admin/match/new}" th:object="${match}" method="post">
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Date</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control">
+                                    <input type="date" th:field="*{date}" class="form-control" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Time</label>
                                 <div class="col-sm-10">
-                                    <input type="time" class="form-control">
+                                    <input type="time" th:field="*{time}" class="form-control" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Stadium</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" th:field="*{stadium}" required>
                                 </div>
                             </div>
 
@@ -76,6 +67,7 @@
 </div>
 
 <div th:replace="admin_fragments::script"></div>
+
 </body>
 
 </html>

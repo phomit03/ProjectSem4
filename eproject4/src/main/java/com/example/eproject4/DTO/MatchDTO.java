@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 public class MatchDTO {
     private int id;
     private Date date;
-    private Time time;
+    private String time;
     private String stadium;
     private Integer status;
     private Timestamp created_at;

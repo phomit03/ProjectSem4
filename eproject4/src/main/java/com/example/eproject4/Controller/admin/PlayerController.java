@@ -1,4 +1,4 @@
-package com.example.eproject4.Controller;
+package com.example.eproject4.Controller.admin;
 
 import com.example.eproject4.Entity.Player;
 import com.example.eproject4.Service.PlayerService;
