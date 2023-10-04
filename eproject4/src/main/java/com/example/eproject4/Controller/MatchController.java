@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/admin")
+@RequestMapping("/admin")
 public class MatchController {
     private final MatchService matchService;
 
