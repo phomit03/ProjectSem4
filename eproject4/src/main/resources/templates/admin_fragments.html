@@ -28,6 +28,11 @@
 
     <!-- Template Stylesheet -->
     <link th:href="@{/admin/css/style.css}" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datetimepicker@4.17.47/dist/css/bootstrap-datetimepicker.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datetimepicker@4.17.47/src/js/bootstrap-datetimepicker.js"></script>
 </head>
 <body>
 
@@ -52,6 +57,9 @@
             </a>
             <a th:href="@{/admin/matches}" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/admin/matches' ? 'active' : ''}">
                 <i class="fa fa-th me-2"></i>Match
+            </a>
+            <a th:href="@{/admin/team}" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/admin/team') ? 'active' : ''}">
+                <i class="fa fa-th me-2"></i>Team
             </a>
 <!--            <div class="nav-item dropdown">-->
 <!--                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>-->
