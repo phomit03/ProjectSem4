@@ -60,4 +60,8 @@ public class TeamService {
         Team team = teamRepository.findById(id).orElse(null);
         return modelToDtoConverter.convertToDto(team, TeamDTO.class);
     }
+
+    public void delete(Long id) {
+        teamRepository.deleteById(id);
+    }
 }
