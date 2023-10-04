@@ -56,7 +56,8 @@ public class TeamController {
     }
 
     @GetMapping("/team/read/{id}")
-    public ResponseEntity<TeamDTO> getTeamById(@PathVariable Long teamId) {
-        return null;
+    public ResponseEntity<TeamDTO> getTeamById(@PathVariable Long id) {
+        TeamDTO teamDTO = teamService.getTeamById(id);
+        return ResponseEntity.ok(teamDTO);
     }
 }

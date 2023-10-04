@@ -4,8 +4,8 @@ import com.example.eproject4.DTO.Request.TeamRequest;
 import com.example.eproject4.DTO.TeamDTO;
 import com.example.eproject4.Entity.Team;
 import com.example.eproject4.Repository.TeamRepository;
-import com.example.eproject4.Utils.ModelToDtoConverter;
 import com.example.eproject4.utils.Helper;
+import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,7 +57,7 @@ public class TeamService {
     }
 
     public TeamDTO getTeamById(Long id) {
-        Team team = teamRepository.getById(id);
-        return null;
+        Team team = teamRepository.findById(id).orElse(null);
+        return modelToDtoConverter.convertToDto(team, TeamDTO.class);
     }
 }
