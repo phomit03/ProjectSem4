@@ -4,8 +4,8 @@ import com.example.eproject4.DTO.Request.TeamRequest;
 import com.example.eproject4.DTO.TeamDTO;
 import com.example.eproject4.Entity.Team;
 import com.example.eproject4.Repository.TeamRepository;
-import com.example.eproject4.utils.Helper;
-import com.example.eproject4.utils.ModelToDtoConverter;
+import com.example.eproject4.Utils.Helper;
+import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +24,9 @@ import java.util.stream.Collectors;
 public class TeamService {
     @Autowired
     private Helper helper;
+    @Autowired
     private final ModelToDtoConverter modelToDtoConverter;
+    @Autowired
     private final TeamRepository teamRepository;
 
     public TeamService(ModelToDtoConverter modelToDtoConverter, TeamRepository teamRepository) {
@@ -52,5 +54,10 @@ public class TeamService {
         team.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
 
         return teamRepository.save(team);
+    }
+
+    public TeamDTO getTeamById(Long id) {
+        Team team = teamRepository.findById(id).orElse(null);
+        return modelToDtoConverter.convertToDto(team, TeamDTO.class);
     }
 }

@@ -1,6 +1,6 @@
 package com.example.eproject4.DTO;
 
-import com.example.eproject4.utils.MapToDTO;
+import com.example.eproject4.Utils.MapToDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

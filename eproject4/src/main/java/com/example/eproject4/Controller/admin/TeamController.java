@@ -1,15 +1,12 @@
 package com.example.eproject4.Controller.admin;
 
-import com.example.eproject4.DTO.MatchDTO;
 import com.example.eproject4.DTO.Request.TeamRequest;
 import com.example.eproject4.DTO.TeamDTO;
 import com.example.eproject4.Service.TeamService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -35,7 +32,7 @@ public class TeamController {
         List<TeamDTO> teams = allMatches.subList((page - 1) * pageSize, Math.min(page * pageSize, totalItems));
 
         model.addAttribute("teams", teams);
-        model.addAttribute("title", "Matches");
+        model.addAttribute("title", "Teams");
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
 
@@ -55,5 +52,11 @@ public class TeamController {
             e.printStackTrace();
         }
         return "redirect:/admin/team";
+    }
+
+    @GetMapping("/team/read/{id}")
+    public ResponseEntity<TeamDTO> getTeamById(@PathVariable Long id) {
+        TeamDTO teamDTO = teamService.getTeamById(id);
+        return ResponseEntity.ok(teamDTO);
     }
 }

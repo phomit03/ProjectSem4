@@ -30,7 +30,7 @@
         <div class="container-fluid pt-4 px-4">
             <div class="row g-4">
                 <div>
-                    <a th:href="@{/admin/match/create}">
+                    <a th:href="@{/admin/match/new}">
                         <button type="button" class="btn btn-primary m-2" style="float: right">
                             Create Match +
                         </button>
@@ -58,9 +58,9 @@
                                     <td th:text="${match.date}"></td>
                                     <td th:text="${match.time}"></td>
                                     <td th:text="${match.stadium}"></td>
-                                    <td th:text="${match.status}"></td>
+                                    <td th:text="${(match.status == 1) ? 'active' : 'inactive'}"></td>
                                     <td style="display: flex; gap: 20px;">
-                                        <a th:href="@{/admin}">
+                                        <a th:href="@{'/admin/match/edit/' + ${match.id}}">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
                                         <form th:action="@{/admin}" method="post">
@@ -74,7 +74,7 @@
                                 </tbody>
                                 <tbody th:if="${matches == null or #lists.size(matches) == 0}">
                                 <tr>
-                                    <td colspan="7" style="text-align: center; padding: 10px 0px;">Không có dữ liệu</td>
+                                    <td colspan="7" style="text-align: center; padding: 10px 0px;">No data</td>
                                 </tr>
                                 </tbody>
                             </table>
