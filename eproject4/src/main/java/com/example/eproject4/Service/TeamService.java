@@ -5,7 +5,7 @@ import com.example.eproject4.DTO.TeamDTO;
 import com.example.eproject4.Entity.Team;
 import com.example.eproject4.Repository.TeamRepository;
 import com.example.eproject4.Utils.ModelToDtoConverter;
-import com.example.eproject4.utils.Helper;
+import com.example.eproject4.Utils.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
