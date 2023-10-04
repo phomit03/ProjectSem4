@@ -43,7 +43,7 @@ public class MatchController {
         MatchRequest matchRequest = new MatchRequest();
         model.addAttribute("match", matchRequest);
 
-        return "admin_create_match";
+        return "admin_match_create";
     }
 
     @PostMapping("match/new")
