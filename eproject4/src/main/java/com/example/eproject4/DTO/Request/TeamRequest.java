@@ -13,13 +13,13 @@ public class TeamRequest {
     @MapToDTO
     private String name;
     @MapToDTO
-    private MultipartFile logo;
+    private String logo;
     @MapToDTO
     private String coach;
     @MapToDTO
-    private String stadium;
+    private String home_stadium;
     @MapToDTO
-    private Float valuation;
+    private Float club_valuation;
     @MapToDTO
     private Integer status;
 }
