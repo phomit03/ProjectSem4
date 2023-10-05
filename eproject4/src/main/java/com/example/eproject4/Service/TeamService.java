@@ -16,7 +16,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -40,16 +42,21 @@ public class TeamService {
         return teams.stream().map(team -> modelToDtoConverter.convertToDto(team, TeamDTO.class)).collect(Collectors.toList());
     }
 
-    public Team createTeam(TeamRequest teamRequest, MultipartFile logo) throws IOException {
-        String logoPath = helper.uploadImage(logo);
-
+    public Team createTeam(TeamDTO teamDTO, MultipartFile logo) throws IOException {
         Team team = new Team();
-        team.setName(teamRequest.getName());
-        team.setLogo_img(logoPath);
-        team.setCoach(teamRequest.getCoach());
-        team.setHome_stadium(teamRequest.getStadium());
-        team.setClub_valuation(teamRequest.getValuation());
-        team.setStatus(teamRequest.getStatus());
+        team.setName(teamDTO.getName());
+        if (logo == null) {
+            team.setLogo_img(teamDTO.getLogo_img());
+        } else {
+            Object[] uploadResult = helper.uploadImage(logo);
+            if ((boolean) uploadResult[0]) {
+                team.setLogo_img((String) uploadResult[1]);
+            }
+        }
+        team.setCoach(teamDTO.getCoach());
+        team.setHome_stadium(teamDTO.getHome_stadium());
+        team.setClub_valuation(teamDTO.getClub_valuation());
+        team.setStatus(teamDTO.getStatus());
         team.setCreated_at(Timestamp.valueOf(LocalDateTime.now()));
         team.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
 
@@ -58,6 +65,35 @@ public class TeamService {
 
     public TeamDTO getTeamById(Long id) {
         Team team = teamRepository.findById(id).orElse(null);
+        return modelToDtoConverter.convertToDto(team, TeamDTO.class);
+    }
+
+    public Team update (TeamDTO teamDTO, MultipartFile logo) {
+        try {
+            System.out.println(logo);
+            Team team = teamRepository.getById(teamDTO.getId());
+            if (logo.isEmpty()) {
+                team.setLogo_img(teamDTO.getLogo_img());
+            } else {
+                Object[] uploadResult = helper.uploadImage(logo);
+                if ((boolean) uploadResult[0]) {
+                    team.setLogo_img((String) uploadResult[1]);
+                }
+            }
+            team.setName(teamDTO.getName());
+            team.setCoach(teamDTO.getCoach());
+            team.setHome_stadium(teamDTO.getHome_stadium());
+            team.setClub_valuation(teamDTO.getClub_valuation());
+            team.setStatus(teamDTO.getStatus());
+            return teamRepository.save(team);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public TeamDTO findById(Long id) {
+        Team team = teamRepository.getById(id);
         return modelToDtoConverter.convertToDto(team, TeamDTO.class);
     }
 

@@ -21,6 +21,8 @@ public class Team {
     @MapToDTO
     private String name;
     @MapToDTO
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private String logo_img;
     @MapToDTO
     private String coach;

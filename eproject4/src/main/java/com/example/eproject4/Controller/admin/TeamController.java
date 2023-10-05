@@ -47,29 +47,15 @@ public class TeamController {
 
     @GetMapping("/team/create")
     public String showCreateForm(Model model) {
-        TeamRequest teamRequest = new TeamRequest();
-        model.addAttribute("teamRequest", teamRequest);
-        model.addAttribute("actionUrl", "/admin/team/create/save");
-        return "admin_team_create";
-    }
-
-    @GetMapping("/team/update/{id}")
-    public String showUpdateForm(@PathVariable Long id, Model model)  {
-        Optional<Team> team = teamRepository.findById(id);
-        if (team == null) {
-            return "redirect:/admin/team";
-        }
-
-        model.addAttribute("team", team);
-        model.addAttribute("actionUrl", "/admin/team/update/" + id);
+        model.addAttribute("teamDTO", new TeamDTO());
         return "admin_team_create";
     }
 
 
     @PostMapping("/team/create/save")
-    public String createTeam(@ModelAttribute TeamRequest teamRequest, @RequestParam("logo") MultipartFile logo, RedirectAttributes attributes){
+    public String createTeam(@ModelAttribute TeamDTO teamDTO, @RequestParam("logo") MultipartFile logo, RedirectAttributes attributes){
         try {
-            teamService.createTeam(teamRequest, logo);
+            teamService.createTeam(teamDTO, logo);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,15 +63,32 @@ public class TeamController {
     }
 
     @GetMapping("/team/update/{id}")
-    public String getTeamById(@PathVariable Long id) {
-        TeamDTO teamDTO = teamService.getTeamById(id);
-        return null;
+    public String showUpdateForm(@PathVariable Long id, Model model)  {
+        TeamDTO team = teamService.getTeamById(id);
+        if (team == null) {
+            return "redirect:/admin/team";
+        }
+
+        model.addAttribute("teamDTO", team);
+        return "admin_team_update";
+    }
+
+    @PostMapping("/team/update/{id}")
+    public String update(@PathVariable Long id, @ModelAttribute("teamDTO") TeamDTO teamDTO, @RequestParam("logo") MultipartFile logo, RedirectAttributes attributes) {
+        try {
+            teamService.update(teamDTO, logo);
+            attributes.addFlashAttribute("success", "Update Successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            attributes.addFlashAttribute("error", "Failed to update!");
+        }
+        return "redirect:/admin/team";
     }
 
     @GetMapping("/team/delete/{id}")
     public ResponseEntity<String> deleteTeamById(@PathVariable Long id) {
         try {
-            teamRepository.deleteById(id);
+            teamService.delete(id);
             return ResponseEntity.ok("Delete team successfully.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error!");
