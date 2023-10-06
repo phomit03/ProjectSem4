@@ -20,7 +20,7 @@ public class MatchController {
         this.matchService = matchService;
     }
 
-    @RequestMapping("/matches")
+    @RequestMapping("/match")
     public String matches(Model model, @RequestParam(defaultValue = "1") int page) {
         int pageSize = 20;
         List<MatchRequest> allMatches = matchService.getAllMatches();
@@ -38,7 +38,7 @@ public class MatchController {
         return "admin_match";
     }
 
-    @GetMapping("match/new")
+    @GetMapping("/match/new")
     public String create(Model model) {
         MatchRequest matchRequest = new MatchRequest();
         model.addAttribute("match", matchRequest);
@@ -46,19 +46,16 @@ public class MatchController {
         return "admin_match_create";
     }
 
-    @PostMapping("match/new")
+    @PostMapping("/match/new")
     public String create(@ModelAttribute MatchRequest matchRequest, RedirectAttributes redirectAttributes) {
         MatchRequest createdMatch = matchService.createMatch(matchRequest);
 
         if (createdMatch != null) {
             redirectAttributes.addFlashAttribute("successMessage", "Match created successfully!");
-            return "redirect:/admin/matches";
+            return "redirect:/admin/match";
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "Failed to create match.");
-            return "redirect:/admin/matches/new";
+            return "redirect:/admin/match/new";
         }
     }
-
-
-
 }

@@ -41,11 +41,8 @@
                   <th scope="col">ID</th>
                   <th scope="col">Username</th>
                   <th scope="col">Email</th>
-                  <th scope="col">Address</th>
                   <th scope="col">Full Name</th>
                   <th scope="col">Phone</th>
-                  <th scope="col">Date of Birth</th>
-                  <th scope="col">Password</th>
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
@@ -54,12 +51,8 @@
                   <td th:text="${iterStat.index + 1}"></td>
                   <td th:text="${user.username}"></td>
                   <td th:text="${user.email}"></td>
-                  <td th:text="${user.address}"></td>
                   <td th:text="${user.fullName}"></td>
                   <td th:text="${user.phone}"></td>
-                  <td th:text="${user.dateOfBirth}"></td>
-                  <td>******</td>
-
                   <td>
                     <button class="btn">
                       <a th:href="@{/user/{id}/edit(id=${user.id})}">
