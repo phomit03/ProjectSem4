@@ -7,6 +7,7 @@ import com.example.eproject4.Repository.UserRepository;
 import com.example.eproject4.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,6 +47,41 @@ public class UserServiceImpl implements UserService {
 				Arrays.asList(new Role("ROLE_USER"))
 		);
 		return userRepository.save(user);
+	}
+	// crud user
+	@Override
+	public List<User> getAllUsers() {
+		return userRepository.findAll();
+	}
+
+	@Override
+	public User getUserById(Long id) {
+		return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
+	}
+
+//	@Override
+//	public User createUser(User user) {
+//		return userRepository.save(user);
+//	}
+
+	@Override
+	public User updateUser(Long id, User user) {
+		User existingUser = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
+		existingUser.setUsername(user.getUsername());
+		existingUser.setEmail(user.getEmail());
+		existingUser.setAddress(user.getAddress());
+		existingUser.setFullName(user.getFullName());
+		existingUser.setPhone(user.getPhone());
+		existingUser.setDateOfBirth(user.getDateOfBirth());
+		if (!user.getPassword().equals(existingUser.getPassword())) {
+			existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+		}
+		return userRepository.save(existingUser);
+	}
+
+	@Override
+	public void deleteUser(Long id) {
+		userRepository.deleteById(id);
 	}
 
 	@Override

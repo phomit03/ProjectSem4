@@ -9,31 +9,31 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class RoleServiceImpl implements RoleService {
+    private final RoleRepository roleRepository;
 
-    private RoleRepository roleRepository;
-    @Autowired
     public RoleServiceImpl(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
 
     @Override
     public List<Role> getAllRoles() {
-        List<Role> roles = roleRepository.findAll();
-        return roles;
+        return roleRepository.findAll();
+    }
+
+    @Override
+    public void deleteRole(Long id) {
+        roleRepository.deleteById(id);
     }
 
     @Override
     public Role getRoleById(Long id) {
-        return roleRepository.findById(id).orElse(null);
+        return roleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid role ID: " + id));
     }
 
     @Override
-    public Role saveRole(Role role) {
-        return roleRepository.save(role);
-    }
-
-    @Override
-    public void deleteRole(Role roleId) {
-        roleRepository.delete(roleId);
+    public void updateRole(Long id, Role updatedRole) {
+        Role role = getRoleById(id);
+        role.setName(updatedRole.getName());
+        roleRepository.save(role);
     }
 }
