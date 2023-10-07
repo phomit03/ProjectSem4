@@ -42,7 +42,7 @@ public class MatchService {
         return modelToDtoConverter.convertToDto(match, MatchDTO.class);
     }
 
-    public MatchRequest createMatch(MatchRequest matchRequest) {
+    public MatchDTO createMatch(MatchRequest matchRequest) {
         Match match = new Match();
 
         match.setDate(matchRequest.getDate());
@@ -51,7 +51,7 @@ public class MatchService {
         match.setStatus(1);
 
         match = matchRepository.save(match);
-        return modelToDtoConverter.convertToDto(match, MatchRequest.class);
+        return modelToDtoConverter.convertToDto(match, MatchDTO.class);
     }
 
     public Match updateMatch(MatchRequest matchRequest) {
