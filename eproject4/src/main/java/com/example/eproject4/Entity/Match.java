@@ -24,7 +24,7 @@ public class Match{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @MapToDTO
-    private int id;
+    private Long id;
 
     @Column(name = "date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -40,7 +40,7 @@ public class Match{
     @MapToDTO
     private String stadium;
 
-    @Column(name = "status")
+    @Column(name = "status", columnDefinition = "INT DEFAULT 1")
     @MapToDTO
     private Integer status;
 
