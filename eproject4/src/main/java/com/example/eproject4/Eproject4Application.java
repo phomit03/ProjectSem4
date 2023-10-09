@@ -15,12 +15,12 @@ public class Eproject4Application {
 	}
 
 	private static void setupSSHTunnel() {
-		String sshHost = "61.14.233.196"; // Địa chỉ máy chủ SSH
-		String sshUser = "hungqd"; // Tên đăng nhập SSH
-		String sshPassword = "RlKrZSrDH63YjZt"; // Mật khẩu SSH
-		int sshPort = 2018; // Cổng SSH
+		String sshHost = "61.14.233.196";
+		String sshUser = "root";
+		String sshPassword = "2JuI5ri5";
+		int sshPort = 2018;
 
-		String dbHost = "localhost"; // Địa chỉ cơ sở dữ liệu MySQL thông qua SSH tunnel
+		String dbHost = "localhost";
 		int dbPort = 3306;
 
 		try {
@@ -30,7 +30,7 @@ public class Eproject4Application {
 			session.setConfig("StrictHostKeyChecking", "no");
 			session.connect();
 
-			int localPort = 3307;
+			int localPort = 3306;
 			session.setPortForwardingL(localPort, dbHost, dbPort);
 		} catch (Exception e) {
 			e.printStackTrace();
