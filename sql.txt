@@ -1,30 +1,20 @@
 CREATE TABLE team (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255),
     logo_img VARCHAR(255),
-    coach INT,
+    coach VARCHAR(255),
     home_stadium VARCHAR(255),
     club_valuation FLOAT,
-    status INT,
+    status INT DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
-CREATE TABLE feedback (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id VARCHAR(255) NOT NULL,
-    subject INT,
-    content TEXT,
-    status INT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE player (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     avatar_img VARCHAR(255),
-    date_of_birth INT,
+    date_of_birth DATE,
     national VARCHAR(255),
     position VARCHAR(255),
     number INT,
@@ -32,19 +22,20 @@ CREATE TABLE player (
     height INT,
     achievement TEXT,
     team_id INT,
-    status INT,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
+    status INT DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE match (
+
+CREATE TABLE matches (
     id INT AUTO_INCREMENT PRIMARY KEY,
     date DATE,
     time TIME,
     stadium VARCHAR(255),
     status INT,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE match_detail (
@@ -64,8 +55,8 @@ CREATE TABLE match_detail (
     off_side TEXT,
     corner TEXT,
     status INT,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE news (
@@ -74,8 +65,8 @@ CREATE TABLE news (
     title VARCHAR(255),
     content TEXT,
     status INT,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE user (
@@ -88,22 +79,29 @@ CREATE TABLE user (
     full_name VARCHAR(255),
     phone VARCHAR(255),
     status INT,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
 CREATE TABLE role (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     status INT,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
 CREATE TABLE user_role (
     user_id INT,
     role_id INT,
     status INT,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE feedback (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    subject INT,
+    content TEXT,
+    status INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
