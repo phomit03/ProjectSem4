@@ -71,7 +71,7 @@ public class TeamController {
     }
 
     @PostMapping("/team/update/{id}")
-    public String update(@PathVariable Long id, @ModelAttribute("teamDTO") TeamDTO teamDTO, @RequestParam("logo") MultipartFile logo, RedirectAttributes attributes) {
+    public String update(@PathVariable Long id, @ModelAttribute("teamDTO") TeamDTO teamDTO, @RequestParam(value = "logo", required = false) MultipartFile logo, RedirectAttributes attributes) {
         try {
             teamService.update(teamDTO, logo);
             attributes.addFlashAttribute("success", "Update Successfully!");
