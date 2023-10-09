@@ -1,4 +1,4 @@
-package com.example.eproject4.DTO;
+package com.example.eproject4.DTO.Response;
 
 import com.example.eproject4.Utils.MapToDTO;
 import lombok.AllArgsConstructor;

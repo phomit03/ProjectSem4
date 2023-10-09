@@ -1,8 +1,6 @@
 package com.example.eproject4.Controller.admin;
 
-import com.example.eproject4.DTO.Request.TeamRequest;
-import com.example.eproject4.DTO.TeamDTO;
-import com.example.eproject4.Entity.Team;
+import com.example.eproject4.DTO.Response.TeamDTO;
 import com.example.eproject4.Repository.TeamRepository;
 import com.example.eproject4.Service.TeamService;
 import org.springframework.http.HttpStatus;
@@ -14,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")

@@ -1,7 +1,6 @@
 package com.example.eproject4.Service;
 
-import com.example.eproject4.DTO.Request.TeamRequest;
-import com.example.eproject4.DTO.TeamDTO;
+import com.example.eproject4.DTO.Response.TeamDTO;
 import com.example.eproject4.Entity.Team;
 import com.example.eproject4.Repository.TeamRepository;
 import com.example.eproject4.Utils.Helper;
@@ -11,15 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service

@@ -28,30 +28,34 @@
                                 <i class="fas fa-arrow-left"></i>
                             </a>
                         </div>
-                        <form>
+                        <form th:action="@{/admin/match/update/{id} (id = ${matchDTO.id})}" th:object="${matchDTO}"
+                              method="post" enctype="multipart/form-data">
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Date</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control" name="date">
+                                    <input type="date" class="form-control" th:field="*{date}" name="date">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Time</label>
                                 <div class="col-sm-10">
-                                    <input type="time" class="form-control" name="time">
+                                    <input type="time" class="form-control" th:field="*{time}" name="time">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Stadium</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="stadium">
+                                    <input type="text" class="form-control" th:field="*{stadium}" name="stadium">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Status</label>
                                 <div class="col-sm-10">
-                                    <input class="form-check-input" type="checkbox" role="switch"
-                                           id="flexSwitchCheckChecked" checked="">
+                                    <select class="form-select" th:field="*{status}" name="status"
+                                            aria-label="Floating label select example">
+                                        <option value="1" th:selected="${status == 1}">active</option>
+                                        <option value="0" th:selected="${status == 0}">inactive</option>
+                                    </select>
                                 </div>
                             </div>
 
