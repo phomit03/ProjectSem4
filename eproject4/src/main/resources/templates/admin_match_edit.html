@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin_fragments::head"></head>
+
+<body>
+<div class="container-fluid position-relative d-flex p-0">
+    <!-- Sidebar Start -->
+    <div th:replace="admin_fragments::sidebar"></div>
+    <!-- Sidebar End -->
+
+
+    <!-- Content Start -->
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav th:replace="admin_fragments::navbar"></nav>
+        <!-- Navbar End -->
+
+
+        <!--CONTENT HERE-->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4" style="display: flex; justify-content: center;">
+                <div class="col-sm-12 col-xl-10">
+                    <div class="bg-secondary rounded h-100 p-4">
+                        <div class="mb-4">
+                            <span style="font-weight: bold">EDIT MATCH</span>
+                            <a class="mb-4" style="float: right;" th:href="@{/admin/matches}">
+                                <i class="fas fa-arrow-left"></i>
+                            </a>
+                        </div>
+                        <form th:action="@{/admin/match/update/{id} (id = ${matchDTO.id})}" th:object="${matchDTO}"
+                              method="post" enctype="multipart/form-data">
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Date</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" th:field="*{date}" name="date">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Time</label>
+                                <div class="col-sm-10">
+                                    <input type="time" class="form-control" th:field="*{time}" name="time">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Stadium</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" th:field="*{stadium}" name="stadium">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Status</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" th:field="*{status}" name="status"
+                                            aria-label="Floating label select example">
+                                        <option value="1" th:selected="${status == 1}">active</option>
+                                        <option value="0" th:selected="${status == 0}">inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-4" style="float: right">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/END CONTENT-->
+
+    </div>
+    <!-- Content End -->
+
+
+    <!-- Back to Top -->
+    <div th:replace="admin_fragments::back-to-top"></div>
+</div>
+
+<div th:replace="admin_fragments::script"></div>
+</body>
+
+</html>
