@@ -27,11 +27,11 @@
           <div class="bg-secondary rounded h-100 p-4">
             <div class="mb-4">
               <span style="font-weight: bold">UPDATE USER</span>
-              <a class="mb-4" style="float: right;" th:href="@{/user}">
+              <a class="mb-4" style="float: right;" th:href="@{/admin/user}">
                 <i class="fas fa-arrow-left"></i>
               </a>
             </div>
-            <form  th:action="@{/user/{id}/edit(id=${user.id})}" th:object="${user}" method="post" enctype="multipart/form-data">
+            <form  th:action="@{/admin/user/{id}/edit(id=${user.id})}" th:object="${user}" method="post" enctype="multipart/form-data">
               <input type="hidden" th:field="*{id}"/>
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">User name</label>

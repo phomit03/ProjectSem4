@@ -27,11 +27,11 @@
                     <div class="bg-secondary rounded h-100 p-4">
                         <div class="mb-4">
                             <span style="font-weight: bold">UPDATE ROLE</span>
-                            <a class="mb-4" style="float: right;" th:href="@{/roles}">
+                            <a class="mb-4" style="float: right;" th:href="@{/admin/role}">
                                 <i class="fas fa-arrow-left"></i>
                             </a>
                         </div>
-                        <form th:action="@{/roles/{id}/update(id=${role.id})}" method="post" enctype="multipart/form-data">
+                        <form th:action="@{/admin/role/{id}/update(id=${role.id})}" method="post" enctype="multipart/form-data">
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Role</label>
                                 <div class="col-sm-10">
