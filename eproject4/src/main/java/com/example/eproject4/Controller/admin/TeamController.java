@@ -17,11 +17,9 @@ import java.util.List;
 @RequestMapping("/admin")
 public class TeamController {
     private final TeamService teamService;
-    private final TeamRepository teamRepository;
 
-    public TeamController(TeamService teamService, TeamRepository teamRepository) {
+    public TeamController(TeamService teamService) {
         this.teamService = teamService;
-        this.teamRepository = teamRepository;
     }
 
     @RequestMapping("/team")
@@ -50,7 +48,7 @@ public class TeamController {
 
 
     @PostMapping("/team/create/save")
-    public String createTeam(@ModelAttribute TeamDTO teamDTO, @RequestParam("logo") MultipartFile logo, RedirectAttributes attributes){
+    public String createTeam(@ModelAttribute TeamDTO teamDTO, @RequestParam("logo") MultipartFile logo, RedirectAttributes attributes) {
         try {
             teamService.createTeam(teamDTO, logo);
         } catch (Exception e) {
@@ -60,7 +58,7 @@ public class TeamController {
     }
 
     @GetMapping("/team/update/{id}")
-    public String showUpdateForm(@PathVariable Long id, Model model)  {
+    public String showUpdateForm(@PathVariable Long id, Model model) {
         TeamDTO team = teamService.getTeamById(id);
         if (team == null) {
             return "redirect:/admin/team";

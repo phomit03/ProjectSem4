@@ -30,7 +30,7 @@ public class Eproject4Application {
 			session.setConfig("StrictHostKeyChecking", "no");
 			session.connect();
 
-			int localPort = 3306;
+			int localPort = 3307;
 			session.setPortForwardingL(localPort, dbHost, dbPort);
 		} catch (Exception e) {
 			e.printStackTrace();

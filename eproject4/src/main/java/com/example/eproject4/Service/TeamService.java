@@ -61,7 +61,6 @@ public class TeamService {
 
     public Team update (TeamDTO teamDTO, MultipartFile logo) {
         try {
-            System.out.println(logo);
             Team team = teamRepository.getById(teamDTO.getId());
             if (!logo.isEmpty()) {
                 String logo_img = helper.uploadImage(logo);
