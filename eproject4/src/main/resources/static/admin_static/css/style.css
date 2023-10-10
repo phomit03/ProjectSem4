@@ -288,3 +288,7 @@
     background: var(--dark);
     border-color: var(--primary);
 }
+
+.ck-editor__editable {
+    min-height: 500px !important;
+}

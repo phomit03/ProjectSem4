@@ -28,6 +28,7 @@ public class Match{
     private Long id;
 
     @Column(name = "match_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @MapToDTO
     private LocalDateTime match_time;
 

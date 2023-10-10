@@ -22,27 +22,38 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @MapToDTO
     private Long id;
+
     @MapToDTO
     private String name;
+
     @MapToDTO
     private String avatar_img;
+
     @MapToDTO
     private String date_of_birth;
+
     @MapToDTO
     private String national;
+
     @MapToDTO
     private String position;
+
     @MapToDTO
     private int number;
+
     @MapToDTO
     private int weight;
+
     @MapToDTO
     private int height;
+
     @Column(columnDefinition = "text")
     @MapToDTO
     private String achievement;
+
     @MapToDTO
     private Long team_id;
+
     @Column(name = "status", columnDefinition = "INT DEFAULT 1")
     @MapToDTO
     private Integer status;

@@ -11,7 +11,11 @@ import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +49,7 @@ public class MatchService {
     public MatchDTO createMatch(MatchRequest matchRequest) {
         Match match = new Match();
 
-        match.setMatch_time(matchRequest.getMatch_time());
+        match.setMatch_time(LocalDateTime.parse(matchRequest.getMatch_time()));
         match.setHome_team_id(matchRequest.getHome_team_id());
         match.setAway_team_id(matchRequest.getAway_team_id());
         match.setStadium_id(matchRequest.getStadium_id());
@@ -59,13 +63,15 @@ public class MatchService {
         try {
             Match match = matchRepository.getById(matchRequest.getId());
 
-            match.setMatch_time(matchRequest.getMatch_time());
+            match.setMatch_time(LocalDateTime.parse(matchRequest.getMatch_time()));
             match.setHome_team_id(matchRequest.getHome_team_id());
             match.setAway_team_id(matchRequest.getAway_team_id());
             match.setStadium_id(matchRequest.getStadium_id());
-            match.setStatus(matchRequest.getStatus());
+            match.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
+
 
             return matchRepository.save(match);
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;
