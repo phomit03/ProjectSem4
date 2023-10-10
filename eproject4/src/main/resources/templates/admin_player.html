@@ -137,7 +137,20 @@
     })
 </script>
 
-<div class="message" th:data="${success}" style="display: none"></div>
+<div class="message" th:if="${error}" th:data="${error}" style="display: none"></div>
+
+<script th:if="${error}">
+    $( document ).ready(function() {
+        var message = $('.message').attr('data');
+        Swal.fire(
+            'Error',
+            message,
+            'error'
+        )
+    });
+</script>
+
+<div class="message" th:if="${success}" th:data="${success}" style="display: none"></div>
 
 <script th:if="${success}">
     $( document ).ready(function() {
@@ -149,6 +162,7 @@
         )
     });
 </script>
+
 </body>
 
 </html>

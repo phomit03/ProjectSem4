@@ -16,9 +16,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class MatchRequest {
     private Long id;
-    private LocalDateTime match_time;
+    private String match_time;
     private Team home_team_id;
     private Team away_team_id;
     private Stadium stadium_id;
     private Integer status;
+    private Team team;
+
 }

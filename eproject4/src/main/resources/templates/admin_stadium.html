@@ -32,7 +32,7 @@
                 <div>
                     <a th:href="@{/admin/stadium/new}">
                         <button type="button" class="btn btn-primary m-2" style="float: right">
-                            Create Stadium +
+                            + Stadium
                         </button>
                     </a>
                 </div>
@@ -55,9 +55,13 @@
                                         <tr th:each="stadium, iterStat : ${stadiums}" th:class="'stadium-' + ${stadium.id}">
                                             <td th:text="${iterStat.index + 1}"></td>
                                             <td th:text="${stadium.name}"></td>
-                                            <td th:text="${stadium.description}"></td>
+                                            <td th:text="${#strings.length(stadium.description) > 100 ?
+                                                #strings.substring(stadium.description, 0, 200) + '...'
+                                                :
+                                                stadium.description
+                                                }">
+                                            </td>
                                             <td th:text="${(stadium.status == 1) ? 'Active' : 'Inactive'}"></td>
-                                            <td>
                                             <td>
                                                 <button class="btn">
                                                     <a th:href="@{/admin/stadium/edit/{id} (id=${stadium.id})}">
@@ -120,6 +124,34 @@
             }
         })
     })
+</script>
+
+
+<!--alert-->
+<div class="message" th:if="${error}" th:data="${error}" style="display: none"></div>
+
+<script th:if="${error}">
+    $( document ).ready(function() {
+        var message = $('.message').attr('data');
+        Swal.fire(
+            'Error',
+            message,
+            'error'
+        )
+    });
+</script>
+
+<div class="message" th:if="${success}" th:data="${success}" style="display: none"></div>
+
+<script th:if="${success}">
+    $( document ).ready(function() {
+        var message = $('.message').attr('data');
+        Swal.fire(
+            'Success',
+            message,
+            'success'
+        )
+    });
 </script>
 
 </html>

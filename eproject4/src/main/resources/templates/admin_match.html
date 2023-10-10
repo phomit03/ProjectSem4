@@ -32,7 +32,7 @@
                 <div>
                     <a th:href="@{/admin/match/new}">
                         <button type="button" class="btn btn-primary m-2" style="float: right">
-                            Create Match +
+                            + Match
                         </button>
                     </a>
                 </div>
@@ -43,42 +43,45 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Time</th>
-                                        <th scope="col">Stadium</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Match Time</th>
+                                    <th scope="col">Home Team - Away Team</th>
+                                    <th scope="col">Stadium</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
                                 </thead>
-                                    <tbody th:if="${matches != null and #lists.size(matches) > 0}">
-                                        <tr th:each="match, iterStat : ${matches}">
-                                            <td th:text="${iterStat.index + 1}"></td>
-                                            <td th:text="${match.match_time}"></td>
-                                            <td th:text="${match.home_team_id}"></td>
-                                            <td th:text="${match.away_team_id}"></td>
-                                            <td th:text="${match.stadium_id}"></td>
-                                            <td th:text="${(match.status == 1) ? 'active' : 'inactive'}"></td>
-                                            <td>
-                                                <button class="btn">
-                                                    <a th:href="@{/admin/match/edit/{id} (id=${match.id})}">
-                                                        <i class="fas fa-pencil-alt"></i>
-                                                    </a>
-                                                </button>
-                                                <button class="btn">
-                                                    <a th:data-id="${match.id}"
-                                                       class="delete-btn">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
+                                <tbody th:if="${matches != null and #lists.size(matches) > 0}">
+                                <tr th:each="match, iterStat : ${matches}">
+                                    <td th:text="${iterStat.index + 1}"></td>
+                                    <td th:text="${match.match_time}"></td>
+                                    <td style="font-weight: 700; color: #ca0f33;">
+                                        <span th:text="${match.home_team_id.name}"></span>
+                                        <span style="color: white;"> vs </span>
+                                        <span th:text="${match.away_team_id.name}"></span>
+                                    </td>
+                                    <td th:text="${match.stadium_id.name}"></td>
+                                    <td th:text="${(match.status == 1) ? 'Active' : 'Inactive'}"></td>
+                                    <td>
+                                        <button class="btn">
+                                            <a th:href="@{/admin/match/edit/{id} (id=${match.id})}">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a>
+                                        </button>
+                                        <button class="btn">
+                                            <a th:data-id="${match.id}"
+                                               class="delete-btn">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
                                 <tbody th:if="${matches == null or #lists.size(matches) == 0}">
-                                    <tr>
-                                        <td colspan="7" style="text-align: center; padding: 10px 0px;">No data</td>
-                                    </tr>
+                                <tr>
+                                    <td colspan="7" style="text-align: center; padding: 10px 0px;">No data</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -94,9 +97,36 @@
 
 <!-- Back to Top -->
 <div th:replace="admin_fragments::back-to-top"></div>
-</div>
 
 <div th:replace="admin_fragments::script"></div>
+
+<!--alert-->
+<div class="message-error" th:if="${error}" th:data="${error}" style="display: none"></div>
+
+<script th:if="${error}">
+    $( document ).ready(function() {
+        var message = $('.message-error').attr('data');
+        Swal.fire(
+            'Error',
+            message,
+            'error'
+        )
+    });
+</script>
+
+<div class="message" th:if="${success}" th:data="${success}" style="display: none"></div>
+
+<script th:if="${success}">
+    $( document ).ready(function() {
+        var message = $('.message').attr('data');
+        Swal.fire(
+            'Success',
+            message,
+            'success'
+        )
+    });
+</script>
+
 </body>
 
 </html>

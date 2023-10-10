@@ -50,11 +50,13 @@ public class StadiumController {
     }
 
     @PostMapping("/stadium/new/save")
-    public String create(@ModelAttribute StadiumRequest stadiumRequest){
+    public String create(@ModelAttribute StadiumRequest stadiumRequest, RedirectAttributes redirectAttributes) {
         try {
             stadiumService.createStadium(stadiumRequest);
+            redirectAttributes.addFlashAttribute("success", "Create successfully!");
         } catch (Exception e) {
             e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Failed to create!");
         }
         return "redirect:/admin/stadiums";
     }

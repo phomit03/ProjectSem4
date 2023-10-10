@@ -44,9 +44,7 @@ public class TeamService {
         team.setCoach(teamDTO.getCoach());
         team.setHome_stadium(teamDTO.getHome_stadium());
         team.setClub_valuation(teamDTO.getClub_valuation());
-        team.setStatus(teamDTO.getStatus());
-        team.setCreated_at(Timestamp.valueOf(LocalDateTime.now()));
-        team.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
+        team.setStatus(1);
         if (!logo.isEmpty()) {
             String imageUrl = helper.uploadImage(logo);
             team.setLogo_img(imageUrl);
@@ -70,7 +68,7 @@ public class TeamService {
             team.setCoach(teamDTO.getCoach());
             team.setHome_stadium(teamDTO.getHome_stadium());
             team.setClub_valuation(teamDTO.getClub_valuation());
-            team.setStatus(teamDTO.getStatus());
+            team.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
             return teamRepository.save(team);
         } catch (Exception e) {
             e.printStackTrace();

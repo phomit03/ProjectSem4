@@ -45,6 +45,7 @@ public class PlayerService {
             String imgUrl = helper.uploadImage(img);
             player.setAvatar_img(imgUrl);
         }
+        player.setStatus(1);
         player.setTeam_id(playerDTO.getTeam_id());
         return playerRepository.save(player);
     }
@@ -69,7 +70,6 @@ public class PlayerService {
             player.setHeight(playerDTO.getHeight());
             player.setAchievement(playerDTO.getAchievement());
             player.setTeam_id(playerDTO.getTeam_id());
-            player.setStatus(playerDTO.getStatus());
             player.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
             return playerRepository.save(player);
         } catch (Exception e) {
