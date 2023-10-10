@@ -20,31 +20,21 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "matches")
-public class Match{
+@Table(name = "stadium")
+public class Stadium{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @MapToDTO
     private Long id;
 
-    @Column(name = "match_time")
+    @Column(name = "name")
     @MapToDTO
-    private LocalDateTime match_time;
+    private String name;
 
+    @Lob
+    @Column(name = "description", columnDefinition = "text")
     @MapToDTO
-    @OneToOne
-    @JoinColumn(name = "home_team_id", referencedColumnName = "id")
-    private Team home_team_id;
-
-    @MapToDTO
-    @OneToOne
-    @JoinColumn(name = "away_team_id", referencedColumnName = "id")
-    private Team away_team_id;
-
-    @MapToDTO
-    @ManyToOne
-    @JoinColumn(name = "stadium_id", referencedColumnName = "id")
-    private Stadium stadium_id;
+    private String description;
 
     @Column(name = "status", columnDefinition = "INT DEFAULT 1")
     @MapToDTO
@@ -59,4 +49,5 @@ public class Match{
     @Column(name = "updated_at")
     @MapToDTO
     private Timestamp updated_at;
+
 }

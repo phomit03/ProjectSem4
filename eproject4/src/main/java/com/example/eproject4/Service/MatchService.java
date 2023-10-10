@@ -45,9 +45,10 @@ public class MatchService {
     public MatchDTO createMatch(MatchRequest matchRequest) {
         Match match = new Match();
 
-        match.setDate(matchRequest.getDate());
-        match.setTime(matchRequest.getTime());
-        match.setStadium(matchRequest.getStadium());
+        match.setMatch_time(matchRequest.getMatch_time());
+        match.setHome_team_id(matchRequest.getHome_team_id());
+        match.setAway_team_id(matchRequest.getAway_team_id());
+        match.setStadium_id(matchRequest.getStadium_id());
         match.setStatus(1);
 
         match = matchRepository.save(match);
@@ -58,9 +59,10 @@ public class MatchService {
         try {
             Match match = matchRepository.getById(matchRequest.getId());
 
-            match.setDate(matchRequest.getDate());
-            match.setTime(matchRequest.getTime());
-            match.setStadium(matchRequest.getStadium());
+            match.setMatch_time(matchRequest.getMatch_time());
+            match.setHome_team_id(matchRequest.getHome_team_id());
+            match.setAway_team_id(matchRequest.getAway_team_id());
+            match.setStadium_id(matchRequest.getStadium_id());
             match.setStatus(matchRequest.getStatus());
 
             return matchRepository.save(match);

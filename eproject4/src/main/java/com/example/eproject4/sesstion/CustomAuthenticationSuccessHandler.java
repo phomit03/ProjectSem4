@@ -43,6 +43,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
 
         // Chuyển hướng đến trang chính sau khi đăng nhập thành công
-        response.sendRedirect("/index1");
+        response.sendRedirect("/admin");
     }
 }

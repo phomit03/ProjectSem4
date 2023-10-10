@@ -30,44 +30,42 @@
         <div class="container-fluid pt-4 px-4">
             <div class="row g-4">
                 <div>
-                    <a th:href="@{/admin/match/new}">
+                    <a th:href="@{/admin/stadium/new}">
                         <button type="button" class="btn btn-primary m-2" style="float: right">
-                            Create Match +
+                            Create Stadium +
                         </button>
                     </a>
                 </div>
 
                 <div class="col-12">
                     <div class="bg-secondary rounded h-100 p-4">
-                        <h6 class="mb-4">LIST MATCH</h6>
+                        <h6 class="mb-4">LIST STADIUM</h6>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Time</th>
-                                        <th scope="col">Stadium</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Description</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
-                                    <tbody th:if="${matches != null and #lists.size(matches) > 0}">
-                                        <tr th:each="match, iterStat : ${matches}">
+                                    <tbody th:if="${stadiums != null and #lists.size(stadiums) > 0}">
+                                        <tr th:each="stadium, iterStat : ${stadiums}">
                                             <td th:text="${iterStat.index + 1}"></td>
-                                            <td th:text="${match.match_time}"></td>
-                                            <td th:text="${match.home_team_id}"></td>
-                                            <td th:text="${match.away_team_id}"></td>
-                                            <td th:text="${match.stadium_id}"></td>
-                                            <td th:text="${(match.status == 1) ? 'active' : 'inactive'}"></td>
+                                            <td th:text="${stadium.name}"></td>
+                                            <td th:text="${stadium.description}"></td>
+                                            <td th:text="${(stadium.status == 1) ? 'Active' : 'Inactive'}"></td>
+                                            <td>
                                             <td>
                                                 <button class="btn">
-                                                    <a th:href="@{/admin/match/edit/{id} (id=${match.id})}">
+                                                    <a th:href="@{/admin/stadium/edit/{id} (id=${stadium.id})}">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </a>
                                                 </button>
                                                 <button class="btn">
-                                                    <a th:data-id="${match.id}"
+                                                    <a th:data-id="${stadium.id}"
                                                        class="delete-btn">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
@@ -75,7 +73,7 @@
                                             </td>
                                         </tr>
                                     </tbody>
-                                <tbody th:if="${matches == null or #lists.size(matches) == 0}">
+                                <tbody th:if="${stadiums == null or #lists.size(stadiums) == 0}">
                                     <tr>
                                         <td colspan="7" style="text-align: center; padding: 10px 0px;">No data</td>
                                     </tr>
