@@ -68,7 +68,10 @@
             <a th:href="@{/admin/team}" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/admin/team') ? 'active' : ''}">
                 <i class="fa fa-th me-2"></i>Teams
             </a>
-            <a th:href="@{/admin/matches}" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/admin/matches') ? 'active' : ''}">
+            <a th:href="@{/admin/player}" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/admin/player') ? 'active' : ''}">
+                <i class="fa fa-th me-2"></i>Players
+            </a>
+            <a th:href="@{/admin/matches}" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/admin/match') ? 'active' : ''}">
                 <i class="fa fa-th me-2"></i>Matches
             </a>
 <!--            <div class="nav-item dropdown">-->

@@ -1,0 +1,89 @@
+package com.example.eproject4.Service;
+
+import com.example.eproject4.DTO.Response.PlayerDTO;
+import com.example.eproject4.DTO.Response.TeamDTO;
+import com.example.eproject4.Entity.Player;
+import com.example.eproject4.Entity.Team;
+import com.example.eproject4.Repository.PlayerRepository;
+import com.example.eproject4.Utils.Helper;
+import com.example.eproject4.Utils.ModelToDtoConverter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
+public class PlayerService {
+
+    @Autowired
+    private Helper helper;
+    @Autowired
+    private final ModelToDtoConverter modelToDtoConverter;
+    @Autowired
+    private final PlayerRepository playerRepository;
+
+    public PlayerService(ModelToDtoConverter modelToDtoConverter, PlayerRepository playerRepository) {
+        this.modelToDtoConverter = modelToDtoConverter;
+        this.playerRepository = playerRepository;
+    }
+
+    public List<PlayerDTO> getAllPlayers() {
+        List<Player> players = playerRepository.findAll();
+        return players.stream().map(player -> modelToDtoConverter.convertToDto(player, PlayerDTO.class)).collect(Collectors.toList());
+    }
+
+    public Player create(PlayerDTO playerDTO, MultipartFile img) throws IOException {
+        Player player = new Player();
+        player.setName(playerDTO.getName());
+        if (!img.isEmpty()) {
+            String imgUrl = helper.uploadImage(img);
+            player.setAvatar_img(imgUrl);
+        }
+        player.setTeam_id(playerDTO.getTeam_id());
+        return playerRepository.save(player);
+    }
+
+    public PlayerDTO getPlayerById(Long id) {
+        Player player = playerRepository.findById(id).orElse(null);
+        return modelToDtoConverter.convertToDto(player, PlayerDTO.class);
+    }
+
+    public Player update (PlayerDTO playerDTO, MultipartFile img) {
+        try {
+            Player player = playerRepository.getById(playerDTO.getId());
+            player.setName(playerDTO.getName());
+            if (!img.isEmpty()) {
+                String imgUrl = helper.uploadImage(img);
+                player.setAvatar_img(imgUrl);
+            }
+            player.setDate_of_birth(playerDTO.getDate_of_birth());
+            player.setNational(playerDTO.getNational());
+            player.setPosition(playerDTO.getPosition());
+            player.setNumber(playerDTO.getNumber());
+            player.setHeight(playerDTO.getHeight());
+            player.setAchievement(playerDTO.getAchievement());
+            player.setTeam_id(playerDTO.getTeam_id());
+            player.setStatus(playerDTO.getStatus());
+            player.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
+            return playerRepository.save(player);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public PlayerDTO findById(Long id) {
+        Player player = playerRepository.getById(id);
+        return modelToDtoConverter.convertToDto(player, PlayerDTO.class);
+    }
+
+    public void delete(Long id) {
+        playerRepository.deleteById(id);
+    }
+}
