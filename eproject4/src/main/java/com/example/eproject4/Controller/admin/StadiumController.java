@@ -38,7 +38,7 @@ public class StadiumController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
 
-        return "admin_stadiums";
+        return "admin_stadium";
     }
 
     @GetMapping("/stadium/new")

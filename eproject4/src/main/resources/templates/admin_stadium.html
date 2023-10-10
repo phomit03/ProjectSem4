@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin_fragments::head"></head>
+
+<body>
+<div class="container-fluid position-relative d-flex p-0">
+    <!-- Spinner Start -->
+    <!--        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">-->
+    <!--            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">-->
+    <!--                <span class="sr-only">Loading...</span>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!-- Spinner End -->
+
+
+    <!-- Sidebar Start -->
+    <div th:replace="admin_fragments::sidebar"></div>
+    <!-- Sidebar End -->
+
+
+    <!-- Content Start -->
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav th:replace="admin_fragments::navbar"></nav>
+        <!-- Navbar End -->
+
+
+        <!--CONTENT HERE-->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4">
+                <div>
+                    <a th:href="@{/admin/stadium/new}">
+                        <button type="button" class="btn btn-primary m-2" style="float: right">
+                            Create Stadium +
+                        </button>
+                    </a>
+                </div>
+
+                <div class="col-12">
+                    <div class="bg-secondary rounded h-100 p-4">
+                        <h6 class="mb-4">LIST STADIUM</h6>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                    <tbody th:if="${stadiums != null and #lists.size(stadiums) > 0}">
+                                        <tr th:each="stadium, iterStat : ${stadiums}">
+                                            <td th:text="${iterStat.index + 1}"></td>
+                                            <td th:text="${stadium.name}"></td>
+                                            <td th:text="${stadium.description}"></td>
+                                            <td th:text="${(stadium.status == 1) ? 'Active' : 'Inactive'}"></td>
+                                            <td>
+                                            <td>
+                                                <button class="btn">
+                                                    <a th:href="@{/admin/stadium/edit/{id} (id=${stadium.id})}">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </a>
+                                                </button>
+                                                <button class="btn">
+                                                    <a th:data-id="${stadium.id}"
+                                                       class="delete-btn">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                <tbody th:if="${stadiums == null or #lists.size(stadiums) == 0}">
+                                    <tr>
+                                        <td colspan="7" style="text-align: center; padding: 10px 0px;">No data</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/END CONTENT-->
+</div>
+<!-- Content End -->
+
+
+<!-- Back to Top -->
+<div th:replace="admin_fragments::back-to-top"></div>
+</div>
+
+<div th:replace="admin_fragments::script"></div>
+</body>
+
+</html>
