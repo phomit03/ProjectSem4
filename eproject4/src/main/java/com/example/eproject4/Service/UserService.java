@@ -31,6 +31,10 @@ public class UserService implements UserDetailsService {
 		super();
 		this.userRepository = userRepository;
 	}
+	// check username
+	public boolean existsByUsername(String username) {
+		return userRepository.existsByUsername(username);
+	}
 
 	public User save(UserRegistrationDto registrationDto) {
 		User user = new User(

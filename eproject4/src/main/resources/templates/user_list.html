@@ -43,6 +43,7 @@
                   <th scope="col">Email</th>
                   <th scope="col">Full Name</th>
                   <th scope="col">Phone</th>
+                  <th scope="col">Role</th>
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
@@ -53,6 +54,10 @@
                   <td th:text="${user.email}"></td>
                   <td th:text="${user.fullName}"></td>
                   <td th:text="${user.phone}"></td>
+                  <td>
+                    <span th:each="userRole : ${user.roles}" th:if="${userRole.name == 'ROLE_ADMIN'}">ROLE_ADMIN</span>
+                    <span th:each="userRole : ${user.roles}" th:if="${userRole.name == 'ROLE_USER'}">ROLE_USER</span>
+                  </td>
                   <td>
                     <button class="btn">
                       <a th:href="@{/admin/user/{id}/edit(id=${user.id})}">

@@ -1,11 +1,13 @@
 package com.example.eproject4.Controller.auth;
 
+import com.example.eproject4.Entity.Role;
 import com.example.eproject4.Entity.User;
 import com.example.eproject4.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -21,6 +23,8 @@ public class UserController {
 		model.addAttribute("users", users);
 		return "user_list";
 	}
+
+
 
 //	@GetMapping("/{id}")
 //	public String getUserById(@PathVariable Long id, Model model) {
