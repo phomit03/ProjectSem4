@@ -47,6 +47,7 @@ public class PlayerController {
     public String create(@ModelAttribute PlayerDTO playerDTO, @RequestParam("img") MultipartFile img, RedirectAttributes redirectAttributes) {
         try {
             playerService.create(playerDTO, img);
+            redirectAttributes.addFlashAttribute("success", "Create success");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,7 +71,7 @@ public class PlayerController {
     public String update(@PathVariable Long id, @ModelAttribute("playerDTO") PlayerDTO playerDTO, @RequestParam(value = "img", required = false) MultipartFile img, RedirectAttributes redirectAttributes) {
         try {
             playerService.update(playerDTO, img);
-            redirectAttributes.addFlashAttribute("success", "Update Successfully!");
+            redirectAttributes.addFlashAttribute("success", "Update Successfully 123!");
         } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("error", "Failed to update!");
