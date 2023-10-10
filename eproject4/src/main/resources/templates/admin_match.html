@@ -55,9 +55,10 @@
                                     <tbody th:if="${matches != null and #lists.size(matches) > 0}">
                                         <tr th:each="match, iterStat : ${matches}">
                                             <td th:text="${iterStat.index + 1}"></td>
-                                            <td th:text="${match.date}"></td>
-                                            <td th:text="${match.time}"></td>
-                                            <td th:text="${match.stadium}"></td>
+                                            <td th:text="${match.match_time}"></td>
+                                            <td th:text="${match.home_team_id}"></td>
+                                            <td th:text="${match.away_team_id}"></td>
+                                            <td th:text="${match.stadium_id}"></td>
                                             <td th:text="${(match.status == 1) ? 'active' : 'inactive'}"></td>
                                             <td>
                                                 <button class="btn">

@@ -33,25 +33,39 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Date</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control" th:field="*{date}" name="date">
+                                    <input type="date" class="form-control" th:field="*{match_time}" name="date">
                                 </div>
                             </div>
+
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">Time</label>
-                                <div class="col-sm-10">
-                                    <input type="time" class="form-control" th:field="*{time}" name="time">
+                                <label class="col-sm-2 col-form-label">Home Team</label>
+                                <div class="col-sm-4">
+                                    <select class="form-select" th:field="*{home_team_id}" name="home_team_id"
+                                            aria-label="Floating label select example">
+                                        <option value="1" th:selected="${status == 1}">active</option>
+                                        <option value="0" th:selected="${status == 0}">inactive</option>
+                                    </select>
                                 </div>
                             </div>
+
+                            <p> - </p>
+
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">Stadium</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" th:field="*{stadium}" name="stadium">
+                                <label class="col-sm-2 col-form-label">Away Team</label>
+                                <div class="col-sm-4">
+                                    <select class="form-select" th:field="*{away_team_id}" name="away_team_id"
+                                            aria-label="Floating label select example">
+                                        <option value="1" th:selected="${status == 1}">active</option>
+                                        <option value="0" th:selected="${status == 0}">inactive</option>
+                                    </select>
                                 </div>
                             </div>
+
+
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">Status</label>
+                                <label class="col-sm-2 col-form-label">Stadium Takes Place</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" th:field="*{status}" name="status"
+                                    <select class="form-select" th:field="*{stadium_id}" name="stadium_id"
                                             aria-label="Floating label select example">
                                         <option value="1" th:selected="${status == 1}">active</option>
                                         <option value="0" th:selected="${status == 0}">inactive</option>

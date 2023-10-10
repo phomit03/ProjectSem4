@@ -23,7 +23,7 @@ public class MatchController {
         this.matchService = matchService;
     }
 
-    @RequestMapping("/match")
+    @RequestMapping("/matches")
     public String matches(Model model, @RequestParam(defaultValue = "1") int page) {
         int pageSize = 20;
         List<MatchDTO> allMatches = matchService.getAllMatches();
@@ -50,7 +50,7 @@ public class MatchController {
     }
 
     @PostMapping("/match/new/save")
-    public String create(@ModelAttribute MatchRequest matchRequest, RedirectAttributes redirectAttributes){
+    public String create(@ModelAttribute MatchRequest matchRequest){
         try {
             matchService.createMatch(matchRequest);
         } catch (Exception e) {
