@@ -20,6 +20,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 public class MatchController {
+    @Autowired
     private final MatchService matchService;
     private final TeamService teamService;
     private final StadiumService stadiumService;
@@ -66,8 +67,13 @@ public class MatchController {
     @PostMapping("/match/new/save")
     public String create(@ModelAttribute MatchRequest matchRequest, RedirectAttributes redirectAttributes) {
         try {
-            matchService.createMatch(matchRequest);
-            redirectAttributes.addFlashAttribute("success", "Create successfully!");
+            if (matchService.checkMatchExist(matchRequest)) {
+                matchService.createMatch(matchRequest);
+                redirectAttributes.addFlashAttribute("success", "Create successfully!");
+            } else  {
+                redirectAttributes.addFlashAttribute("error", "Creating a match failed because the time and field were the same or the time and team were the same! ");
+                return "redirect:/admin/match/new";
+            }
         } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("error", "Failed to create!");
@@ -96,8 +102,14 @@ public class MatchController {
     public String update(@PathVariable Long id, @ModelAttribute("matchRequest") MatchRequest matchRequest,
                          RedirectAttributes attributes) {
         try {
-            matchService.updateMatch(matchRequest);
-            attributes.addFlashAttribute("success", "Update Successfully!");
+            if (matchService.checkMatchExist(matchRequest)) {
+                matchService.updateMatch(matchRequest);
+                attributes.addFlashAttribute("success", "Update Successfully!");
+            } else  {
+                attributes.addFlashAttribute("error", "Updating a match failed because the time and field were the same or the time and team were the same! ");
+                return "redirect:/admin/match/update/" + id;
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             attributes.addFlashAttribute("error", "Failed to update!");

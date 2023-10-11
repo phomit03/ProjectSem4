@@ -4,6 +4,11 @@
 <head th:replace="admin_fragments::head"></head>
 
 <body>
+<style>
+    tr td {
+        vertical-align: middle;
+    }
+</style>
 <div class="container-fluid position-relative d-flex p-0">
     <!-- Spinner Start -->
     <!--        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">-->
@@ -46,20 +51,30 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Match Time</th>
-                                    <th scope="col">Home Team - Away Team</th>
+                                    <th scope="col" class="text-center">Home Team</th>
+                                    <th></th>
+                                    <th scope="col" class="text-center">Away Team</th>
                                     <th scope="col">Stadium</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody th:if="${matches != null and #lists.size(matches) > 0}">
-                                <tr th:each="match, iterStat : ${matches}">
+                                <tr th:each="match, iterStat : ${matches}" th:class="'row-' + ${match.id}">
                                     <td th:text="${iterStat.index + 1}"></td>
-                                    <td th:text="${match.match_time}"></td>
-                                    <td style="font-weight: 700; color: #ca0f33;">
-                                        <span th:text="${match.home_team_id.name}"></span>
-                                        <span style="color: white;"> vs </span>
-                                        <span th:text="${match.away_team_id.name}"></span>
+                                    <td th:text="${match.formattedMatchTime}"></td>
+                                    <td class="text-center">
+                                        <img style="width: 50px;" th:src="@{${match.home_team_id.logo_img}}">
+                                        <br>
+                                        <span th:text="${match.home_team_id.name}" style="margin-top: 8px;"></span>
+                                    </td>
+                                    <td>
+                                        VS
+                                    </td>
+                                    <td class="text-center">
+                                        <img style="width: 50px;" th:src="@{${match.away_team_id.logo_img}}">
+                                        <br>
+                                        <span th:text="${match.away_team_id.name}" style="margin-top: 8px;"></span>
                                     </td>
                                     <td th:text="${match.stadium_id.name}"></td>
                                     <td th:text="${(match.status == 1) ? 'Active' : 'Inactive'}"></td>
@@ -99,6 +114,31 @@
 <div th:replace="admin_fragments::back-to-top"></div>
 
 <div th:replace="admin_fragments::script"></div>
+
+<script>
+    $('.delete-btn').click(function () {
+        var id = $(this).attr('data-id');
+        var teamRow = $('.row-' + id);
+        Swal.fire({
+            title: 'Are you sure you want to delete this item?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "/admin/match/delete/" + id,
+                    success: function () {
+                        teamRow.remove();
+                    }
+                })
+            }
+        })
+    })
+</script>
 
 <!--alert-->
 <div class="message-error" th:if="${error}" th:data="${error}" style="display: none"></div>
