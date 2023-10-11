@@ -700,7 +700,7 @@ h1, h2, h3, h4, h5,
     .team-vs .team-details img {
       width: 90px; }
   .team-vs .team-1, .team-vs .team-2 {
-    padding: 30px; }
+    padding: 10px; }
   .team-vs .team-2 {
     position: relative; }
     .team-vs .team-2:before {
@@ -992,6 +992,7 @@ h1, h2, h3, h4, h5,
   font-weight: 700; }
 
 .custom-media .text h3 {
+  font-weight: bold;
   font-size: 18px; }
   .custom-media .text h3 a {
     color: #fff; }
@@ -1117,3 +1118,16 @@ h1, h2, h3, h4, h5,
   .post-meta a {
     color: #fff;
     border-bottom: 1px solid rgba(255, 255, 255, 0.5); }
+
+.user {
+  font-size: 2.75em; color: white; vertical-align: middle;
+}
+
+.user:hover{
+  color: #ee1e46;
+}
+
+.icon-user-circle-o:before {
+  content: "\f2be";
+  color: #ee1e46;
+}
