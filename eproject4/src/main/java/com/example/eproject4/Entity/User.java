@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
 import java.security.Timestamp;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -21,9 +22,12 @@ public class User {
     @Column(name = "id")
     private Long id;
 
+
     private String username;
 
+
     private String email;
+
 
     private String password;
 

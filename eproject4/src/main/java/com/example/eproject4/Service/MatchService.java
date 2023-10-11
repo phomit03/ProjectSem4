@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 public class MatchService {
     @Autowired
     private Helper helper;
+    @Autowired
     private final MatchRepository matchRepository;
 
     @Autowired
@@ -80,6 +81,29 @@ public class MatchService {
 
     public void deleteMatch(Long id) {
         matchRepository.deleteById(id);
+    }
+
+    public String formatDateTime(String dateTimeStr) {
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a");
+        LocalDateTime inputDateTime = LocalDateTime.parse(dateTimeStr, inputFormatter);
+
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return inputDateTime.format(outputFormatter);
+    }
+
+    public boolean checkMatchExist(MatchRequest matchRequest) {
+        //check time va stadium
+        if (!matchRepository.findMatchesByMatchTimeAndStadiumId(LocalDateTime.parse(matchRequest.getMatch_time()), matchRequest.getStadium_id().getId()).isEmpty()) {
+            return false;
+        }
+        if (!matchRepository.findMatchesByMatchTimeAndHomeTeamId(LocalDateTime.parse(matchRequest.getMatch_time()), matchRequest.getHome_team_id().getId()).isEmpty()) {
+            return false;
+        }
+        if (!matchRepository.findMatchesByMatchTimeAndAwayTeamId(LocalDateTime.parse(matchRequest.getMatch_time()), matchRequest.getAway_team_id().getId()).isEmpty()) {
+            return false;
+        }
+
+        return true;
     }
 
 }

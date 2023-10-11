@@ -1,11 +1,15 @@
 package com.example.eproject4.Service;
 
 import com.example.eproject4.DTO.UserRegistrationDto;
+import com.example.eproject4.Entity.Employee;
 import com.example.eproject4.Entity.Role;
 import com.example.eproject4.Entity.User;
 import com.example.eproject4.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -93,6 +97,13 @@ public class UserService implements UserDetailsService {
 
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+	}
+
+	// phan trang
+	public Page<User> findPaginated(int pageNo, int pageSize) {
+
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+		return this.userRepository.findAll(pageable);
 	}
 
 }

@@ -55,8 +55,8 @@
                             <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/matches') ? 'active' : ''}">
                                 <a th:href="@{/matches}" class="nav-link">Matches</a>
                             </li>
-                            <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/players') ? 'active' : ''}">
-                                <a th:href="@{/players}" class="nav-link">Players</a>
+                            <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/teams') ? 'active' : ''}">
+                                <a th:href="@{/teams}" class="nav-link">Teams</a>
                             </li>
                             <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/news') ? 'active' : ''}">
                                 <a th:href="@{/news}" class="nav-link">News</a>

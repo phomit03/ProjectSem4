@@ -1,8 +1,10 @@
 package com.example.eproject4.Controller.auth;
 
+import com.example.eproject4.Entity.Employee;
 import com.example.eproject4.Entity.Role;
 import com.example.eproject4.Entity.User;
 import com.example.eproject4.Service.UserService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +19,15 @@ public class UserController {
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
+//	@GetMapping("")
+//	public String getAllUsers(Model model) {
+//		List<User> users = userService.getAllUsers();
+//		model.addAttribute("users", users);
+//		return "user_list";
+//	}
 	@GetMapping("")
 	public String getAllUsers(Model model) {
-		List<User> users = userService.getAllUsers();
-		model.addAttribute("users", users);
-		return "user_list";
+		return findPaginated(1, model);
 	}
 
 
@@ -55,13 +61,31 @@ public class UserController {
 	@PostMapping("/{id}/edit")
 	public String updateUser(@PathVariable Long id, @ModelAttribute("user") User user) {
 		userService.updateUser(id, user);
-		return "redirect:/user";
+		return "redirect:/admin/user";
 	}
 
 	@GetMapping("/{id}/delete")
 	public String deleteUser(@PathVariable Long id) {
 		userService.deleteUser(id);
-		return "redirect:/user";
+		return "redirect:/admin/user";
+	}
+
+	// phan trang
+	@GetMapping("/{pageNo}")
+	public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
+								Model model) {
+		int pageSize = 5;
+
+
+		Page<User> page = userService.findPaginated(pageNo, pageSize);
+		List<User> users = page.getContent();
+
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems", page.getTotalElements());
+
+		model.addAttribute("users", users);
+		return "user_list";
 	}
 
 }

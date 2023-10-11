@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/admin")
 public class MatchController {
+    @Autowired
     private final MatchService matchService;
     private final TeamService teamService;
     private final StadiumService stadiumService;
@@ -66,8 +68,18 @@ public class MatchController {
     @PostMapping("/match/new/save")
     public String create(@ModelAttribute MatchRequest matchRequest, RedirectAttributes redirectAttributes) {
         try {
-            matchService.createMatch(matchRequest);
-            redirectAttributes.addFlashAttribute("success", "Create successfully!");
+            if (Objects.equals(matchRequest.getHome_team_id().getId(), matchRequest.getAway_team_id().getId())) {
+                redirectAttributes.addFlashAttribute("error", "You cannot choose 2 same teams! ");
+                return "redirect:/admin/match/new";
+            }
+
+            if (matchService.checkMatchExist(matchRequest)) {
+                matchService.createMatch(matchRequest);
+                redirectAttributes.addFlashAttribute("success", "Create successfully!");
+            } else  {
+                redirectAttributes.addFlashAttribute("error", "Creating a match failed because the time and field were the same or the time and team were the same! ");
+                return "redirect:/admin/match/new";
+            }
         } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("error", "Failed to create!");
@@ -96,8 +108,19 @@ public class MatchController {
     public String update(@PathVariable Long id, @ModelAttribute("matchRequest") MatchRequest matchRequest,
                          RedirectAttributes attributes) {
         try {
-            matchService.updateMatch(matchRequest);
-            attributes.addFlashAttribute("success", "Update Successfully!");
+            if (Objects.equals(matchRequest.getHome_team_id().getId(), matchRequest.getAway_team_id().getId())) {
+                attributes.addFlashAttribute("error", "You cannot choose 2 same teams! ");
+                return "redirect:/admin/match/edit/" + id;
+            }
+
+            if (matchService.checkMatchExist(matchRequest)) {
+                matchService.updateMatch(matchRequest);
+                attributes.addFlashAttribute("success", "Update Successfully!");
+            } else  {
+                attributes.addFlashAttribute("error", "Updating a match failed because the time and field were the same or the time and team were the same! ");
+                return "redirect:/admin/match/edit/" + id;
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             attributes.addFlashAttribute("error", "Failed to update!");
