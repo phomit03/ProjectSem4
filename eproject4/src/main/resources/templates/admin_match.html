@@ -65,16 +65,12 @@
                                     <td th:text="${match.formattedMatchTime}"></td>
                                     <td class="text-center">
                                         <img style="width: 50px;" th:src="@{${match.home_team_id.logo_img}}">
-                                        <br>
-                                        <span th:text="${match.home_team_id.name}" style="margin-top: 8px;"></span>
                                     </td>
                                     <td>
                                         VS
                                     </td>
                                     <td class="text-center">
                                         <img style="width: 50px;" th:src="@{${match.away_team_id.logo_img}}">
-                                        <br>
-                                        <span th:text="${match.away_team_id.name}" style="margin-top: 8px;"></span>
                                     </td>
                                     <td th:text="${match.stadium_id.name}"></td>
                                     <td th:text="${(match.status == 1) ? 'Active' : 'Inactive'}"></td>
