@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="customer_fragments::head-fragment"></head>
+
+<body>
+<div class="site-wrap">
+    <div th:replace="customer_fragments::top-fragment"></div>
+
+    <!--/CONTENT HERE/-->
+    <div class="site-section bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 title-section">
+                    <h2 class="heading">Info Club</h2>
+                </div>
+
+                <div class="col-lg-6">
+                    <img class="img-fluid img-thumbnail w-100 h-75" th:src="@{/user/images/logo_1.png}">
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="p-4 rounded" style="font-size: 15rem;">
+                        <div style="font-size:25px; line-height: 3.5">
+                            Name Club: <p></p>
+                            Coach: <p></p>
+                            Home Stadium: <p></p>
+                            Club Valuation: <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="site-section bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 title-section">
+                    <h2 class="heading">Recent Matches</h2>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="bg-light p-4 rounded">
+                        <div class="widget-body">
+                            <div class="widget-vs">
+                                <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                                    <div class="team-1 text-center">
+                                        <img th:src="@{/user/images/logo_1.png}" alt="Image">
+                                        <h3>Football League</h3>
+                                    </div>
+                                    <div>
+                                        <span class="vs"><span>VS</span></span>
+                                    </div>
+                                    <div class="team-2 text-center">
+                                        <img th:src="@{/user/images/logo_2.png}" alt="Image">
+                                        <h3>Soccer</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center widget-vs-contents mb-4">
+                            <h4>World Cup League</h4>
+                            <p class="mb-5">
+                                <span class="d-block">December 20th, 2020</span>
+                                <span class="d-block">9:30 AM GMT+0</span>
+                                <strong class="text-primary">New Euro Arena</strong>
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="bg-light p-4 rounded">
+                        <div class="widget-body">
+                            <div class="widget-vs">
+                                <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                                    <div class="team-1 text-center">
+                                        <img th:src="@{/user/images/logo_3.png}" alt="Image">
+                                        <h3>Football League</h3>
+                                    </div>
+                                    <div>
+                                        <span class="vs"><span>VS</span></span>
+                                    </div>
+                                    <div class="team-2 text-center">
+                                        <img th:src="@{/user/images/logo_4.png}" alt="Image">
+                                        <h3>Soccer</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center widget-vs-contents mb-4">
+                            <h4>World Cup League</h4>
+                            <p class="mb-5">
+                                <span class="d-block">December 20th, 2020</span>
+                                <span class="d-block">9:30 AM GMT+0</span>
+                                <strong class="text-primary">New Euro Arena</strong>
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                    <div class="bg-light p-4 rounded">
+                        <div class="widget-body">
+                            <div class="widget-vs">
+                                <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                                    <div class="team-1 text-center">
+                                        <img th:src="@{/user/images/logo_1.png}" alt="Image">
+                                        <h3>Football League</h3>
+                                    </div>
+                                    <div>
+                                        <span class="vs"><span>VS</span></span>
+                                    </div>
+                                    <div class="team-2 text-center">
+                                        <img th:src="@{/user/images/logo_2.png}" alt="Image">
+                                        <h3>Soccer</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center widget-vs-contents mb-4">
+                            <h4>World Cup League</h4>
+                            <p class="mb-5">
+                                <span class="d-block">December 20th, 2020</span>
+                                <span class="d-block">9:30 AM GMT+0</span>
+                                <strong class="text-primary">New Euro Arena</strong>
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="bg-light p-4 rounded">
+                        <div class="widget-body">
+                            <div class="widget-vs">
+                                <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                                    <div class="team-1 text-center">
+                                        <img th:src="@{/user/images/logo_3.png}" alt="Image">
+                                        <h3>Football League</h3>
+                                    </div>
+                                    <div>
+                                        <span class="vs"><span>VS</span></span>
+                                    </div>
+                                    <div class="team-2 text-center">
+                                        <img th:src="@{/user/images/logo_4.png}" alt="Image">
+                                        <h3>Soccer</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center widget-vs-contents mb-4">
+                            <h4>World Cup League</h4>
+                            <p class="mb-5">
+                                <span class="d-block">December 20th, 2020</span>
+                                <span class="d-block">9:30 AM GMT+0</span>
+                                <strong class="text-primary">New Euro Arena</strong>
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-dark" style="padding-bottom: 80px !important;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 title-section">
+                    <h2 class="heading">Player List Of Team</h2>
+                </div>
+                <div class="col-lg-12 mb-4">
+                    <table class="table table-bordered table-dark" style="background-color: #262930;">
+                        <thead>
+                        <tr style="color: #ee1e46">
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Date Of Birth</th>
+                            <th scope="col">Nationality</th>
+                            <th scope="col">Position</th>
+                            <th scope="col">Number</th>
+                            <th scope="col">Weight</th>
+                            <th scope="col">Height</th>
+                            <th scope="col">Soccer Team</th>
+                            <th scope="col">Achievements</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Ronaldo</td>
+                            <td><img class="img-fluid img-thumbnail" th:src="@{/user/images/logo_1.png}"></td>
+                            <td>01/01/2001</td>
+                            <td>Portugal</td>
+                            <td>Left Winger</td>
+                            <td>7</td>
+                            <td>80kg</td>
+                            <td>1.85m</td>
+                            <td>Real Madrid</td>
+                            <td>Championship C1, LaLiga</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Ronaldo</td>
+                            <td><img class="img-fluid img-thumbnail" th:src="@{/user/images/logo_1.png}"></td>
+                            <td>01/01/2001</td>
+                            <td>Portugal</td>
+                            <td>Left Winger</td>
+                            <td>7</td>
+                            <td>80kg</td>
+                            <td>1.85m</td>
+                            <td>Real Madrid</td>
+                            <td>Championship C1, LaLiga</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Ronaldo</td>
+                            <td><img class="img-fluid img-thumbnail" th:src="@{/user/images/logo_1.png}"></td>
+                            <td>01/01/2001</td>
+                            <td>Portugal</td>
+                            <td>Left Winger</td>
+                            <td>7</td>
+                            <td>80kg</td>
+                            <td>1.85m</td>
+                            <td>Real Madrid</td>
+                            <td>Championship C1, LaLiga</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Ronaldo</td>
+                            <td><img class="img-fluid img-thumbnail" th:src="@{/user/images/logo_1.png}"></td>
+                            <td>01/01/2001</td>
+                            <td>Portugal</td>
+                            <td>Left Winger</td>
+                            <td>7</td>
+                            <td>80kg</td>
+                            <td>1.85m</td>
+                            <td>Real Madrid</td>
+                            <td>Championship C1, LaLiga</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Ronaldo</td>
+                            <td><img class="img-fluid img-thumbnail" th:src="@{/user/images/logo_1.png}"></td>
+                            <td>01/01/2001</td>
+                            <td>Portugal</td>
+                            <td>Left Winger</td>
+                            <td>7</td>
+                            <td>80kg</td>
+                            <td>1.85m</td>
+                            <td>Real Madrid</td>
+                            <td>Championship C1, LaLiga</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/END CONTENT HERE/-->
+
+    <div th:replace="customer_fragments::bot-fragment"></div>
+</div>
+
+<div th:replace="customer_fragments::script-fragment"></div>
+</body>
+
+</html>
