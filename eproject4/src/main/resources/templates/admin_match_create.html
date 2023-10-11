@@ -30,34 +30,36 @@
                         </div>
                         <form th:action="@{/admin/match/new/save}" th:object="${match}" method="post">
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">Match Time</label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-3 col-form-label">Match Time</label>
+                                <div class="col-sm-9">
                                     <input type="datetime-local" th:field="*{match_time}" class="form-control" required>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">Home Team - Away Team</label>
+                                <label class="col-sm-3 col-form-label">Home Team - Away Team</label>
                                 <div class="col-sm-4">
                                     <select class="form-select" th:field="*{home_team_id}" aria-label="Team" required>
-                                        <option value="" selected>-- choose option --</option>
+                                        <option value="" selected>-- Choose home team --</option>
                                         <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
                                     </select>
                                 </div>
-                                vs
+                                <div class="col-sm-1" style="display: flex; align-items: center; justify-content: center">
+                                    VS
+                                </div>
                                 <div class="col-sm-4">
                                     <select class="form-select" th:field="*{away_team_id}" aria-label="Team" required>
-                                        <option value="" selected>-- choose option --</option>
+                                        <option value="" selected>-- Choose away team --</option>
                                         <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">Stadium Takes Place</label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-3 col-form-label">Stadium Takes Place</label>
+                                <div class="col-sm-9">
                                     <select class="form-select" th:field="*{stadium_id}" aria-label="Stadium" required>
-                                        <option value="" selected>-- choose option --</option>
+                                        <option value="" selected>-- Choose option --</option>
                                         <option th:each="stadium : ${stadiums}" th:value="${stadium.id}" th:text="${stadium.name}"></option>
                                     </select>
                                 </div>

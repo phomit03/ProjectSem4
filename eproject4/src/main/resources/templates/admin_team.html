@@ -55,7 +55,7 @@
                 <tr th:each="team, iterStat : ${teams}" th:class="'team-' + ${team.id}">
                   <td th:text="${iterStat.index + 1}"></td>
                   <td>
-                    <img style="width: 50px;" th:src="@{${team.logo_img}}">
+                    <img style="width: 70px; max-height: 100px" th:src="@{${team.logo_img}}">
                   </td>
                   <td th:text="${team.name}"></td>
                   <td th:text="${team.coach}"></td>
