@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @NoArgsConstructor
@@ -22,4 +23,9 @@ public class MatchDTO {
     private Integer status;
     private Timestamp created_at;
     private Timestamp updated_at;
+
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public String getFormattedMatchTime() {
+        return match_time.format(dateTimeFormatter);
+    }
 }

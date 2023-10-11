@@ -222,6 +222,29 @@
     <script th:src="@{/admin_static/lib/tempusdominus/js/moment-timezone.min.js}"></script>
     <script th:src="@{/admin_static/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js}"></script>
     <script th:src="@{/admin_static/js/main.js}"></script>
+
+    <div style="display: none">
+        <span th:if="${success}" th:data="${success}" class="success-noti"></span>
+        <span th:if="${error}" th:data="${error}" class="error-noti"></span>
+    </div>
+
+    <script th:if="${success}">
+        var text = $('.success-noti').attr('data');
+        Swal.fire(
+            'Success',
+            text,
+            'success'
+        )
+    </script>
+
+    <script th:if="${error}">
+        var text = $('.error-noti').attr('data');
+        Swal.fire(
+            'Error',
+            text,
+            'error'
+        )
+    </script>
 </div>
 </body>
 </html>

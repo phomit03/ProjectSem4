@@ -9,14 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class MainController {
 
 	@GetMapping("/login")
-	public String showLoginForm() {
-		return "login";
-	}
-
-	@PostMapping("/login")
-	public String loginUserAccount(Model model) {
-		// Thêm thông báo lỗi vào model (nếu cần)
-		model.addAttribute("error","Tài khoản hoặc mật khẩu không đúng.");
+	public String showLoginForm(Model model) {
+		model.addAttribute("error","Sai tài khoản hoặc mật khẩu.");
 		return "login";
 	}
 

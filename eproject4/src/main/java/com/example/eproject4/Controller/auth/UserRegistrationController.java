@@ -4,10 +4,13 @@ import com.example.eproject4.DTO.UserRegistrationDto;
 import com.example.eproject4.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/registration")
@@ -31,7 +34,9 @@ public class UserRegistrationController {
 	}
 
 	@PostMapping
-	public String registerUserAccount(@ModelAttribute("user") UserRegistrationDto registrationDto, Model model) {
+	public String registerUserAccount(@ModelAttribute("user")
+										  UserRegistrationDto registrationDto,
+									  	  Model model) {
 		if (userService.existsByUsername(registrationDto.getUsername())) {
 			model.addAttribute("error", "Tên người dùng đã tồn tại.");
 			return "signup";
@@ -40,4 +45,7 @@ public class UserRegistrationController {
 		userService.save(registrationDto);
 		return "redirect:/registration?success";
 	}
+
+
+
 }
