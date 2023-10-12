@@ -10,7 +10,7 @@ public class MainController {
 
 	@GetMapping("/login")
 	public String showLoginForm(Model model) {
-		model.addAttribute("error","Sai tài khoản hoặc mật khẩu.");
+//		model.addAttribute("error","Sai tài khoản hoặc mật khẩu.");
 		return "login";
 	}
 
