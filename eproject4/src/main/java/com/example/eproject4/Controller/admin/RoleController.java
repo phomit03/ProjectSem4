@@ -1,4 +1,4 @@
-package com.example.eproject4.Controller.auth;
+package com.example.eproject4.Controller.admin;
 
 import com.example.eproject4.Entity.Role;
 import com.example.eproject4.Service.RoleService;
@@ -21,7 +21,7 @@ public class RoleController {
     public String getAllRoles(Model model) {
         List<Role> roles = roleService.getAllRoles();
         model.addAttribute("roles", roles);
-        return "role_list";
+        return "admin_role_list";
     }
 
 //    @GetMapping("/delete/{id}")
@@ -34,12 +34,12 @@ public class RoleController {
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         Role role = roleService.getRoleById(id);
         model.addAttribute("role", role);
-        return "role_update";
+        return "admin_role_update";
     }
 
     @PostMapping("/{id}/update")
     public String updateRole(@PathVariable("id") Long id, @ModelAttribute("role") Role updatedRole) {
         roleService.updateRole(id, updatedRole);
-        return "redirect:/roles";
+        return "redirect:/admin/role";
     }
 }

@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
-
 @Controller
-@RequestMapping("/registration")
+@RequestMapping("/admin/registration")
 public class UserRegistrationController {
 
 	private UserService userService;
@@ -30,7 +28,7 @@ public class UserRegistrationController {
 	
 	@GetMapping
 	public String showRegistrationForm() {
-		return "signup";
+		return "admin_signup";
 	}
 
 	@PostMapping
@@ -38,12 +36,12 @@ public class UserRegistrationController {
 										  UserRegistrationDto registrationDto,
 									  	  Model model) {
 		if (userService.existsByUsername(registrationDto.getUsername())) {
-			model.addAttribute("error", "Tên người dùng đã tồn tại.");
-			return "signup";
+			model.addAttribute("error_admin", "Tên người dùng đã tồn tại.");
+			return "admin_signup";
 		}
 
 		userService.save(registrationDto);
-		return "redirect:/registration?success";
+		return "redirect:/login";
 	}
 
 

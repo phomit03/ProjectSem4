@@ -10,7 +10,12 @@
   <p>Welcome, <span th:text="${session.loggedInUser.username}">User</span>!</p>
 <p>Email: <span th:text="${session.loggedInUser.email}">Email</span></p>
 </span>
-
+<h1>Duy</h1>
+<span th:if="${loggedInUser != null }">
+    <p>Welcome, <span th:text="${loggedInUser.username}">User</span>!</p>
+    <p>Email: <span th:text="${loggedInUser.email}">Email</span></p>
+</span>
+<p>Email: <span th:text="${roles}"></span></p>
 <!-- Thay thế 'username' và 'email' bằng các thuộc tính của user model của bạn -->
 <a th:href="@{/logout}">Logout</a>
 </body>

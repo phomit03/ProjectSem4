@@ -195,6 +195,28 @@
     <script th:src="@{/user/js/jquery.sticky.js}"></script>
     <script th:src="@{/user/js/jquery.mb.YTPlayer.min.js}"></script>
     <script th:src="@{/user/js/main.js}"></script>
+    <div style="display: none">
+        <span th:if="${success}" th:data="${success}" class="success-noti"></span>
+        <span th:if="${error}" th:data="${error}" class="error-noti"></span>
+    </div>
+
+    <script th:if="${success}">
+        var text = $('.success-noti').attr('data');
+        Swal.fire(
+            'Success',
+            text,
+            'success'
+        )
+    </script>
+
+    <script th:if="${error}">
+        var text = $('.error-noti').attr('data');
+        Swal.fire(
+            'Error',
+            text,
+            'error'
+        )
+    </script>
 </div>
 </body>
 </html>
