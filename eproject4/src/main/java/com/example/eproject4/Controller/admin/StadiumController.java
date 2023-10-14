@@ -2,15 +2,18 @@ package com.example.eproject4.Controller.admin;
 
 import com.example.eproject4.DTO.Request.StadiumRequest;
 import com.example.eproject4.DTO.Response.StadiumDTO;
+import com.example.eproject4.Entity.Stadium;
 import com.example.eproject4.Service.StadiumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -76,6 +79,11 @@ public class StadiumController {
     public String update(@PathVariable Long id, @ModelAttribute("stadiumRequest") StadiumRequest stadiumRequest,
                          RedirectAttributes attributes) {
         try {
+            StadiumDTO stadium = stadiumService.getStadiumById(id);
+            if (stadium == null) {
+                return "redirect:/admin/stadiums";
+            }
+
             stadiumService.updateStadium(stadiumRequest);
             attributes.addFlashAttribute("success", "Update Successfully!");
         } catch (Exception e) {
