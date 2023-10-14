@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="customer_fragments::head-fragment"></head>
+
+<body>
+
+
+<div class="main-sections">
+    <a th:href="@{/shopping_cart}">
+        <button type="button" class="btn btn-outline-secondary back-out">Back</button>
+    </a>
+
+    <div class="header-topment">
+        <h2>Payment with me</h2>
+        <p><i> Please update your payment information.</i></p>
+    </div>
+
+    <div class="row hang-1">
+        <div class="col-75 cot-3">
+            <div class="container-main ">
+                <form action="/action_page.php">
+
+                    <div class="row hang-1">
+                        <div class="col-50 cot-2">
+                            <h3 class="text-head">Billing Address</h3>
+                            <label class="lable-mon" for="fname">
+                                <i>Fullname:</i></label>
+                            <input type="text" id="fname" name="firstname" placeholder="Nguyen Van A">
+                            <label class="lable-mon" for="email"><i>Email:</i></label>
+                            <input type="text" id="email" name="email" placeholder="name@example.com">
+                            <label class="lable-mon" for="adr"><i>Address:</i></label>
+                            <input type="text" id="adr" name="address" placeholder="Tran Duy Hung Street">
+                            <label class="lable-mon" for="city"><i>City:</i></label>
+                            <input type="text" id="city" name="city" placeholder="HaNoi">
+
+                            <div class="row hang-1">
+                                <div class="col-50 cot-2">
+                                    <label class="lable-mon" for="state"><i>State:</i></label>
+                                    <input type="text" id="state" name="state" placeholder="M/Y">
+                                </div>
+                                <div class="col-50 cot-2">
+                                    <label class="lable-mon" for="zip"><i>Zip:</i></label>
+                                    <input type="text" id="zip" name="zip" placeholder="10001">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-50 cot-2">
+                            <h3 class="text-head">Payment</h3>
+                            <label class="lable-mon" for="fname"><i>Accepted Cards:</i> </label>
+                            <div class="icon-containers">
+                                <div class="icons">
+                                    <img th:src="@{user/images/mastercard.png}" width="30">
+                                    <img th:src="@{user/images/visa.png}" width="30">
+                                    <img th:src="@{user/images/tripe.png}" width="30">
+                                    <img th:src="@{user/images/mastercard.png}" width="30">
+                                </div>
+                            </div>
+                            <label class="lable-mon" for="cname"><i>Name on Card:</i></label>
+                            <input type="text" id="cname" name="cardname" placeholder="....">
+                            <label class="lable-mon" for="ccnum"><i>Credit card number:</i></label>
+                            <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+                            <label class="lable-mon" for="expmonth"><i>Exp Month:</i> </label>
+                            <input type="text" id="expmonth" name="expmonth" placeholder="September">
+                            <div class="row hang-1">
+                                <div class="col-50 cot-2">
+                                    <label class="lable-mon" for="expyear"><i>Exp Year:</i> </label>
+                                    <input type="text" id="expyear" name="expyear" placeholder="2023">
+                                </div>
+                                <div class="col-50 cot-2">
+                                    <label class="lable-mon" for="cvv"><i>CVV:</i> </label>
+                                    <input type="text" id="cvv" name="cvv" placeholder="352">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <label>
+                        <input type="checkbox" checked="checked" name="sameadr"><i>Shipping address same as billing</i>
+                    </label>
+                    <input type="submit" value="Payment" class="btn-mit">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="customer_fragments::bot-fragment"></div>
+</div>
+
+    <div th:replace="customer_fragments::script-fragment"></div>
+</body>
+
+</html>
