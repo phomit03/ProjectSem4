@@ -43,14 +43,20 @@
                                 </li>
 
                                 <!--login/user-->
-                                <li>
+                                <li th:if="${session.loggedInUser == null }">
                                     <a th:href="@{/login}" class="btn-primary py-2 px-3">Login
                                         <i class="icon-user"
                                            aria-hidden="true">
                                         </i>
                                     </a>
                                 </li>
-
+                                <li th:if="${session.loggedInUser != null }">
+                                    <a href="/profile" class="nav-link">
+                                        <i class="icon-user-circle-o user"
+                                           aria-hidden="true">
+                                        </i>
+                                    </a>
+                                </li>
                                 <li>
                                     <a th:href="@{/shopping_cart}" style="font-size: large">
                                         <i class="icon-shopping-cart" aria-hidden="true"></i>
@@ -131,7 +137,7 @@
             <div class="row no-gutters">
                 <div class="col-md-4">
                     <div class="post-entry" routerLink="/news/detail">
-                            <img th:src="@{/user/images/img_1.jpg}" alt="Image" class="img-fluid">
+                        <img th:src="@{/user/images/img_1.jpg}" alt="Image" class="img-fluid">
                         <div class="caption">
                             <div class="caption-inner">
                                 <a th:href="@{/news/detail}" routerLink="/news/detail">
