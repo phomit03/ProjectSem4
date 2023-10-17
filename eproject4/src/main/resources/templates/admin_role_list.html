@@ -47,8 +47,7 @@
                                 <tr th:each="role, iterStat : ${roles}">
                                     <td th:text="${iterStat.index + 1}"></td>
                                     <td th:text="${role.name}"></td>
-                                    <td>
-                                        <button class="btn">
+                                    <td th:if="${role.name != 'ROLE_ADMIN'}">                                        <button class="btn">
                                             <a th:href="@{/admin/role/{id}/update/(id=${role.id})}">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>

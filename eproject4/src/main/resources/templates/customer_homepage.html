@@ -43,14 +43,20 @@
                                 </li>
 
                                 <!--login/user-->
-                                <li>
-                                    <a th:href="@{/user/login}" class="btn-primary py-2 px-3">Login
+                                <li th:if="${session.loggedInUser == null }">
+                                    <a th:href="@{/login}" class="btn-primary py-2 px-3">Login
                                         <i class="icon-user"
                                            aria-hidden="true">
                                         </i>
                                     </a>
                                 </li>
-
+                                <li th:if="${session.loggedInUser != null }">
+                                    <a href="/profile" class="nav-link">
+                                        <i class="icon-user-circle-o user"
+                                           aria-hidden="true">
+                                        </i>
+                                    </a>
+                                </li>
                                 <li>
                                     <a th:href="@{/shopping_cart}" style="font-size: large">
                                         <i class="icon-shopping-cart" aria-hidden="true"></i>
@@ -494,11 +500,42 @@
             contentType: 'application/json',
             data: JSON.stringify(dataToSend),
             success: function (res) {
-                $('.live-score').html(res[0] + '-' + res[1])
+                var homeTeamEventsUl = $('.home-team-event');
+                homeTeamEventsUl.empty();
+                $.each(res.homeTeamEventGoal, function (index, event) {
+                    getPlayerById(event.player_id, function(player) {
+                        var li = $('<li>').text(player.name + ' (' + event.time + ')');
+                        homeTeamEventsUl.append(li);
+                    });
+                });
+
+                var awayTeamEventsUl = $('.away-team-event');
+                awayTeamEventsUl.empty();
+                $.each(res.awayTeamEventGoal, function (index, event) {
+                    getPlayerById(event.player_id, function(player) {
+                        var li = $('<li>').text(player.name + ' (' + event.time + ')');
+                        awayTeamEventsUl.append(li);
+                    });
+                });
+
+                $('.live-score').html(res.homeTeamScore + '-' + res.awayTeamScore);
             }
-        })
+        });
     });
+
+    function getPlayerById(id, callback) {
+        $.ajax({
+            type: 'POST',
+            url: '/api/getPlayerById',
+            contentType: 'application/json',
+            data: JSON.stringify({ id: id }),
+            success: function (res) {
+                callback(res);
+            }
+        });
+    }
 </script>
+
 </body>
 
 </html>

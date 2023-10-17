@@ -58,11 +58,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/user/**",
                         "/index1/**",
                         "/img/**").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/admin/**").hasRole("ADMIN")  // dung cho admin
+                .antMatchers("/logged/**").hasRole("USER") // dung cho nguoi dung muon dat hang
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
+                .loginPage("/admin/login")
+                .failureUrl("/admin/login?error=true")
+                .successHandler(authenticationSuccessHandler())
+                .permitAll()
+                .and()
+                .formLogin()
                 .loginPage("/login")
+                .failureUrl("/login?error=true")
                 .successHandler(authenticationSuccessHandler())
                 .permitAll()
                 .and()

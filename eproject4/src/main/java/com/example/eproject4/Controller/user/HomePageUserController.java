@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Controller
-@RequestMapping("/home")
+@RequestMapping("")
 public class HomePageUserController {
     @Autowired
     private  MatchService matchService;
@@ -31,8 +31,18 @@ public class HomePageUserController {
     @Autowired
     private  MatchDetailEventService matchDetailEventService;
 
-    @RequestMapping("")
+    @RequestMapping("/")
     public String home(Model model) {
+        model.addAttribute("title", "Home Page");
+        model.addAttribute("overlay_title", "World Cup Event");
+        model.addAttribute("description", "Welcome to the most exciting tournament on the planet ^.^");
+
+        List<MatchDTO> nextMatchesOrLiveMatches = matchService.getNextMatchesOrLiveMatches();
+        model.addAttribute("nextMatchesOrLiveMatches", nextMatchesOrLiveMatches);
+        return "customer_homepage";
+    }
+    @RequestMapping("/home")
+    public String home_page(Model model) {
         model.addAttribute("title", "Home Page");
         model.addAttribute("overlay_title", "World Cup Event");
         model.addAttribute("description", "Welcome to the most exciting tournament on the planet ^.^");
