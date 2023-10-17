@@ -494,10 +494,40 @@
             contentType: 'application/json',
             data: JSON.stringify(dataToSend),
             success: function (res) {
-                $('.live-score').html(res[0] + '-' + res[1])
+                var homeTeamEventsUl = $('.home-team-event');
+                homeTeamEventsUl.empty();
+                $.each(res.homeTeamEventGoal, function (index, event) {
+                    getPlayerById(event.player_id, function(player) {
+                        var li = $('<li>').text(player.name + ' (' + event.time + ')');
+                        homeTeamEventsUl.append(li);
+                    });
+                });
+
+                var awayTeamEventsUl = $('.away-team-event');
+                awayTeamEventsUl.empty();
+                $.each(res.awayTeamEventGoal, function (index, event) {
+                    getPlayerById(event.player_id, function(player) {
+                        var li = $('<li>').text(player.name + ' (' + event.time + ')');
+                        awayTeamEventsUl.append(li);
+                    });
+                });
+
+                $('.live-score').html(res.homeTeamScore + '-' + res.awayTeamScore);
             }
-        })
+        });
     });
+
+    function getPlayerById(id, callback) {
+        $.ajax({
+            type: 'POST',
+            url: '/api/getPlayerById',
+            contentType: 'application/json',
+            data: JSON.stringify({ id: id }),
+            success: function (res) {
+                callback(res);
+            }
+        });
+    }
 </script>
 </body>
 
