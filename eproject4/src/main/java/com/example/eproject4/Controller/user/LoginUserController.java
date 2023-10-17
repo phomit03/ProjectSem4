@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/user")
 public class LoginUserController {
     @GetMapping("/login")
     public String showLoginForm(Model model) {
-        model.addAttribute("erroruser", "Sai tài khoản hoặc mật khẩu.");
+//        model.addAttribute("erroruser", "Sai tài khoản hoặc mật khẩu.");
         return "customer_login";
     }
     @GetMapping("/home")

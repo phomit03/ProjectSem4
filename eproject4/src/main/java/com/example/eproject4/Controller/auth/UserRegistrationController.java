@@ -36,7 +36,7 @@ public class UserRegistrationController {
 										  UserRegistrationDto registrationDto,
 									  	  Model model) {
 		if (userService.existsByUsername(registrationDto.getUsername())) {
-			model.addAttribute("error_admin", "Tên người dùng đã tồn tại.");
+			model.addAttribute("error_admin", "The username already exists.");
 			return "admin_signup";
 		}
 

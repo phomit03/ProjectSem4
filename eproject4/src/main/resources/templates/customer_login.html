@@ -34,7 +34,7 @@
                     </span>
                     </div>
                     <div th:if="${param.error}" class="alert alert-danger">
-                        Sai mật khẩu hoặc tên đăng nhập. Vui lòng thử lại.
+                        Incorrect password or username. Please try again !!!
                     </div>
                     <div class="container-login100-form-btn">
                         <button class="login100-form-btn">
@@ -52,7 +52,7 @@
                     </div>
 
                     <div class="text-center p-t-136">
-                        <a class="txt2" th:href="@{/user/register}">
+                        <a class="txt2" th:href="@{/register}">
                             Create your Account
                             <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                         </a>

@@ -35,6 +35,10 @@ public class RouterAdminOrUserController {
     @GetMapping()
     public String router(HttpSession session, Model model) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            // Nếu chưa đăng nhập, chuyển hướng đến trang admin/login
+            return "redirect:/admin/login";
+        }
         model.addAttribute("loggedInUser", loggedInUser);
 
         String firstRoleName = roleRepository.findFirstRoleNameByUsername(loggedInUser.getUsername());
@@ -44,7 +48,7 @@ public class RouterAdminOrUserController {
         if (Objects.equals(firstRoleName, "ROLE_ADMIN")){
             return "redirect:/admin";
         }else {
-            return "redirect:/user/home";
+            return "redirect:/home";
         }
     }
 }

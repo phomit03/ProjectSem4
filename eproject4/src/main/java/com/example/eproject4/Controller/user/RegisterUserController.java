@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/user/register")
+@RequestMapping("/register")
 public class RegisterUserController {
     private UserService userService;
 
@@ -34,12 +34,12 @@ public class RegisterUserController {
                                       UserRegistrationDto registrationDto,
                                       Model model) {
         if (userService.existsByUsername(registrationDto.getUsername())) {
-            model.addAttribute("error_user", "Tên người dùng đã tồn tại.");
+            model.addAttribute("error_user", "The username already exists.");
             return "customer_register";
         }
 
         userService.save(registrationDto);
-        return "redirect:/user/login";
+        return "redirect:/login";
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.eproject4.Controller.auth;
+package com.example.eproject4.Controller.admin;
 
 import com.example.eproject4.Entity.Employee;
 import com.example.eproject4.Entity.Role;
@@ -27,6 +27,8 @@ public class UserController {
 //	}
 	@GetMapping
 	public String getAllUsers(Model model) {
+		model.addAttribute("title", "Users");
+
 		return findPaginated(1, model);
 	}
 

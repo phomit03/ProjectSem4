@@ -68,8 +68,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/user/login")
-                .failureUrl("/user/login?error=true")
+                .loginPage("/login")
+                .failureUrl("/login?error=true")
                 .successHandler(authenticationSuccessHandler())
                 .permitAll()
                 .and()
@@ -77,7 +77,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/admin/login?logout")
+                .logoutSuccessUrl("/login?logout")
                 .permitAll();
     }
 
