@@ -75,8 +75,8 @@ h1, h2, h3, h4, h5,
     -webkit-box-shadow: none !important;
     box-shadow: none !important; }
   .btn.btn-primary:hover {
-    border-color: #fff;
-    background: transparent;
+    border-color: #cd1b3d;
+    background: #cd1b3d;
     color: #fff; }
   .btn.btn-black {
     border-width: 2px;
@@ -1149,7 +1149,7 @@ button:focus,
   box-shadow: none;
 }
 .form-control:disabled, .form-control[readonly]{
-  background-color: #808080;
+  background-color: #dbe0e6;
 }
 
 .table tr,
@@ -1300,7 +1300,7 @@ input[type=text] {
   width: 100%;
   margin-bottom: 20px;
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #4e535a !important;
   border-radius: 3px;
 }
 
@@ -1335,4 +1335,19 @@ input[type=text] {
   .hang-1 {
     flex-direction: column-reverse;
   }
+}
+
+.hover-delete:hover{
+  color: #ee1e46;
+}
+
+.text-info-cart {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.title-info-cart {
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
 }
