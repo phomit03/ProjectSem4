@@ -1,12 +1,9 @@
 package com.example.eproject4.Controller.admin;
 
 import com.example.eproject4.DTO.Request.MatchRequest;
-import com.example.eproject4.DTO.Response.MatchDTO;
-import com.example.eproject4.DTO.Response.StadiumDTO;
-import com.example.eproject4.DTO.Response.TeamDTO;
-import com.example.eproject4.Service.MatchService;
-import com.example.eproject4.Service.StadiumService;
-import com.example.eproject4.Service.TeamService;
+import com.example.eproject4.DTO.Response.*;
+import com.example.eproject4.Entity.MatchDetail;
+import com.example.eproject4.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,14 +21,26 @@ import java.util.Objects;
 public class MatchController {
     @Autowired
     private final MatchService matchService;
+    @Autowired
     private final TeamService teamService;
+    @Autowired
     private final StadiumService stadiumService;
+    @Autowired
+    private final MatchDetailService matchDetailService;
+    @Autowired
+    private final PlayerService playerService;
+    @Autowired
+    private final MatchDetailEventService matchDetailEventService;
+
 
     @Autowired
-    public MatchController(MatchService matchService, TeamService teamService, StadiumService stadiumService) {
+    public MatchController(MatchService matchService, TeamService teamService, StadiumService stadiumService, MatchDetailService matchDetailService, PlayerService playerService, MatchDetailEventService matchDetailEventService) {
         this.matchService = matchService;
         this.teamService = teamService;
         this.stadiumService = stadiumService;
+        this.matchDetailService = matchDetailService;
+        this.playerService = playerService;
+        this.matchDetailEventService = matchDetailEventService;
     }
 
     @RequestMapping("/matches")
@@ -88,20 +98,51 @@ public class MatchController {
     }
 
     @GetMapping("/match/edit/{id}")
-    public String edit(@PathVariable Long id, Model model)  {
+    public String edit(@PathVariable Long id, Model model) {
         MatchDTO match = matchService.getMatchById(id);
         if (match == null) {
             return "redirect:/admin/matches";
         }
-
         List<TeamDTO> teams = teamService.getAllTeams();
         model.addAttribute("teams", teams);
-
         List<StadiumDTO> stadiums = stadiumService.getAllStadiums();
         model.addAttribute("stadiums", stadiums);
-
         model.addAttribute("matchDTO", match);
+        MatchDetailDTO matchDetailDTO = matchDetailService.getMatchDetailByMatchId(id);
+        model.addAttribute("matchDetailDTO", matchDetailDTO);
+        List<PlayerDTO> homePlayers = playerService.findAllByTeam_id(match.getHome_team_id().getId());
+        List<PlayerDTO> awayPlayers = playerService.findAllByTeam_id(match.getAway_team_id().getId());
+        model.addAttribute("homePlayers", homePlayers);
+        model.addAttribute("awayPlayers", awayPlayers);
+        Long homeTeamScore = matchDetailEventService.countEvent(match.getHome_team_id().getId(), match.getId(), 1);
+        Long awayTeamScore = matchDetailEventService.countEvent(match.getAway_team_id().getId(), match.getId(), 1);
+        model.addAttribute("homeTeamScore", homeTeamScore);
+        model.addAttribute("awayTeamScore", awayTeamScore);
+        List<List<MatchDetailEventDTO>> homePlayerEvents = new ArrayList<>();
+        for (PlayerDTO homePlayer : homePlayers) {
+            List<MatchDetailEventDTO> playerEvents = matchDetailEventService.getEventsByPlayerIdAndMatchId(homePlayer.getId(), id);
+            homePlayerEvents.add(playerEvents);
+        }
+        model.addAttribute("homePlayerEvents", homePlayerEvents);
+        List<List<MatchDetailEventDTO>> awayPlayerEvents = new ArrayList<>();
+        for (PlayerDTO awayPlayer : awayPlayers) {
+            List<MatchDetailEventDTO> playerEvents = matchDetailEventService.getEventsByPlayerIdAndMatchId(awayPlayer.getId(), id);
+            awayPlayerEvents.add(playerEvents);
+        }
+        model.addAttribute("awayPlayerEvents", awayPlayerEvents);
+        model.addAttribute("teamEvent", new MatchDetailEventDTO());
         return "admin_match_edit";
+    }
+
+    @PostMapping("/match/event/save")
+    public String eventSave(@ModelAttribute("teamEvent") MatchDetailEventDTO matchDetailEventDTO, RedirectAttributes redirectAttributes) {
+        try {
+            MatchDetailEventDTO matchDetailEventDTO1 = matchDetailEventService.create(matchDetailEventDTO);
+            return "redirect:/admin/match/edit/" + matchDetailEventDTO.getMatch_id();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/admin/match/edit/" + matchDetailEventDTO.getMatch_id();
+        }
     }
 
     @PostMapping("/match/update/{id}")
@@ -135,6 +176,30 @@ public class MatchController {
             return ResponseEntity.ok("Delete successfully.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error!");
+        }
+    }
+
+    @GetMapping("/match/event/delete/{id}")
+    public ResponseEntity<String> deleteMatchDetailEvent(@PathVariable Long id) {
+        try {
+            matchDetailEventService.delete(id);
+            return ResponseEntity.ok("Delete event successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error!");
+        }
+    }
+
+    @PostMapping("/match/detail/update/{id}")
+    public String updateMatchDetail(@PathVariable Long id, @ModelAttribute("matchDetailDTO") MatchDetailDTO matchDetailDTO, RedirectAttributes attributes) {
+        try {
+            System.out.println(matchDetailDTO);
+            MatchDetail matchDetail = matchDetailService.updateMatchDetail(matchDetailDTO);
+            attributes.addFlashAttribute("success", "Update Success");
+            return "redirect:/admin/match/edit/" + matchDetailDTO.getMatch_id();
+        } catch (Exception e) {
+            e.printStackTrace();
+            attributes.addFlashAttribute("error", "Update failed");
+            return "redirect:/admin/match/edit/" + matchDetailDTO.getMatch_id();
         }
     }
 }

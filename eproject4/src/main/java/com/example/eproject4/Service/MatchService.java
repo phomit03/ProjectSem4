@@ -4,7 +4,9 @@ import com.example.eproject4.DTO.Request.MatchRequest;
 import com.example.eproject4.DTO.Response.MatchDTO;
 import com.example.eproject4.DTO.Response.TeamDTO;
 import com.example.eproject4.Entity.Match;
+import com.example.eproject4.Entity.MatchDetail;
 import com.example.eproject4.Entity.Team;
+import com.example.eproject4.Repository.MatchDetailRepository;
 import com.example.eproject4.Repository.MatchRepository;
 import com.example.eproject4.Utils.Helper;
 import com.example.eproject4.Utils.ModelToDtoConverter;
@@ -25,15 +27,18 @@ public class MatchService {
     private Helper helper;
     @Autowired
     private final MatchRepository matchRepository;
+    @Autowired
+    private MatchDetailService matchDetailService;
+    @Autowired
+    private MatchDetailRepository matchDetailRepository;
+    @Autowired
+    private final ModelToDtoConverter modelToDtoConverter;
 
     @Autowired
     public MatchService(MatchRepository matchRepository, ModelToDtoConverter modelToDtoConverter) {
         this.matchRepository = matchRepository;
         this.modelToDtoConverter = modelToDtoConverter;
     }
-
-    @Autowired
-    private final ModelToDtoConverter modelToDtoConverter;
 
     public List<MatchDTO> getAllMatches() {
         List<Match> matches = matchRepository.findAll();
@@ -57,6 +62,10 @@ public class MatchService {
         match.setStatus(1);
 
         match = matchRepository.save(match);
+
+        MatchDetail matchDetail = new MatchDetail();
+        matchDetail.setMatch_id(match.getId());
+        matchDetailRepository.save(matchDetail);
         return modelToDtoConverter.convertToDto(match, MatchDTO.class);
     }
 
@@ -106,5 +115,15 @@ public class MatchService {
         return true;
     }
 
+    public List<MatchDTO> getNextMatchesOrLiveMatches() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        List<Match> matches = matchRepository.findNextLiveOrUpcomingMatchesWithDetails(currentDateTime);
+        int maxResults = 5;
+        if (matches.size() > maxResults) {
+            matches = matches.subList(0, maxResults);
+        }
+        return matches.stream().map(match -> modelToDtoConverter.convertToDto(match, MatchDTO.class))
+                .collect(Collectors.toList());
+    }
 }
 

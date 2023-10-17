@@ -53,10 +53,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(
                         "/registration/**",
                         "/employee/**",
+                        "/api/**",
                         "/admin_static/**",
                         "/user/**",
                         "/index1/**",
                         "/img/**").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")  // dung cho admin
                 .antMatchers("/logged/**").hasRole("USER") // dung cho nguoi dung muon dat hang
                 .anyRequest().permitAll()
@@ -78,8 +81,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")
-                .permitAll();
+                .permitAll()
+                .and()
+                .csrf().disable();
     }
+
 
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
