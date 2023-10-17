@@ -84,14 +84,15 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-
-                <div class="d-flex team-vs">
-                    <span class="score">4-1</span>
+                <div th:if="${nextMatchesOrLiveMatches} and ${#lists.size(nextMatchesOrLiveMatches) > 0}" class="d-flex team-vs">
+                    <span class="score live-score"></span>
                     <div class="team-1 w-50">
                         <div class="team-details w-100 text-center">
-                            <img th:src="@{/user/images/logo_1.png}" alt="Image" class="img-fluid">
-                            <h3>LA LEGA <span>(win)</span></h3>
-                            <ul class="list-unstyled">
+                            <input type="hidden" class="live-match-id" th:value="${nextMatchesOrLiveMatches[0].id}">
+                            <img th:src="@{${nextMatchesOrLiveMatches[0].home_team.logo_img}}" alt="Image" class="img-fluid" style="width: 70px; max-height: 80px">
+                            <h3 th:text="${nextMatchesOrLiveMatches[0].home_team.name}"></h3>
+                            <input type="hidden" class="home-team-id" th:value="${nextMatchesOrLiveMatches[0].home_team.id}">
+                            <ul class="list-unstyled home-team-event">
                                 <li>Anja Landry (7)</li>
                                 <li>Eadie Salinas (12)</li>
                                 <li>Ashton Allen (10)</li>
@@ -101,9 +102,10 @@
                     </div>
                     <div class="team-2 w-50">
                         <div class="team-details w-100 text-center">
-                            <img th:src="@{/user/images/logo_2.png}" alt="Image" class="img-fluid">
-                            <h3>JUVENDU <span>(loss)</span></h3>
-                            <ul class="list-unstyled">
+                            <img th:src="@{${nextMatchesOrLiveMatches[0].away_team.logo_img}}" alt="Image" class="img-fluid" style="width: 70px; max-height: 100px">
+                            <h3 th:text="${nextMatchesOrLiveMatches[0].away_team.name}"></h3>
+                            <input type="hidden" class="away-team-id" th:value="${nextMatchesOrLiveMatches[0].away_team.id}">
+                            <ul class="list-unstyled away-team-event">
                                 <li>Macauly Green (3)</li>
                                 <li>Arham Stark (8)</li>
                                 <li>Stephan Murillo (9)</li>
@@ -475,6 +477,25 @@
 </div>
 
 <div th:replace="customer_fragments::script-fragment"></div>
+
+<script>
+    $(document).ready(function () {
+        var dataToSend = {
+            homeTeamId: $('.home-team-id').val(),
+            awayTeamId: $('.away-team-id').val(),
+            matchId: $('.live-match-id').val()
+        };
+        $.ajax({
+            type: 'POST',
+            url: '/api/getTeamEvent',
+            contentType: 'application/json',
+            data: JSON.stringify(dataToSend),
+            success: function (res) {
+                $('.live-score').html(res[0] + '-' + res[1])
+            }
+        })
+    });
+</script>
 </body>
 
 </html>
