@@ -23,8 +23,10 @@ public class MatchDTO {
     private Integer status;
     private Timestamp created_at;
     private Timestamp updated_at;
+    private Team home_team;
+    private Team away_team;
 
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     public String getFormattedMatchTime() {
         return match_time.format(dateTimeFormatter);
     }
