@@ -115,5 +115,15 @@ public class MatchService {
         return true;
     }
 
+    public List<MatchDTO> getNextMatchesOrLiveMatches() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        List<Match> matches = matchRepository.findNextLiveOrUpcomingMatchesWithDetails(currentDateTime);
+        int maxResults = 5;
+        if (matches.size() > maxResults) {
+            matches = matches.subList(0, maxResults);
+        }
+        return matches.stream().map(match -> modelToDtoConverter.convertToDto(match, MatchDTO.class))
+                .collect(Collectors.toList());
+    }
 }
 
