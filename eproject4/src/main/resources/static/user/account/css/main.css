@@ -1,7 +1,3 @@
-
-
-
-
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
 
@@ -92,7 +88,7 @@ textarea {
 }
 
 textarea:focus, input:focus {
-  border-color: transparent !important;
+  border-color: #dee2e6 !important;
 }
 
 input:focus::-webkit-input-placeholder { color:transparent; }
