@@ -14,6 +14,8 @@ public interface MatchDetailEventRepository extends JpaRepository<MatchDetailEve
     List<MatchDetailEvent> findByPlayerIdAndMatchId(@Param("playerId") Long playerId, @Param("matchId") Long matchId);
     @Query("SELECT e FROM MatchDetailEvent e WHERE e.team_id = :teamId AND e.match_id = :matchId")
     List<MatchDetailEvent> findByMatch_idAndTeam_id(@Param("teamId") Long teamId, @Param("matchId") Long matchId);
+    @Query("SELECT e FROM MatchDetailEvent e WHERE e.team_id = :teamId AND e.match_id = :matchId AND e.type = :type")
+    List<MatchDetailEvent> findByMatchIdAndTeamIdAndType(@Param("teamId") Long teamId, @Param("matchId") Long matchId, @Param("type") Integer type);
 
     @Query("SELECT COUNT(e) FROM MatchDetailEvent e WHERE e.team_id = :teamId AND e.match_id = :matchId AND e.type = :eventType")
     Long countEventsByTeamIdAndMatchIdAndType(@Param("teamId") Long teamId, @Param("matchId") Long matchId, @Param("eventType") Integer eventType);
