@@ -53,6 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(
                         "/registration/**",
                         "/employee/**",
+                        "/api/**",
                         "/admin_static/**",
                         "/user/**",
                         "/index1/**",
@@ -78,8 +79,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout")
-                .permitAll();
+                .permitAll()
+                .and()
+                .csrf().disable();
     }
+
 
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {

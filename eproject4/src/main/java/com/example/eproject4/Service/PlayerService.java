@@ -1,9 +1,10 @@
 package com.example.eproject4.Service;
 
+import com.example.eproject4.DTO.Response.MatchDetailEventDTO;
 import com.example.eproject4.DTO.Response.PlayerDTO;
-import com.example.eproject4.DTO.Response.TeamDTO;
+import com.example.eproject4.Entity.MatchDetailEvent;
 import com.example.eproject4.Entity.Player;
-import com.example.eproject4.Entity.Team;
+import com.example.eproject4.Repository.MatchDetailEventRepository;
 import com.example.eproject4.Repository.PlayerRepository;
 import com.example.eproject4.Utils.Helper;
 import com.example.eproject4.Utils.ModelToDtoConverter;
@@ -15,7 +16,6 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,10 +27,13 @@ public class PlayerService {
     private final ModelToDtoConverter modelToDtoConverter;
     @Autowired
     private final PlayerRepository playerRepository;
+    @Autowired
+    private final MatchDetailEventRepository matchDetailEventRepository;
 
-    public PlayerService(ModelToDtoConverter modelToDtoConverter, PlayerRepository playerRepository) {
+    public PlayerService(ModelToDtoConverter modelToDtoConverter, PlayerRepository playerRepository, MatchDetailEventRepository matchDetailEventRepository) {
         this.modelToDtoConverter = modelToDtoConverter;
         this.playerRepository = playerRepository;
+        this.matchDetailEventRepository = matchDetailEventRepository;
     }
 
     public List<PlayerDTO> getAllPlayers() {
@@ -85,5 +88,15 @@ public class PlayerService {
 
     public void delete(Long id) {
         playerRepository.deleteById(id);
+    }
+
+    public List<PlayerDTO> findAllByTeam_id (Long id) {
+        List<Player> playerList = playerRepository.findAllByTeam_id(id);
+        return playerList.stream().map(player -> modelToDtoConverter.convertToDto(player, PlayerDTO.class)).collect(Collectors.toList());
+    }
+
+    public List<MatchDetailEventDTO> getEventsByPlayerIdAndMatchId(Long playerId, Long matchId) {
+        List<MatchDetailEvent> matchDetailEvents = matchDetailEventRepository.findByPlayerIdAndMatchId(playerId, matchId);
+        return matchDetailEvents.stream().map(matchDetailEvent -> modelToDtoConverter.convertToDto(matchDetailEvent, MatchDetailEventDTO.class)).collect(Collectors.toList());
     }
 }

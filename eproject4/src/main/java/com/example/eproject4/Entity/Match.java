@@ -9,12 +9,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.sql.Time;
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
@@ -60,4 +56,14 @@ public class Match{
     @Column(name = "updated_at")
     @MapToDTO
     private Timestamp updated_at;
+
+    @ManyToOne
+    @JoinColumn(name = "home_team_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @MapToDTO
+    private Team home_team;
+
+    @ManyToOne
+    @JoinColumn(name = "away_team_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @MapToDTO
+    private Team away_team;
 }

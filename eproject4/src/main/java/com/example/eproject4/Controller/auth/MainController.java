@@ -30,7 +30,7 @@ public class MainController {
 		return new UserRegistrationDto();
 	}
 
-	@GetMapping("/")
+	@GetMapping("")
 	public String home() {
 		return "admin_index";
 	}

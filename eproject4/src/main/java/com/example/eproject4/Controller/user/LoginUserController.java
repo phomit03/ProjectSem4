@@ -11,12 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginUserController {
     @GetMapping("/login")
     public String showLoginForm(Model model) {
-//        model.addAttribute("erroruser", "Sai tài khoản hoặc mật khẩu.");
+        //model.addAttribute("erroruser", "Sai tài khoản hoặc mật khẩu.");
         return "customer_login";
-    }
-    @GetMapping("/home")
-    public String home(){
-        return "customer_homepage";
     }
 
 
