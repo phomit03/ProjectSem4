@@ -1,4 +1,4 @@
-package com.example.eproject4.Controller.auth;
+package com.example.eproject4.Controller.admin;
 
 import com.example.eproject4.Entity.Employee;
 import com.example.eproject4.Entity.Role;
@@ -19,17 +19,18 @@ public class UserController {
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
-//	@GetMapping("")
+	//	@GetMapping("")
 //	public String getAllUsers(Model model) {
 //		List<User> users = userService.getAllUsers();
 //		model.addAttribute("users", users);
 //		return "user_list";
 //	}
-	@GetMapping("")
+	@GetMapping
 	public String getAllUsers(Model model) {
+		model.addAttribute("title", "Users");
+
 		return findPaginated(1, model);
 	}
-
 
 
 //	@GetMapping("/{id}")
@@ -55,7 +56,7 @@ public class UserController {
 	public String showEditUserForm(@PathVariable Long id, Model model) {
 		User user = userService.getUserById(id);
 		model.addAttribute("user", user);
-		return "user_update";
+		return "admin_user_update";
 	}
 
 	@PostMapping("/{id}/edit")
@@ -85,7 +86,7 @@ public class UserController {
 		model.addAttribute("totalItems", page.getTotalElements());
 
 		model.addAttribute("users", users);
-		return "user_list";
+		return "admin_user_list";
 	}
 
 }

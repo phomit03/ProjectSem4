@@ -16,7 +16,7 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public CustomAuthenticationSuccessHandler(UserRepository userRepository) {
@@ -25,24 +25,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-      /*  // Truy cập thông tin người dùng đã đăng nhập
-        String username = authentication.getName();
-
-        // Lưu thông tin người dùng vào session
-        request.getSession().setAttribute("loggedInUser", username);*/
-
-
-
-
-
         User user =  userRepository.findByUsername(authentication.getName());
 
         // Lưu user model vào session
         HttpSession session = request.getSession();
         session.setAttribute("loggedInUser", user);
-
-
-        // Chuyển hướng đến trang chính sau khi đăng nhập thành công
-        response.sendRedirect("/admin");
+        response.sendRedirect("/adminoruser");
     }
 }

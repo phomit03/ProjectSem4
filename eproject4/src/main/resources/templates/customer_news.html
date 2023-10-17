@@ -14,87 +14,26 @@
                 <h2 class="heading">Latest News</h2>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-4 mb-4">
-                <div class="custom-media d-block">
+        <div class="row img-father">
+            <div th:each="aNew : ${news}" class="col-lg-4 mb-4">
+                <div class="custom-media d-block ">
                     <div class="img mb-4">
-                        <a th:href="@{/news/detail}"><img th:src="@{/user/images/img_1.jpg}" alt="Image" class="img-fluid"></a>
+                        <div class="div-content">
+                            <a th:href="@{/news/detail/{id} (id=${aNew.id})}">
+                                <img class="div-content"
+                                     th:src="@{${aNew.new_img}}" alt="Image">
+                            </a>
+                        </div>
+
                     </div>
                     <div class="text">
-                        <span class="meta">May 20, 2020</span>
-                        <h3 class="mb-4"><a th:href="@{/news/detail}">Romolu to stay at Real Nadrid?</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus deserunt saepe tempora dolorem.</p>
-                        <p><a href="#">Read more</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-4">
-                <div class="custom-media d-block">
-                    <div class="img mb-4">
-                        <a th:href="@{/news/detail}"><img th:src="@{/user/images/img_3.jpg}" alt="Image" class="img-fluid"></a>
-                    </div>
-                    <div class="text">
-                        <span class="meta">May 20, 2020</span>
-                        <h3 class="mb-4"><a th:href="@{/news/detail}">Romolu to stay at Real Nadrid?</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus deserunt saepe tempora dolorem.</p>
-                        <p><a href="#">Read more</a></p>
+                        <span th:text="${aNew.title}"></span>
+                        <h3 class="mb-4"><a th:href="@{/news/detail}"></a></h3>
+                        <p><a th:href="@{/news/detail/{id} (id=${aNew.id})}">Read more</a></p>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-4 mb-4">
-                <div class="custom-media d-block">
-                    <div class="img mb-4">
-                        <a th:href="@{/news/detail}"><img th:src="@{/user/images/img_1.jpg}" alt="Image" class="img-fluid"></a>
-                    </div>
-                    <div class="text">
-                        <span class="meta">May 20, 2020</span>
-                        <h3 class="mb-4"><a th:href="@{/news/detail}">Romolu to stay at Real Nadrid?</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus deserunt saepe tempora dolorem.</p>
-                        <p><a href="#">Read more</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-4">
-                <div class="custom-media d-block">
-                    <div class="img mb-4">
-                        <a th:href="@{/news/detail}"><img th:src="@{/user/images/img_3.jpg}" alt="Image" class="img-fluid"></a>
-                    </div>
-                    <div class="text">
-                        <span class="meta">May 20, 2020</span>
-                        <h3 class="mb-4"><a th:href="@{/news/detail}">Romolu to stay at Real Nadrid?</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus deserunt saepe tempora dolorem.</p>
-                        <p><a href="#">Read more</a></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 mb-4">
-                <div class="custom-media d-block">
-                    <div class="img mb-4">
-                        <a th:href="@{/news/detail}"><img th:src="@{/user/images/img_1.jpg}" alt="Image" class="img-fluid"></a>
-                    </div>
-                    <div class="text">
-                        <span class="meta">May 20, 2020</span>
-                        <h3 class="mb-4"><a th:href="@{/news/detail}">Romolu to stay at Real Nadrid?</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus deserunt saepe tempora dolorem.</p>
-                        <p><a href="#">Read more</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-4">
-                <div class="custom-media d-block">
-                    <div class="img mb-4">
-                        <a th:href="@{/news/detail}"><img th:src="@{/user/images/img_3.jpg}" alt="Image" class="img-fluid"></a>
-                    </div>
-                    <div class="text">
-                        <span class="meta">May 20, 2020</span>
-                        <h3 class="mb-4"><a th:href="@{/news/detail}">Romolu to stay at Real Nadrid?</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus deserunt saepe tempora dolorem.</p>
-                        <p><a href="#">Read more</a></p>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="row justify-content-center">
