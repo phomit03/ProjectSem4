@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="customer_fragments::head-fragment"></head>
+
+<body>
+<div class="site-wrap">
+    <div th:replace="customer_fragments::top-fragment"></div>
+
+    <!--/CONTENT HERE/-->
+    <div class="site-section">
+        <div class="container">
+            <div class="p-3 px-lg-0 container-lg">
+                <div class="p-3 border rounded">
+                    <h1 class="text-sm-center font-weight-bold">Manchester United - Chelsea</h1>
+                    <div class="position-relative" style="max-height: 100px; overflow: hidden;">
+                        <div class="mt-3 text-start text-sm-center"></div>
+                    </div>
+                    <div class="mt-3 text-white text-md-center row" style="font-size: large">
+                        <div class="col-md-4 col-sm-6 col-12">
+                            <i class="icon-map-marker" style="color: #ca0f33"></i>
+                            Old Trafford
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-12">
+                            <i class="icon-calendar" style="color: #ca0f33"></i>
+                            22-10-2023
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-12">
+                            <i class="icon-clock-o" style="color: #ca0f33"></i>
+                            19:15
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="eventDetailContent" class="mt-3 p-3 px-lg-0 container-lg">
+                <div class="pt-3 row">
+                    <div class="col-xl-8 col-12">
+                        <div class="text-lg-center w-100 mb-4 text-white font-weight-bold">
+                            <h3>
+                                Vinh Stadium
+                            </h3>
+                        </div>
+                        <div class="rounded overflow-hidden stadium-container">
+                            <div class="position-relative user-select-none main-stage" style="min-height: 350px;">
+                                <img th:src="@{/user/images/map_stadium.jpg}" alt="Image" class="img-fluid"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-12">
+                        <div class="text-lg-center w-100 mb-4 text-white font-weight-bold">
+                            <h3>
+                                Select Tickets
+                            </h3>
+                        </div>
+                        <div class="rounded overflow-hidden stadium-container">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/END CONTENT HERE/-->
+
+    <div th:replace="customer_fragments::bot-fragment"></div>
+</div>
+
+<div th:replace="customer_fragments::script-fragment"></div>
+</body>
+
+</html>
