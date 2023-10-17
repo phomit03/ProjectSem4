@@ -55,4 +55,9 @@ public class MatchDetailEventService {
     public void delete(Long id) {
         matchDetailEventRepository.deleteById(id);
     }
+
+    public List<MatchDetailEventDTO> getEventsByTeamIdAndMatchIdAndType(Long teamId, Long matchId, Integer type) {
+        List<MatchDetailEvent> events = matchDetailEventRepository.findByMatchIdAndTeamIdAndType(teamId, matchId, type);
+        return events.stream().map(event -> modelToDtoConverter.convertToDto(event, MatchDetailEventDTO.class)).collect(Collectors.toList());
+    }
 }
