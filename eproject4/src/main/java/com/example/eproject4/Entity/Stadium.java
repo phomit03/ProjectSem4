@@ -31,6 +31,10 @@ public class Stadium{
     @MapToDTO
     private String name;
 
+    @Column(name = "map_img")
+    @MapToDTO
+    private String map_img;
+
     @Lob
     @Column(name = "description", columnDefinition = "text")
     @MapToDTO

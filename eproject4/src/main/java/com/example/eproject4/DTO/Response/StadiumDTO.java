@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class StadiumDTO {
     private Long id;
     private String name;
+    private String map_img;
     private String description;
     private Integer status;
     private Timestamp created_at;
