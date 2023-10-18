@@ -73,13 +73,31 @@
                                     </i>
                                 </a>
                             </li>
-                             <li th:if="${session.loggedInUser != null }">
-                                <a href="/profile" class="nav-link">
-                                  <i class="icon-user-circle-o user"
-                                     aria-hidden="true">
-                                  </i>
-                                </a>
-                              </li>
+                            <li th:if="${session.loggedInUser != null}">
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img class="rounded-circle me-lg-2"
+                                             th:src="@{/admin_static/img/user.jpg}"
+                                             alt="" style="width: 40px; height: 40px;">
+                                        <span class="ml-1 d-lg-inline-flex text-white"
+                                              th:if="${session.loggedInUser != null}"
+                                              th:text="${session.loggedInUser.fullName}"></span>
+                                        <i class="bi bi-caret-down color-red icon-large"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="userDropdown">
+                                        <a class="dropdown-item dropdown-fix color-grey" href="#">
+                                            <i class="icon-user mr-2 color-red"></i> Info Account
+                                        </a>
+                                        <a class="dropdown-item dropdown-fix color-grey" href="#">
+                                            <i class="icon-ticket mr-2 color-red"></i> My ticket
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item dropdown-fix2 color-red" th:href="@{/logout}">
+                                            <i class="icon-arrow-right mr-2 color-red"></i> Logout
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
                             <li>
                                 <a th:href="@{/shopping_cart}" style="font-size: large">
                                     <i class="icon-shopping-cart" aria-hidden="true"></i>
