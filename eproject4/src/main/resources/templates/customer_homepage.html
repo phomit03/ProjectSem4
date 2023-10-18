@@ -102,10 +102,7 @@
                             <h3 th:text="${nextMatchesOrLiveMatches[0].home_team.name}"></h3>
                             <input type="hidden" class="home-team-id" th:value="${nextMatchesOrLiveMatches[0].home_team.id}">
                             <ul class="list-unstyled home-team-event">
-                                <li>Anja Landry (7)</li>
-                                <li>Eadie Salinas (12)</li>
-                                <li>Ashton Allen (10)</li>
-                                <li>Baxter Metcalfe (5)</li>
+
                             </ul>
                         </div>
                     </div>
@@ -115,10 +112,7 @@
                             <h3 th:text="${nextMatchesOrLiveMatches[0].away_team.name}"></h3>
                             <input type="hidden" class="away-team-id" th:value="${nextMatchesOrLiveMatches[0].away_team.id}">
                             <ul class="list-unstyled away-team-event">
-                                <li>Macauly Green (3)</li>
-                                <li>Arham Stark (8)</li>
-                                <li>Stephan Murillo (9)</li>
-                                <li>Ned Ritter (5)</li>
+
                             </ul>
                         </div>
                     </div>
@@ -487,22 +481,23 @@
 
 <div th:replace="customer_fragments::script-fragment"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
 <script>
     $(document).ready(function () {
-        var dataToSend = {
-            homeTeamId: $('.home-team-id').val(),
-            awayTeamId: $('.away-team-id').val(),
-            matchId: $('.live-match-id').val()
-        };
-        $.ajax({
-            type: 'POST',
-            url: '/api/getTeamEvent',
-            contentType: 'application/json',
-            data: JSON.stringify(dataToSend),
-            success: function (res) {
+        var socket = new SockJS('/ws-endpoint');
+        var stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe('/topic/score', function (scoreUpdate) {
+                var scoreUpdateObj = JSON.parse(scoreUpdate.body);
+
+                updateScoreOnPage(scoreUpdateObj.homeTeamScore, scoreUpdateObj.awayTeamScore);
+
                 var homeTeamEventsUl = $('.home-team-event');
                 homeTeamEventsUl.empty();
-                $.each(res.homeTeamEventGoal, function (index, event) {
+                $.each(scoreUpdateObj.homeTeamEventGoal, function (index, event) {
                     getPlayerById(event.player_id, function(player) {
                         var li = $('<li>').text(player.name + ' (' + event.time + ')');
                         homeTeamEventsUl.append(li);
@@ -511,18 +506,67 @@
 
                 var awayTeamEventsUl = $('.away-team-event');
                 awayTeamEventsUl.empty();
-                $.each(res.awayTeamEventGoal, function (index, event) {
+                $.each(scoreUpdateObj.awayTeamEventGoal, function (index, event) {
                     getPlayerById(event.player_id, function(player) {
                         var li = $('<li>').text(player.name + ' (' + event.time + ')');
                         awayTeamEventsUl.append(li);
                     });
                 });
-
-                $('.live-score').html(res.homeTeamScore + '-' + res.awayTeamScore);
-            }
+            });
         });
     });
 
+    function updateScoreOnPage(homeScore, awayScore) {
+        $('.live-score').html(homeScore + '-' + awayScore);
+    }
+
+    function getPlayerById(id, callback) {
+        $.ajax({
+            type: 'POST',
+            url: '/api/getPlayerById',
+            contentType: 'application/json',
+            data: JSON.stringify({ id: id }),
+            success: function (res) {
+                callback(res);
+            }
+        });
+    }
+</script>
+
+<script>
+    var dataToSend = {
+        homeTeamId: $('.home-team-id').val(),
+        awayTeamId: $('.away-team-id').val(),
+        matchId: $('.live-match-id').val()
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/getTeamEvent',
+        contentType: 'application/json',
+        data: JSON.stringify(dataToSend),
+        success: function (res) {
+            var homeTeamEventsUl = $('.home-team-event');
+            homeTeamEventsUl.empty();
+            $.each(res.homeTeamEventGoal, function (index, event) {
+                getPlayerById(event.player_id, function(player) {
+                    var li = $('<li>').text(player.name + ' (' + event.time + ')');
+                    homeTeamEventsUl.append(li);
+                });
+            });
+
+            var awayTeamEventsUl = $('.away-team-event');
+            awayTeamEventsUl.empty();
+            $.each(res.awayTeamEventGoal, function (index, event) {
+                getPlayerById(event.player_id, function(player) {
+                    var li = $('<li>').text(player.name + ' (' + event.time + ')');
+                    awayTeamEventsUl.append(li);
+                });
+            });
+
+            $('.live-score').html(res.homeTeamScore + '-' + res.awayTeamScore);
+        }
+    });
     function getPlayerById(id, callback) {
         $.ajax({
             type: 'POST',
