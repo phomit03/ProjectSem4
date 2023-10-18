@@ -60,4 +60,9 @@ public class MatchDetailEventService {
         List<MatchDetailEvent> events = matchDetailEventRepository.findByMatchIdAndTeamIdAndType(teamId, matchId, type);
         return events.stream().map(event -> modelToDtoConverter.convertToDto(event, MatchDetailEventDTO.class)).collect(Collectors.toList());
     }
+
+    public MatchDetailEventDTO getById(Long id) {
+        MatchDetailEvent matchDetailEvent = matchDetailEventRepository.getById(id);
+        return modelToDtoConverter.convertToDto(matchDetailEvent, MatchDetailEventDTO.class);
+    }
 }
