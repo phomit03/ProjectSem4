@@ -18,6 +18,8 @@ public class NewDTO {
     @MapToDTO
     private String title;
     @MapToDTO
+    private String sub_title;
+    @MapToDTO
     private String content;
     @MapToDTO
     private Integer status;
