@@ -1,8 +1,10 @@
 package com.example.eproject4.Service;
 
 import com.example.eproject4.DTO.Response.MatchDetailEventDTO;
+import com.example.eproject4.DTO.Response.NewDTO;
 import com.example.eproject4.DTO.Response.PlayerDTO;
 import com.example.eproject4.Entity.MatchDetailEvent;
+import com.example.eproject4.Entity.New;
 import com.example.eproject4.Repository.MatchDetailEventRepository;
 import com.example.eproject4.Utils.Helper;
 import com.example.eproject4.Utils.ModelToDtoConverter;
@@ -61,8 +63,8 @@ public class MatchDetailEventService {
         return events.stream().map(event -> modelToDtoConverter.convertToDto(event, MatchDetailEventDTO.class)).collect(Collectors.toList());
     }
 
-    public MatchDetailEventDTO getById(Long id) {
-        MatchDetailEvent matchDetailEvent = matchDetailEventRepository.getById(id);
+    public MatchDetailEventDTO findById(Long id) {
+        MatchDetailEvent matchDetailEvent = matchDetailEventRepository.findByIdNew(id);
         return modelToDtoConverter.convertToDto(matchDetailEvent, MatchDetailEventDTO.class);
     }
 }
