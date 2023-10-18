@@ -54,33 +54,99 @@
                             </h3>
                         </div>
                         <div class="rounded overflow-hidden stadium-container">
-                            <div class="mb-3">
-                                <select class="form-control" id="" name="" aria-label="Area" alt="Area">
-                                    <option value="" selected>-- choose option --</option>
-                                    <option value="10">Area A</option>
-                                    <option value="10">Area A1</option>
-                                    <option value="10">Area A2</option>
-                                    <option value="10">Area B1</option>
-                                    <option value="10">Area B2</option>
-                                    <option value="10">Area C</option>
-                                    <option value="10">Area D</option>
-                                </select>
+                            <div class="p-3">
+                                <div class="form-group text-white">
+                                    <label for="ticketType">Ticket Type</label>
+                                    <select class="form-control bg-white color-black" id="ticketType"
+                                            style="border: 2px solid #6c757d">
+                                        <option value="1000">Option 1</option>
+                                        <option value="1000">Option 2</option>
+                                        <option value="1000">Option 3</option>
+                                        <option value="1000">Option 4</option>
+                                        <!-- Thêm các option khác nếu cần -->
+                                    </select>
+                                </div>
+                                <div class="form-group text-white mb-4">
+                                    <label for="quantity">Quantity</label>
+                                    <div class="input-group">
+                                        <button class="btn btn-outline-secondary bg-white crease color-black"
+                                                type="button"
+                                                id="decrease">-
+                                        </button>
+                                        <input type="number"
+                                               class="form-control rounded text-center bg-white color-black"
+                                               id="quantity" min="1" value="1" style="border: 2px solid #6c757d">
+                                        <button class="btn btn-outline-secondary bg-white crease color-black"
+                                                type="button"
+                                                id="increase">+
+                                        </button>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-success btn-block text-white">
+                                    Add to Cart <i class="icon-shopping-cart"></i>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-block mt-2">
+                                    Order <i class="icon-arrow-right"></i>
+                                </button>
                             </div>
-                            <div>
-                                <div class="">
-                                    <button type="button"
-                                            class=" bg-gray-200 text-gray-600 hover:text-gray-700 rounded-l hover:bg-gray-400 h-full w-4/12 cursor-pointer focus:outline-none">
-                                        <span class="m-auto text-xl md:text-2xl font-thin">−</span></button>
-                                    <input id="seatQty" name="seatQty" type="number"
-                                           class="w-4/12 border-l border-r border-gray-200 focus:outline-none text-center transparent font-medium "
-                                           step="0.1" value="1">
-                                    <button type="button"
-                                            class="bg-gray-200 text-gray-600 hover:text-gray-700 rounded-r hover:bg-gray-400 h-full w-4/12 cursor-pointer focus:outline-none">
-                                        <span class="m-auto text-xl md:text-2xl font-thin">+</span></button>
+                        </div>
+
+                        <div class="text-lg-center w-100 mt-3 mb-2 text-white font-weight-bold">
+                            <h3>
+                                Your Cart
+                            </h3>
+                        </div>
+                        <div class="rounded-md p-3 card-shadow">
+                            <div class="bg-white p-3 rounded">
+                                <div class="flex items-center">
+                                    <div class="flex-nowrap">
+                                        <i class="icon-shopping-cart" style="font-size: x-large; color: #8bc34a"></i>
+                                        <p class="font-weight-bold" style="color: #8bc34a">You choose 0 tickets</p>
+                                    </div>
+                                </div>
+                                <div class="py-2">
+                                    <div class="flex-nowrap mb-3 text-red" style="font-size: small;">
+                                        <i class="icon-add_alert"></i>
+                                        <span>Choose up to 4 tickets</span>
+                                        <span style="text-decoration: underline; float: right">Delete all</span>
+                                    </div>
+
+                                    <div class="p-2 mb-2" style="border: 1px dashed #666666">
+                                        <!--Cart added-->
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div style="background-color: #e5e7eb">
+                                                <div class="">
+                                                    <p class="p-1">
+                                                        Area C - Quantity <i class="icon-close text-red ml-3"></i>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p class="ml-2 mr-1">250$</p>
+                                        </div>
+
+                                        <!--Cart no data-->
+<!--                                        <div class="mt-2">-->
+<!--                                            <div class="w-full">-->
+<!--                                                <p class="italic text-gray-400">Cart is empty</p>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+                                    </div>
+                                </div>
+
+                                <hr class="mt-5 mb-2">
+                                <div class="flex">
+                                    <div class="flex w-6/12">
+                                        <p>Total ticket price: </p>
+                                    </div>
+                                    <div>
+                                        <p class="font-weight-bold" style="font-size: large">500$</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
+
                 </div>
             </div>
         </div>
@@ -91,6 +157,21 @@
 </div>
 
 <div th:replace="customer_fragments::script-fragment"></div>
+
+<script>
+    document.getElementById('decrease').addEventListener('click', function () {
+        var quantity = document.getElementById('quantity');
+        if (parseInt(quantity.value) > 1) {
+            quantity.value = parseInt(quantity.value) - 1;
+        }
+    });
+
+    document.getElementById('increase').addEventListener('click', function () {
+        var quantity = document.getElementById('quantity');
+        quantity.value = parseInt(quantity.value) + 1;
+    });
+</script>
+
 </body>
 
 </html>
