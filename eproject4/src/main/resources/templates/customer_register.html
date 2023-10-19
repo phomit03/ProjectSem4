@@ -18,29 +18,32 @@
                 <span class="login100-form-title">
                     Member Register
                 </span>
-
-                    <div class="wrap-input100 validate-input" data-validate = "Username is required">
-                        <input required th:field="*{username}" class="input100" type="text" name="username" placeholder="Username" >
+                    <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz" >
+                        <input required th:field="*{email}" class="input100" type="email" name="email"
+                               placeholder="domain@example.com" >
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
-                        <i class="icon-user" aria-hidden="true"></i>
-                    </span>
+                            <i class="icon-envelope" aria-hidden="true"></i>
+                        </span>
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz" >
-                        <input required th:field="*{email}" class="input100" type="email" name="email" placeholder="Name@example.com" >
+                    <div class="wrap-input100 validate-input" data-validate = "Username is required">
+                        <input required th:field="*{username}" class="input100" type="text" name="username"
+                               placeholder="enter username"
+                               style="padding: 0 30px 0 68px; border-radius: 25px; margin-bottom: 0">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
-                        <i class="icon-envelope" aria-hidden="true"></i>
-                    </span>
+                            <i class="icon-user" aria-hidden="true"></i>
+                        </span>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate = "Password is required">
-                        <input required th:field="*{password}" class="input100" type="password" name="password" placeholder="Password" >
+                        <input required th:field="*{password}" class="input100" type="password" name="password"
+                               placeholder="enter password" >
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
-                        <i class="icon-lock" aria-hidden="true"></i>
-                    </span>
+                            <i class="icon-lock" aria-hidden="true"></i>
+                        </span>
                     </div>
                     <div th:if="${error_user}" class="alert alert-danger">
                         <p th:text="${error_user}"></p>
@@ -53,10 +56,12 @@
                     </div>
 
                     <div class="text-center p-t-136" style="font-size: 13px;">
-                        Already have an account?
-                        <a class="txt2" th:href="@{/login}">
-                            Log in now
-                        </a>
+                        Do you already have an account?
+                        <p>
+                            <a class="txt2" th:href="@{/login}">
+                                Sign in now <i class="icon-arrow-left" aria-hidden="true"></i>
+                            </a>
+                        </p>
                     </div>
                 </form>
             </div>
