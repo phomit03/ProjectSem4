@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -53,9 +54,9 @@ public class StadiumController {
     }
 
     @PostMapping("/stadium/new/save")
-    public String create(@ModelAttribute StadiumRequest stadiumRequest, RedirectAttributes redirectAttributes) {
+    public String create(@ModelAttribute StadiumRequest stadiumRequest, @RequestParam("logo") MultipartFile logo, RedirectAttributes redirectAttributes) {
         try {
-            stadiumService.createStadium(stadiumRequest);
+            stadiumService.createStadium(stadiumRequest, logo);
             redirectAttributes.addFlashAttribute("success", "Create successfully!");
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,15 +77,15 @@ public class StadiumController {
     }
 
     @PostMapping("/stadium/update/{id}")
-    public String update(@PathVariable Long id, @ModelAttribute("stadiumRequest") StadiumRequest stadiumRequest,
-                         RedirectAttributes attributes) {
+    public String update(@PathVariable Long id, @ModelAttribute("stadiumRequest") StadiumRequest stadiumRequest,@RequestParam(value = "logo", required = false) MultipartFile logo, RedirectAttributes attributes)
+    {
         try {
             StadiumDTO stadium = stadiumService.getStadiumById(id);
             if (stadium == null) {
                 return "redirect:/admin/stadiums";
             }
 
-            stadiumService.updateStadium(stadiumRequest);
+            stadiumService.updateStadium(stadiumRequest, logo);
             attributes.addFlashAttribute("success", "Update Successfully!");
         } catch (Exception e) {
             e.printStackTrace();
