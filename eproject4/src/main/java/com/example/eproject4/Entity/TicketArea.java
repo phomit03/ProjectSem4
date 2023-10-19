@@ -21,12 +21,12 @@ public class TicketArea {
 
     @MapToDTO
     @ManyToOne
-    @JoinColumn(name = "area_id", referencedColumnName = "id")
+    @JoinColumn(name = "area_id", nullable = false)
     private Area area;
 
     @MapToDTO
     @ManyToOne
-    @JoinColumn(name = "match_id", referencedColumnName = "id")
+    @JoinColumn(name = "match_id", nullable = false)
     private Match match;
 
     @MapToDTO
