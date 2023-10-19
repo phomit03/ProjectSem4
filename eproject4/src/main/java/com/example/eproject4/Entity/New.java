@@ -30,6 +30,9 @@ public class New {
     private String title;
 
     @MapToDTO
+    private String sub_title;
+
+    @MapToDTO
     private String content;
 
     @Column(name = "status", columnDefinition = "INT DEFAULT 1")

@@ -26,6 +26,8 @@ public class StadiumRequest {
 
     private String name;
 
+    private String map_img;
+
     private String description;
 
     private Integer status;

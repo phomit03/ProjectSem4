@@ -15,14 +15,11 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 public class TicketAreaDTO {
     private Long id;
-    private Area area_id;
-    private Match match_id;
+    private Area area;
+    private Match match;
     private Integer quantity;
     private Float price;
     private Integer status;
     private Timestamp created_at;
     private Timestamp updated_at;
-
-    private Area area;
-    private Match match;
 }

@@ -8,7 +8,9 @@ import com.example.eproject4.Utils.Helper;
 import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -41,21 +43,28 @@ public class StadiumService {
         return modelToDtoConverter.convertToDto(stadium, StadiumDTO.class);
     }
 
-    public StadiumDTO createStadium(StadiumRequest stadiumRequest) {
+    public StadiumDTO createStadium(StadiumRequest stadiumRequest, MultipartFile logo) throws IOException {
         Stadium stadium = new Stadium();
 
         stadium.setName(stadiumRequest.getName());
         stadium.setDescription(stadiumRequest.getDescription());
         stadium.setStatus(1);
+        if (!logo.isEmpty()) {
+            String imageUrl = helper.uploadImage(logo);
+            stadium.setMap_img(imageUrl);
+        }
 
         stadium = stadiumRepository.save(stadium);
         return modelToDtoConverter.convertToDto(stadium, StadiumDTO.class);
     }
 
-    public Stadium updateStadium(StadiumRequest stadiumRequest) {
+    public Stadium updateStadium(StadiumRequest stadiumRequest, MultipartFile logo) {
         try {
             Stadium stadium = stadiumRepository.getById(stadiumRequest.getId());
-
+            if (!logo.isEmpty()) {
+                String logo_img = helper.uploadImage(logo);
+                stadium.setMap_img(logo_img);
+            }
             stadium.setName(stadiumRequest.getName());
             stadium.setDescription(stadiumRequest.getDescription());
             stadium.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));

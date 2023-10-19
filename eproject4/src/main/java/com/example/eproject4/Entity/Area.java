@@ -28,7 +28,7 @@ public class Area {
     private String area_name;
 
     @ManyToOne
-    @JoinColumn(name = "stadium_id", referencedColumnName = "id")
+    @JoinColumn(name = "stadium_id", nullable = false)
     @MapToDTO
     private Stadium stadium;
 

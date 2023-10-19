@@ -42,6 +42,7 @@ public class NewService {
     public New createNew(NewDTO newDTO, MultipartFile logo) throws IOException {
         New aNew = new New();
         aNew.setTitle(newDTO.getTitle());
+        aNew.setSub_title(newDTO.getSub_title());
         aNew.setContent(newDTO.getContent());
         aNew.setStatus(1);
         if (!logo.isEmpty()) {
@@ -64,6 +65,7 @@ public class NewService {
                 aNew.setNew_img(logo_img);
             }
             aNew.setTitle(newDTO.getTitle());
+            aNew.setSub_title(newDTO.getSub_title());
             aNew.setContent(newDTO.getContent());
             return newRepository.save(aNew);
         } catch (Exception e) {
