@@ -3,7 +3,7 @@ body {
   line-height: 1.7;
   color: gray;
   font-weight: 300;
-  background-color: #222831;
+  background-color: #0c0613;
   font-size: 16px; }
 
 ::-moz-selection {
@@ -929,7 +929,7 @@ h1, h2, h3, h4, h5,
   padding: 70px 0;
   font-size: 14px;
   color: rgba(255, 255, 255, 0.5);
-  background: #1a1e25; }
+  background: #0e0a19; }
   .footer-section .widget h3 {
     color: #fff;
     font-size: 18px;
@@ -980,7 +980,8 @@ h1, h2, h3, h4, h5,
   background: rgba(255, 255, 255, 0.05) !important; }
 
 .bg-dark {
-  background: #1a1e25 !important; }
+  background: #0e0a19 !important;
+}
 
 .custom-media .img {
   -webkit-box-flex: 0;
@@ -1389,11 +1390,13 @@ input[type=text] {
 
 .dropdown-fix:hover {
   background-color: #f8f9fa;
+  padding-left: 5px;
 }
 
 .dropdown-fix2:hover {
   background-color: #f8f9fa;
   color: #ee1e46;
+  padding-left: 5px;
 }
 
 .text-2-line {

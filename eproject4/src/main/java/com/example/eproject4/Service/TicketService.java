@@ -81,14 +81,17 @@ public class TicketService {
         ticketRepository.deleteById(id);
     }
 
+    //Retrieve matches that have not yet taken place or took place 15 minutes before
     public List<Match> getUpcomingMatches() {
         LocalDateTime currentTimeMinus15Minutes = LocalDateTime.now().minusMinutes(15);
         return matchRepository.findMatchesAfterTimeThreshold(currentTimeMinus15Minutes);
     }
 
-//    public List<Match> getPastMatches() {
-//        return matchRepository.findPastMatches();
-//    }
+    //Retrieve matches that have already taken place or take place after 15 minutes
+    public List<Match> getPastMatches() {
+        LocalDateTime currentTimeMinus15Minutes = LocalDateTime.now().minusMinutes(15);
+        return matchRepository.findMatchesBeforeTimeThreshold(currentTimeMinus15Minutes);
+    }
 
 }
 

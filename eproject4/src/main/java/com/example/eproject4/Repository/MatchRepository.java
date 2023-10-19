@@ -31,7 +31,11 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
             "ORDER BY m.match_time DESC")
     List<Match> findLatestFinishedMatch();
 
-    //List Ticket
+
+    //Ticket
     @Query("SELECT m FROM Match m WHERE m.match_time >= :timeThreshold")
     List<Match> findMatchesAfterTimeThreshold(@Param("timeThreshold") LocalDateTime timeThreshold);
+
+    @Query("SELECT m FROM Match m WHERE m.match_time < :timeThreshold")
+    List<Match> findMatchesBeforeTimeThreshold(@Param("timeThreshold") LocalDateTime timeThreshold);
 }
