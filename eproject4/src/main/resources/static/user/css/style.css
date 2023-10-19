@@ -1389,9 +1389,11 @@ input[type=text] {
 
 .dropdown-fix:hover {
   background-color: #f8f9fa;
+  padding-left: 5px;
 }
 
 .dropdown-fix2:hover {
   background-color: #f8f9fa;
   color: #ee1e46;
+  padding-left: 5px;
 }

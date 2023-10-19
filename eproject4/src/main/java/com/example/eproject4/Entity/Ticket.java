@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "ticket_area")
+@Table(name = "ticket")
 public class Ticket {
     @MapToDTO
     @Id

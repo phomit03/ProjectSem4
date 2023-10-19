@@ -21,12 +21,15 @@ public class TicketUserController {
     public String tickets(Model model) {
         model.addAttribute("overlay_title", "Tickets");
         model.addAttribute("title", "Tickets");
-        model.addAttribute("description", "Day la danh sach ve cac tran dau");
+        model.addAttribute("description",
+                "List of tickets for matches currently on selling and matches that have stopped selling");
 
+        //Matches that have not yet taken place or are taking place 15 minutes before
         List<Match> upcomingMatches = ticketService.getUpcomingMatches();
-
         model.addAttribute("upcomingMatches", upcomingMatches);
-//        model.addAttribute("pastMatches", ticketService.getPastMatches());
+        //Matches have taken place or are taking place after 15 minutes
+        List<Match> pastMatches = ticketService.getPastMatches();
+        model.addAttribute("pastMatches", pastMatches);
 
         return "customer_tickets";
     }
