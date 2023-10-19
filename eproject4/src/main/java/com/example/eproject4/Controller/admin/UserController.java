@@ -4,6 +4,7 @@ import com.example.eproject4.Entity.Employee;
 import com.example.eproject4.Entity.Role;
 import com.example.eproject4.Entity.User;
 import com.example.eproject4.Service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,16 +16,12 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/user")
 public class UserController {
+	@Autowired
 	private UserService userService;
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
-	//	@GetMapping("")
-//	public String getAllUsers(Model model) {
-//		List<User> users = userService.getAllUsers();
-//		model.addAttribute("users", users);
-//		return "user_list";
-//	}
+
 	@GetMapping
 	public String getAllUsers(Model model) {
 		model.addAttribute("title", "Users");
@@ -32,25 +29,6 @@ public class UserController {
 		return findPaginated(1, model);
 	}
 
-
-//	@GetMapping("/{id}")
-//	public String getUserById(@PathVariable Long id, Model model) {
-//		User user = userService.getUserById(id);
-//		model.addAttribute("user", user);
-//		return "user-details";
-//	}
-
-//	@GetMapping("/new")
-//	public String showUserForm(Model model) {
-//		model.addAttribute("user", new User());
-//		return "user_list";
-//	}
-
-//	@PostMapping("/new")
-//	public String createUser(@ModelAttribute("user") User user) {
-//		userService.createUser(user);
-//		return "redirect:/user/";
-//	}
 
 	@GetMapping("/{id}/edit")
 	public String showEditUserForm(@PathVariable Long id, Model model) {
