@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Entity
 @Table(name = "ticket_area")
-public class TicketArea {
+public class Ticket {
     @MapToDTO
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

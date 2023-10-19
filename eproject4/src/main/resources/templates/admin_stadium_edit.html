@@ -30,13 +30,6 @@
                         </div>
                         <form th:action="@{/admin/stadium/update/{id} (id = ${stadiumDTO.id})}" th:object="${stadiumDTO}"
                               method="post" enctype="multipart/form-data">
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">Name Stadium</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" th:field="*{name}" name="name">
-                                </div>
-                            </div>
-
                             <div class="row mb-3" style="height: 100px; display: flex; align-items: center">
                                 <label class="col-sm-2 col-form-label">Map Image Stadium</label>
                                 <div class="col-sm-4">
@@ -48,6 +41,12 @@
                                 </div>
                             </div>
 
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Name Stadium</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" th:field="*{name}" name="name">
+                                </div>
+                            </div>
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Description Stadium</label>
