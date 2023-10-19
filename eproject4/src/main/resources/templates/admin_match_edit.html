@@ -373,11 +373,12 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: "/admin/match/event/delete/" + id,
+                    type: 'POST',
+                    url: '/admin/match/event/delete/'+ id,
                     success: function () {
                         location.reload();
                     }
-                })
+                });
             }
         })
     })
