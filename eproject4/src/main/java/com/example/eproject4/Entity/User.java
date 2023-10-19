@@ -1,5 +1,6 @@
 package com.example.eproject4.Entity;
 
+import com.example.eproject4.Utils.MapToDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,43 +17,49 @@ import java.util.Collection;
 @Entity
 @Table(name =  "user", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class User {
-
+    @MapToDTO
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-
-    private String username;
-
-
+    @MapToDTO
     private String email;
 
+    @MapToDTO
+    private String username;
 
+    @MapToDTO
     private String password;
 
-    @Column(name = "address", nullable = true)
-    private String address;
-
-	@Column(name = "date_of_birth", nullable = true)
-	private LocalDate dateOfBirth;
-
-
+    @MapToDTO
     @Column(name = "full_name", nullable = true)
     private String fullName;
 
+    @MapToDTO
+    @Column(name = "date_of_birth", nullable = true)
+    private LocalDate dateOfBirth;
+
+    @MapToDTO
     @Column(name = "phone", nullable = true)
     private String phone;
 
+    @MapToDTO
+    @Column(name = "address", nullable = true)
+    private String address;
+
+    @MapToDTO
     @Column(name = "status", columnDefinition = "INT DEFAULT 1")
     private Integer status;
 
+    @MapToDTO
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt;
 
+    @MapToDTO
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Timestamp updatedAt;
 
+    @MapToDTO
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",

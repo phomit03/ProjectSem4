@@ -65,7 +65,8 @@
                                             <i class="bi bi-caret-down color-red icon-large"></i>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="userDropdown">
-                                            <a class="dropdown-item dropdown-fix color-grey" th:href="@{/info}">
+                                            <a class="dropdown-item dropdown-fix color-grey"
+                                               th:href="@{/account/info/{id} (id=${session.loggedInUser.id})}">
                                                 <i class="icon-user mr-2 color-red"></i> Info Account
                                             </a>
                                             <a class="dropdown-item dropdown-fix color-grey" href="#">
