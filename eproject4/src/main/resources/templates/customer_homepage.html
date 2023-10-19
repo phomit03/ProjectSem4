@@ -62,7 +62,7 @@
                                             <i class="bi bi-caret-down color-red icon-large"></i>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="userDropdown">
-                                            <a class="dropdown-item dropdown-fix color-grey" href="#">
+                                            <a class="dropdown-item dropdown-fix color-grey" th:href="@{/info}">
                                                 <i class="icon-user mr-2 color-red"></i> Info Account
                                             </a>
                                             <a class="dropdown-item dropdown-fix color-grey" href="#">
@@ -116,8 +116,8 @@
                     <div class="team-1 w-50">
                         <div class="team-details w-100 text-center">
                             <input type="hidden" class="live-match-id" th:value="${nextMatchesOrLiveMatches[0].id}">
-                            <img th:src="@{${nextMatchesOrLiveMatches[0].home_team.logo_img}}" alt="Image" class="img-fluid" style="width: 70px; max-height: 80px">
-                            <h3 th:text="${nextMatchesOrLiveMatches[0].home_team.name}"></h3>
+                            <img th:src="@{${nextMatchesOrLiveMatches[0].home_team.logo_img}}" alt="Image" class="img-fluid" style="width: 70px; height: 75px">
+                            <h3 class="mt-2" th:text="${nextMatchesOrLiveMatches[0].home_team.name}"></h3>
                             <input type="hidden" class="home-team-id" th:value="${nextMatchesOrLiveMatches[0].home_team.id}">
                             <ul class="list-unstyled home-team-event">
 
@@ -126,8 +126,8 @@
                     </div>
                     <div class="team-2 w-50">
                         <div class="team-details w-100 text-center">
-                            <img th:src="@{${nextMatchesOrLiveMatches[0].away_team.logo_img}}" alt="Image" class="img-fluid" style="width: 70px; max-height: 100px">
-                            <h3 th:text="${nextMatchesOrLiveMatches[0].away_team.name}"></h3>
+                            <img th:src="@{${nextMatchesOrLiveMatches[0].away_team.logo_img}}" alt="Image" class="img-fluid" style="width: 70px; height: 75px">
+                            <h3 class="mt-2" th:text="${nextMatchesOrLiveMatches[0].away_team.name}"></h3>
                             <input type="hidden" class="away-team-id" th:value="${nextMatchesOrLiveMatches[0].away_team.id}">
                             <ul class="list-unstyled away-team-event">
 
@@ -158,7 +158,7 @@
                                 <div class="author d-flex align-items-center">
                                     <div class="img mb-2 mr-3">
                                         <a routerLink="/news/detail">
-                                            <img th:src="@{/user/images/img_1.jpg}" alt="">
+                                            <img th:src="@{/user/images/img_1.jpg}" alt="" style="width: 40px; height: 40px">
                                         </a>
                                     </div>
                                     <div class="text">
