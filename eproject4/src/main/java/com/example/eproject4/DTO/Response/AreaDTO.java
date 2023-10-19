@@ -1,30 +1,23 @@
 package com.example.eproject4.DTO.Response;
 
-import com.example.eproject4.Utils.MapToDTO;
+import com.example.eproject4.Entity.Stadium;
+import com.example.eproject4.Entity.Team;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NewDTO {
-    @MapToDTO
+public class AreaDTO {
     private Long id;
-    @MapToDTO
-    private String new_img;
-    @MapToDTO
-    private String title;
-    @MapToDTO
-    private String sub_title;
-    @MapToDTO
-    private String content;
-    @MapToDTO
+    private String area_name;
+    private Stadium stadium;
     private Integer status;
-    @MapToDTO
     private Timestamp created_at;
-    @MapToDTO
     private Timestamp updated_at;
 }

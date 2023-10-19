@@ -29,7 +29,12 @@
                     <div class="text">
                         <a th:href="@{/news/detail/{id} (id=${aNew.id})}">
                             <h3 class="mb-3 text-2-line" th:text="${aNew.title}"></h3>
-                            <div class="text-2-line" th:utext="${#strings.substring(aNew.content,0,100)} + '...'"></div>
+                            <div th:if="${#strings.length(aNew.content) < 100}">
+                                <div th:utext="${aNew.content}"></div>
+                            </div>
+                            <div th:unless="${#strings.length(aNew.content) <= 100}">
+                                <div class="text-2-line" th:utext="${#strings.substring(aNew.content, 0, 100)} + '...'"></div>
+                            </div>
                             <div class="mt-3">
                                 <a th:href="@{/news/detail/{id} (id=${aNew.id})}">Read more</a>
                             </div>

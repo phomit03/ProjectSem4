@@ -16,7 +16,7 @@ public class TeamUserController {
         return "customer_teams";
     }
     @RequestMapping("/detail")
-    public String team_detail(Model model) {
+    public String teamDetail(Model model) {
         model.addAttribute("title", "Teams Detail");
         model.addAttribute("overlay_title", "Day la ten doi bong");
         model.addAttribute("description", "Mo ta doi bong");
