@@ -558,33 +558,35 @@
         matchId: $('.live-match-id').val()
     };
 
-    $.ajax({
-        type: 'POST',
-        url: '/api/getTeamEvent',
-        contentType: 'application/json',
-        data: JSON.stringify(dataToSend),
-        success: function (res) {
-            var homeTeamEventsUl = $('.home-team-event');
-            homeTeamEventsUl.empty();
-            $.each(res.homeTeamEventGoal, function (index, event) {
-                getPlayerById(event.player_id, function(player) {
-                    var li = $('<li>').text(player.name + ' (' + event.time + ')');
-                    homeTeamEventsUl.append(li);
+    if (!dataToSend.matchId.isEmpty) {
+        $.ajax({
+            type: 'POST',
+            url: '/api/getTeamEvent',
+            contentType: 'application/json',
+            data: JSON.stringify(dataToSend),
+            success: function (res) {
+                var homeTeamEventsUl = $('.home-team-event');
+                homeTeamEventsUl.empty();
+                $.each(res.homeTeamEventGoal, function (index, event) {
+                    getPlayerById(event.player_id, function(player) {
+                        var li = $('<li>').text(player.name + ' (' + event.time + ')');
+                        homeTeamEventsUl.append(li);
+                    });
                 });
-            });
 
-            var awayTeamEventsUl = $('.away-team-event');
-            awayTeamEventsUl.empty();
-            $.each(res.awayTeamEventGoal, function (index, event) {
-                getPlayerById(event.player_id, function(player) {
-                    var li = $('<li>').text(player.name + ' (' + event.time + ')');
-                    awayTeamEventsUl.append(li);
+                var awayTeamEventsUl = $('.away-team-event');
+                awayTeamEventsUl.empty();
+                $.each(res.awayTeamEventGoal, function (index, event) {
+                    getPlayerById(event.player_id, function(player) {
+                        var li = $('<li>').text(player.name + ' (' + event.time + ')');
+                        awayTeamEventsUl.append(li);
+                    });
                 });
-            });
 
-            $('.live-score').html(res.homeTeamScore + '-' + res.awayTeamScore);
-        }
-    });
+                $('.live-score').html(res.homeTeamScore + '-' + res.awayTeamScore);
+            }
+        });
+    }
     function getPlayerById(id, callback) {
         $.ajax({
             type: 'POST',
