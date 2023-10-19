@@ -20,14 +20,15 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
 
     @Query("SELECT m FROM Match m " +
             "JOIN MatchDetail md ON m.id = md.match_id " +
-            "WHERE m.match_time < :currentTime AND md.match_end = 0" +
-            "ORDER BY m.match_time DESC ")
+            "WHERE m.match_time <= :currentTime " +
+            "AND (md.match_end = 0 OR md.match_end IS NULL) " +
+            "ORDER BY m.match_time DESC")
     List<Match> findLiveMatches(@Param("currentTime") LocalDateTime currentTime);
 
     @Query("SELECT m FROM Match m " +
             "JOIN MatchDetail md ON m.id = md.match_id " +
             "WHERE md.match_end = 1 " +
-            "ORDER BY m.match_time DESC ")
+            "ORDER BY m.match_time DESC")
     List<Match> findLatestFinishedMatch();
 
     //List Ticket
