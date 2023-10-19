@@ -42,7 +42,7 @@ public class HomePageUserController {
         return "customer_homepage";
     }
     @RequestMapping("/home")
-    public String home_page(Model model) {
+    public String homePage(Model model) {
         model.addAttribute("title", "Home Page");
         model.addAttribute("overlay_title", "World Cup Event");
         model.addAttribute("description", "Welcome to the most exciting tournament on the planet ^.^");
