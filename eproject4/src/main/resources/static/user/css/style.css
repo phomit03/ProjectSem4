@@ -1428,6 +1428,30 @@ input[type=text] {
   margin-right: 1rem;
 }
 
-.edit-childs {
-  margin-left: 20px;
+
+.icon-large {
+  font-size: large;
+}
+
+.color-red {
+  color: #ee1e46;
+}
+
+.color-grey {
+  color: #666666;
+}
+
+.dropdown-fix.active, .dropdown-fix:active {
+  background-color: white;
+  color: #666666;
+}
+
+.dropdown-fix:hover {
+  background-color: #f8f9fa;
+}
+
+.dropdown-fix2:hover {
+  background-color: #f8f9fa;
+  color: #ee1e46;
+
 }

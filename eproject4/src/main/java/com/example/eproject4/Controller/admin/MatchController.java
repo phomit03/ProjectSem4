@@ -7,6 +7,7 @@ import com.example.eproject4.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,15 +33,19 @@ public class MatchController {
     @Autowired
     private final MatchDetailEventService matchDetailEventService;
 
+    @Autowired
+    private final SimpMessagingTemplate messagingTemplate;
+
 
     @Autowired
-    public MatchController(MatchService matchService, TeamService teamService, StadiumService stadiumService, MatchDetailService matchDetailService, PlayerService playerService, MatchDetailEventService matchDetailEventService) {
+    public MatchController(MatchService matchService, TeamService teamService, StadiumService stadiumService, MatchDetailService matchDetailService, PlayerService playerService, MatchDetailEventService matchDetailEventService, SimpMessagingTemplate messagingTemplate) {
         this.matchService = matchService;
         this.teamService = teamService;
         this.stadiumService = stadiumService;
         this.matchDetailService = matchDetailService;
         this.playerService = playerService;
         this.matchDetailEventService = matchDetailEventService;
+        this.messagingTemplate = messagingTemplate;
     }
 
     @RequestMapping("/matches")
@@ -138,6 +143,20 @@ public class MatchController {
     public String eventSave(@ModelAttribute("teamEvent") MatchDetailEventDTO matchDetailEventDTO, RedirectAttributes redirectAttributes) {
         try {
             MatchDetailEventDTO matchDetailEventDTO1 = matchDetailEventService.create(matchDetailEventDTO);
+
+            MatchDTO matchDTO = matchService.getMatchById(matchDetailEventDTO.getMatch_id());
+            Long homeTeamScore = matchDetailEventService.countEvent(matchDTO.getHome_team_id().getId(), matchDTO.getId(), 1);
+            Long awayTeamScore = matchDetailEventService.countEvent(matchDTO.getAway_team_id().getId(), matchDTO.getId(), 1);
+            List<MatchDetailEventDTO> homeTeamEventGoal = matchDetailEventService.getEventsByTeamIdAndMatchIdAndType(matchDTO.getHome_team_id().getId(), matchDTO.getId(), 1);
+            List<MatchDetailEventDTO> awayTeamEventGoal = matchDetailEventService.getEventsByTeamIdAndMatchIdAndType(matchDTO.getAway_team_id().getId(), matchDTO.getId(), 1);
+            ScoreUpdate scoreUpdate = new ScoreUpdate();
+            scoreUpdate.setMatch_id(matchDTO.getId());
+            scoreUpdate.setHomeTeamScore(homeTeamScore);
+            scoreUpdate.setAwayTeamScore(awayTeamScore);
+            scoreUpdate.setHomeTeamEventGoal(homeTeamEventGoal);
+            scoreUpdate.setAwayTeamEventGoal(awayTeamEventGoal);
+
+            messagingTemplate.convertAndSend("/topic/score", scoreUpdate);
             return "redirect:/admin/match/edit/" + matchDetailEventDTO.getMatch_id();
         } catch (Exception e) {
             e.printStackTrace();
@@ -179,14 +198,31 @@ public class MatchController {
         }
     }
 
-    @GetMapping("/match/event/delete/{id}")
+    @PostMapping("/match/event/delete/{id}")
     public ResponseEntity<String> deleteMatchDetailEvent(@PathVariable Long id) {
-        try {
-            matchDetailEventService.delete(id);
-            return ResponseEntity.ok("Delete event successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error!");
-        }
+//        try {
+//
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error!");
+//        }
+        matchDetailEventService.delete(id);
+        MatchDetailEventDTO matchDetailEventDTO = matchDetailEventService.getById(id);
+
+        MatchDTO matchDTO = matchService.getMatchById(matchDetailEventDTO.getMatch_id());
+        Long homeTeamScore = matchDetailEventService.countEvent(matchDTO.getHome_team_id().getId(), matchDTO.getId(), 1);
+        Long awayTeamScore = matchDetailEventService.countEvent(matchDTO.getAway_team_id().getId(), matchDTO.getId(), 1);
+        List<MatchDetailEventDTO> homeTeamEventGoal = matchDetailEventService.getEventsByTeamIdAndMatchIdAndType(matchDTO.getHome_team_id().getId(), matchDTO.getId(), 1);
+        List<MatchDetailEventDTO> awayTeamEventGoal = matchDetailEventService.getEventsByTeamIdAndMatchIdAndType(matchDTO.getAway_team_id().getId(), matchDTO.getId(), 1);
+        ScoreUpdate scoreUpdate = new ScoreUpdate();
+        scoreUpdate.setMatch_id(matchDTO.getId());
+        scoreUpdate.setHomeTeamScore(homeTeamScore);
+        scoreUpdate.setAwayTeamScore(awayTeamScore);
+        scoreUpdate.setHomeTeamEventGoal(homeTeamEventGoal);
+        scoreUpdate.setAwayTeamEventGoal(awayTeamEventGoal);
+
+        messagingTemplate.convertAndSend("/topic/score", scoreUpdate);
+
+        return ResponseEntity.ok("Delete event successfully.");
     }
 
     @PostMapping("/match/detail/update/{id}")
