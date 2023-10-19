@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/areas")
+@RequestMapping("/admin/area")
 public class AreaController {
     private AreaService areaService;
 

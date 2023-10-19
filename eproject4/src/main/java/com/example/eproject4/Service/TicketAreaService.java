@@ -5,12 +5,16 @@ import com.example.eproject4.DTO.Request.TicketAreaRequest;
 import com.example.eproject4.DTO.Response.AreaDTO;
 import com.example.eproject4.DTO.Response.TicketAreaDTO;
 import com.example.eproject4.Entity.Area;
+import com.example.eproject4.Entity.New;
 import com.example.eproject4.Entity.TicketArea;
 import com.example.eproject4.Repository.AreaRepository;
 import com.example.eproject4.Repository.TicketAreaRepository;
 import com.example.eproject4.Utils.Helper;
 import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -78,5 +82,11 @@ public class TicketAreaService {
         ticketAreaRepository.deleteById(id);
     }
 
+    //phan trang
+    public Page<TicketArea> findPaginated(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.ticketAreaRepository.findAll(pageable);
+    }
 }
 
