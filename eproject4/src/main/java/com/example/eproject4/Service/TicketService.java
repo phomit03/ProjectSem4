@@ -1,8 +1,11 @@
 package com.example.eproject4.Service;
 
 import com.example.eproject4.DTO.Request.TicketRequest;
+import com.example.eproject4.DTO.Response.MatchDTO;
 import com.example.eproject4.DTO.Response.TicketDTO;
+import com.example.eproject4.Entity.Match;
 import com.example.eproject4.Entity.Ticket;
+import com.example.eproject4.Repository.MatchRepository;
 import com.example.eproject4.Repository.TicketRepository;
 import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,52 +23,57 @@ import java.util.stream.Collectors;
 public class TicketService {
     @Autowired
     private final TicketRepository ticketRepository;
+
+    @Autowired
+    private final MatchRepository matchRepository;
+
     @Autowired
     private final ModelToDtoConverter modelToDtoConverter;
 
     @Autowired
-    public TicketService(TicketRepository ticketRepository, ModelToDtoConverter modelToDtoConverter) {
+    public TicketService(TicketRepository ticketRepository, MatchRepository matchRepository, ModelToDtoConverter modelToDtoConverter) {
         this.ticketRepository = ticketRepository;
+        this.matchRepository = matchRepository;
         this.modelToDtoConverter = modelToDtoConverter;
     }
 
     public List<TicketDTO> getAllTickets() {
         List<Ticket> tickets = ticketRepository.findAll();
 
-        return tickets.stream().map(ticketArea -> modelToDtoConverter.convertToDto(ticketArea, TicketDTO.class))
+        return tickets.stream().map(ticket -> modelToDtoConverter.convertToDto(ticket, TicketDTO.class))
                 .collect(Collectors.toList());
     }
 
     public TicketDTO getTicketById(Long id) {
-        Ticket tickets = ticketRepository.findById(id).orElse(null);
-        return modelToDtoConverter.convertToDto(tickets, TicketDTO.class);
+        Ticket ticket = ticketRepository.findById(id).orElse(null);
+        return modelToDtoConverter.convertToDto(ticket, TicketDTO.class);
     }
 
     public TicketDTO createTicket(TicketRequest ticketRequest) {
-        Ticket tickets = new Ticket();
+        Ticket ticket = new Ticket();
 
-        tickets.setArea(ticketRequest.getArea_id());
-        tickets.setMatch(ticketRequest.getMatch_id());
-        tickets.setQuantity(ticketRequest.getQuantity());
-        tickets.setPrice(ticketRequest.getPrice());
-        tickets.setStatus(1);
+        ticket.setArea(ticketRequest.getArea_id());
+        ticket.setMatch(ticketRequest.getMatch_id());
+        ticket.setQuantity(ticketRequest.getQuantity());
+        ticket.setPrice(ticketRequest.getPrice());
+        ticket.setStatus(1);
 
-        tickets = ticketRepository.save(tickets);
-        return modelToDtoConverter.convertToDto(tickets, TicketDTO.class);
+        ticket = ticketRepository.save(ticket);
+        return modelToDtoConverter.convertToDto(ticket, TicketDTO.class);
     }
 
     public Ticket updateTicket(TicketRequest ticketRequest) {
         try {
-            Ticket tickets = ticketRepository.getById(ticketRequest.getId());
+            Ticket ticket = ticketRepository.getById(ticketRequest.getId());
 
-            tickets.setArea(ticketRequest.getArea_id());
-            tickets.setMatch(ticketRequest.getMatch_id());
-            tickets.setQuantity(ticketRequest.getQuantity());
-            tickets.setPrice(ticketRequest.getPrice());
-            tickets.setStatus(ticketRequest.getStatus());
-            tickets.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
+            ticket.setArea(ticketRequest.getArea_id());
+            ticket.setMatch(ticketRequest.getMatch_id());
+            ticket.setQuantity(ticketRequest.getQuantity());
+            ticket.setPrice(ticketRequest.getPrice());
+            ticket.setStatus(ticketRequest.getStatus());
+            ticket.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
 
-            return ticketRepository.save(tickets);
+            return ticketRepository.save(ticket);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -76,6 +84,18 @@ public class TicketService {
         ticketRepository.deleteById(id);
     }
 
+    //Retrieve matches that have not yet taken place or took place 15 minutes before
+    public List<Match> getUpcomingMatches() {
+        LocalDateTime currentTimeMinus15Minutes = LocalDateTime.now().minusMinutes(15);
+        return matchRepository.findMatchesAfterTimeThreshold(currentTimeMinus15Minutes);
+    }
+
+    //Retrieve matches that have already taken place or take place after 15 minutes
+    public List<Match> getPastMatches() {
+        LocalDateTime currentTimeMinus15Minutes = LocalDateTime.now().minusMinutes(15);
+        return matchRepository.findMatchesBeforeTimeThreshold(currentTimeMinus15Minutes);
+    }
+
     //phan trang
     public Page<Ticket> findPaginated(int pageNo, int pageSize) {
 
@@ -83,4 +103,3 @@ public class TicketService {
         return this.ticketRepository.findAll(pageable);
     }
 }
-
