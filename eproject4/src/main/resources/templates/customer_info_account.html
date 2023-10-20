@@ -18,36 +18,30 @@
                         </div>
                         <hr style="border: 1px solid #fff">
                         <div class="card-body">
-                            <form th:action="@{update/info/{id} (id=${user.id})}" th:object="${user}">
+                            <form th:action="@{/account/update/info/{id} (id=${user.id})}" th:object="${user}" method="post" enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label for="email" class="form-label font-weight-bold">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Please enter email"
-                                           th:value="${user.email != null ? user.email : ''}" >
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Please enter email" th:field="*{email}">
                                 </div>
                                 <div class="mb-3">
                                     <label for="username" class="form-label font-weight-bold">Username</label>
-                                    <input type="text" class="form-control" id="username" name="username" placeholder="Please enter username"
-                                           th:field="${user.username}" disabled>
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Please enter username" th:field="*{username}" readonly="readonly">
                                 </div>
                                 <div class="mb-3">
                                     <label for="full_name" class="form-label font-weight-bold">Full Name</label>
-                                    <input type="text" class="form-control" id="full_name" name="fullName" placeholder="Please enter full name"
-                                           th:value="${user.fullName != null ? user.fullName : ''}">
+                                    <input type="text" class="form-control" id="full_name" name="fullName" placeholder="Please enter full name" th:field="*{fullName}">
                                 </div>
                                 <div class="mb-3">
                                     <label for="date_of_birth" class="form-label font-weight-bold">Date of Birth</label>
-                                    <input type="date" class="form-control" id="date_of_birth" name="dateOfBirth" placeholder="Please enter date of birth"
-                                           th:value="${user.dateOfBirth != null ? user.dateOfBirth : ''}">
+                                    <input type="date" class="form-control" id="date_of_birth" name="dateOfBirth" placeholder="Please enter date of birth" th:field="*{dateOfBirth}">
                                 </div>
                                 <div class="mb-3">
                                     <label for="phone" class="form-label font-weight-bold">Phone</label>
-                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Please enter phone"
-                                           th:value="${user.phone != null ? user.phone : ''}">
+                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Please enter phone" th:field="*{phone}">
                                 </div>
                                 <div class="mb-3">
                                     <label for="address" class="form-label font-weight-bold">Address</label>
-                                    <input type="text" class="form-control" id="address" name="address" placeholder="Please enter address"
-                                           th:value="${user.address != null ? user.address : ''}">
+                                    <input type="text" class="form-control" id="address" name="address" placeholder="Please enter address" th:field="*{address}">
                                 </div>
                                 <button type="submit" class="btn btn-primary mt-2 float-right py-2">Save Changes</button>
                             </form>
@@ -64,6 +58,34 @@
 </div>
 
 <div th:replace="customer_fragments::script-fragment"></div>
+
+
+<div class="message" th:if="${error}" th:data="${error}" style="display: none"></div>
+
+<script th:if="${error}">
+    $( document ).ready(function() {
+        var message = $('.message').attr('data');
+        Swal.fire(
+            'Error',
+            message,
+            'error'
+        )
+    });
+</script>
+
+<div class="message" th:if="${success}" th:data="${success}" style="display: none"></div>
+
+<script th:if="${success}">
+    $( document ).ready(function() {
+        var message = $('.message').attr('data');
+        Swal.fire(
+            'Success',
+            message,
+            'success'
+        )
+    });
+</script>
+
 </body>
 
 </html>
