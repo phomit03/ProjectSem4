@@ -18,12 +18,24 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     @Query("SELECT m FROM Match m WHERE m.match_time = :matchTime AND m.away_team_id.id = :awayTeamId")
     List<Match> findMatchesByMatchTimeAndAwayTeamId (@Param("matchTime") LocalDateTime matchTime, @Param("awayTeamId") Long awayTeamId);
 
-    @Query("SELECT m, md, mde " +
-            "FROM Match m " +
-            "LEFT JOIN MatchDetail md ON m.id = md.match_id " +
-            "LEFT JOIN MatchDetailEvent mde ON m.id = mde.match_id " +
-            "WHERE (m.match_time > :currentDateTime AND m.status = 1) " +
-            "OR (m.match_time > :currentDateTime) " +
-            "ORDER BY m.match_time ASC")
-    List<Match> findNextLiveOrUpcomingMatchesWithDetails(@Param("currentDateTime") LocalDateTime currentDateTime);
+    @Query("SELECT m FROM Match m " +
+            "JOIN MatchDetail md ON m.id = md.match_id " +
+            "WHERE m.match_time <= :currentTime " +
+            "AND (md.match_end = 0 OR md.match_end IS NULL) " +
+            "ORDER BY m.match_time DESC")
+    List<Match> findLiveMatches(@Param("currentTime") LocalDateTime currentTime);
+
+    @Query("SELECT m FROM Match m " +
+            "JOIN MatchDetail md ON m.id = md.match_id " +
+            "WHERE md.match_end = 1 " +
+            "ORDER BY m.match_time DESC")
+    List<Match> findLatestFinishedMatch();
+
+
+    //Ticket
+    @Query("SELECT m FROM Match m WHERE m.match_time >= :timeThreshold")
+    List<Match> findMatchesAfterTimeThreshold(@Param("timeThreshold") LocalDateTime timeThreshold);
+
+    @Query("SELECT m FROM Match m WHERE m.match_time < :timeThreshold")
+    List<Match> findMatchesBeforeTimeThreshold(@Param("timeThreshold") LocalDateTime timeThreshold);
 }

@@ -1,7 +1,6 @@
 package com.example.eproject4.Service;
 
 import com.example.eproject4.DTO.UserRegistrationDto;
-import com.example.eproject4.Entity.Employee;
 import com.example.eproject4.Entity.Role;
 import com.example.eproject4.Entity.User;
 import com.example.eproject4.Repository.UserRepository;
@@ -62,22 +61,19 @@ public class UserService implements UserDetailsService {
 		return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
 	}
 
-//	@Override
-//	public User createUser(User user) {
-//		return userRepository.save(user);
-//	}
-
 	public User updateUser(Long id, User user) {
 		User existingUser = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
-		existingUser.setUsername(user.getUsername());
 		existingUser.setEmail(user.getEmail());
-		existingUser.setAddress(user.getAddress());
+		existingUser.setUsername(user.getUsername());
 		existingUser.setFullName(user.getFullName());
 		existingUser.setPhone(user.getPhone());
 		existingUser.setDateOfBirth(user.getDateOfBirth());
+		existingUser.setAddress(user.getAddress());
+
 		if (!user.getPassword().equals(existingUser.getPassword())) {
 			existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
 		}
+
 		return userRepository.save(existingUser);
 	}
 

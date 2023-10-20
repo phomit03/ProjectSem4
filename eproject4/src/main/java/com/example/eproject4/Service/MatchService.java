@@ -115,10 +115,16 @@ public class MatchService {
         return true;
     }
 
-    public List<MatchDTO> getNextMatchesOrLiveMatches() {
+    public List<MatchDTO> getNextMatchesOrLiveMatches(int limit) {
         LocalDateTime currentDateTime = LocalDateTime.now();
-        List<Match> matches = matchRepository.findNextLiveOrUpcomingMatchesWithDetails(currentDateTime);
-        int maxResults = 5;
+        List<Match> matches;
+        List<Match> liveMatches = matchRepository.findLiveMatches(currentDateTime);
+        if (liveMatches.isEmpty()) {
+            matches = matchRepository.findLatestFinishedMatch();
+        } else  {
+            matches = liveMatches;
+        }
+        int maxResults = limit != 0 ? limit : 3;
         if (matches.size() > maxResults) {
             matches = matches.subList(0, maxResults);
         }

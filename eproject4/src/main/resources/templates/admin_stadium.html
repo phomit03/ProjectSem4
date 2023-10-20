@@ -55,11 +55,11 @@
                                     <tbody th:if="${stadiums != null and #lists.size(stadiums) > 0}">
                                         <tr th:each="stadium, iterStat : ${stadiums}" th:class="'stadium-' + ${stadium.id}">
                                             <td th:text="${iterStat.index + 1}"></td>
-                                            <td th:text="${stadium.name}"></td>
                                             <td>
                                                 <img style="width: 70px; max-height: 100px" th:src="@{${stadium.map_img}}">
                                             </td>
-                                            <td th:text="${#strings.length(stadium.description) > 100 ?
+                                            <td th:text="${stadium.name}"></td>
+                                            <td th:utext="${#strings.length(stadium.description) > 100 ?
                                                 #strings.substring(stadium.description, 0, 200) + '...'
                                                 :
                                                 stadium.description

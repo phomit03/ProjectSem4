@@ -1,11 +1,10 @@
 package com.example.eproject4.Controller.admin;
 
-import com.example.eproject4.DTO.Request.TicketAreaRequest;
-import com.example.eproject4.DTO.Response.NewDTO;
-import com.example.eproject4.DTO.Response.TicketAreaDTO;
-import com.example.eproject4.Entity.New;
-import com.example.eproject4.Entity.TicketArea;
-import com.example.eproject4.Service.TicketAreaService;
+import com.example.eproject4.DTO.Request.TicketRequest;
+
+import com.example.eproject4.DTO.Response.TicketDTO;
+import com.example.eproject4.Entity.Ticket;
+import com.example.eproject4.Service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -13,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -21,28 +20,28 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/ticket")
 public class TicketController {
-    private final TicketAreaService ticketAreaService;
+    private final TicketService ticketService;
     @Autowired
-    public TicketController(TicketAreaService ticketAreaService) {
-        this.ticketAreaService = ticketAreaService;
+    public TicketController(TicketService ticketService) {
+        this.ticketService = ticketService;
     }
 
     @GetMapping("/")
-    public String getAllTicketAreas(Model model){
+    public String getAllTickets(Model model){
         model.addAttribute("title", "News");
         return findPaginated(1, model);
     }
 
     @GetMapping("/create")
     public String showCreateForm(Model model){
-        model.addAttribute("ticket_area", new TicketAreaDTO());
+        model.addAttribute("ticket", new TicketDTO());
         return "admin_ticket";
     }
 
     @PostMapping("/create/save")
-    public String createTicketArea(@ModelAttribute TicketAreaRequest ticketAreaRequest, RedirectAttributes attributes) {
+    public String createTicket(@ModelAttribute TicketRequest ticketRequest, RedirectAttributes attributes) {
         try {
-            ticketAreaService.createTicketArea(ticketAreaRequest);
+            ticketService.createTicket(ticketRequest);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,19 +50,19 @@ public class TicketController {
 
     @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable Long id, Model model) {
-        TicketAreaDTO ticketAreaDTO = ticketAreaService.getTicketAreaById(id);
-        if (ticketAreaDTO == null) {
+        TicketDTO ticketDTO = ticketService.getTicketById(id);
+        if (ticketDTO == null) {
             return "redirect:/admin/ticket";
         }
 
-        model.addAttribute("ticket_area", ticketAreaDTO);
+        model.addAttribute("ticket", ticketDTO);
         return "admin_ticket_update";
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable Long id, @ModelAttribute("ticketAreaRequest") TicketAreaRequest ticketAreaRequest, RedirectAttributes attributes) {
+    public String update(@PathVariable Long id, @ModelAttribute("ticketRequest") TicketRequest ticketRequest, RedirectAttributes attributes) {
         try {
-            ticketAreaService.updateTicketArea(ticketAreaRequest);
+            ticketService.updateTicket(ticketRequest);
             attributes.addFlashAttribute("success", "Update Successfully!");
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,9 +72,9 @@ public class TicketController {
     }
 
     @GetMapping("/delete/{id}")
-    public ResponseEntity<String> deleteTicketAreaById(@PathVariable Long id) {
+    public ResponseEntity<String> deleteTicketById(@PathVariable Long id) {
         try {
-            ticketAreaService.deleteTicketArea(id);
+            ticketService.deleteTicket(id);
             return ResponseEntity.ok("Delete ticket successfully.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error!");
@@ -89,13 +88,13 @@ public class TicketController {
         int pageSize = 20;
 
 
-        Page<TicketArea> page = ticketAreaService.findPaginated(pageNo, pageSize);
-        List<TicketArea> ticket_area = page.getContent();
+        Page<Ticket> page = ticketService.findPaginated(pageNo, pageSize);
+        List<Ticket> ticket = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("ticket_area", ticket_area);
+        model.addAttribute("ticket", ticket);
         return "admin_ticket";
     }
 }
