@@ -37,8 +37,8 @@ public class HomePageUserController {
     @RequestMapping("/home")
     public String homePage(Model model) {
         model.addAttribute("title", "Home Page");
-        model.addAttribute("overlay_title", "World Cup Event");
-        model.addAttribute("description", "Welcome to the most exciting tournament on the planet ^.^");
+        model.addAttribute("overlay_title", "Premier League 2023");
+        model.addAttribute("description", "Welcome to the most exciting tournament on the planet");
 
         List<MatchDTO> nextMatchesOrLiveMatches = matchService.getNextMatchesOrLiveMatches(3);
         model.addAttribute("nextMatchesOrLiveMatches", nextMatchesOrLiveMatches);

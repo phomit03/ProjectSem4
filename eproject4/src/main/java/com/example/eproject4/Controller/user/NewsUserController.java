@@ -32,7 +32,7 @@ public class NewsUserController {
     @GetMapping("/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
                                 Model model) {
-        int pageSize = 5;
+        int pageSize = 6;
 
 
         Page<New> page = newService.findPaginated(pageNo, pageSize);
