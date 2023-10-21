@@ -6,6 +6,31 @@
     .team-vs:nth-child(n+2) {
         margin-top: 70px;
     }
+    .live-badge {
+        position: absolute;
+        top: 10px;
+        left: 45%;
+        background-color: #000;
+        color: #e74c3c;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        animation: pulse 1.5s infinite;
+        box-shadow: 0 0 5px rgba(231, 76, 60, 0.7);
+        z-index: 2;
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
 </style>
 <body>
 <div class="site-wrap">
@@ -120,6 +145,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div th:if="${nextMatchesOrLiveMatches} and ${#lists.size(nextMatchesOrLiveMatches) > 0}" th:each="match : ${nextMatchesOrLiveMatches}" th:class="'d-flex team-vs match-div-' + ${match.id}">
+                    <div class="live-badge" th:if="${match.type_match} == 1">LIVE</div>
                     <span th:class="'score live-score-' + ${match.id}"></span>
                     <div class="team-1 w-50">
                         <div class="team-details w-100 text-center">
@@ -128,7 +154,6 @@
                             <h3 class="mt-2" th:text="${match.home_team.name}"></h3>
                             <input type="hidden" class="home-team-id" th:value="${match.home_team.id}">
                             <ul th:class="'list-unstyled home-team-event-' + ${match.id}">
-
                             </ul>
                         </div>
                     </div>
@@ -138,7 +163,6 @@
                             <h3 class="mt-2" th:text="${match.away_team.name}"></h3>
                             <input type="hidden" class="away-team-id" th:value="${match.away_team.id}">
                             <ul th:class="'list-unstyled away-team-event-' + ${match.id}">
-
                             </ul>
                         </div>
                     </div>
