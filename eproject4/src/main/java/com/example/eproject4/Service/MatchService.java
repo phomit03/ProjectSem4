@@ -119,17 +119,25 @@ public class MatchService {
         LocalDateTime currentDateTime = LocalDateTime.now();
         List<Match> matches;
         List<Match> liveMatches = matchRepository.findLiveMatches(currentDateTime);
+        int typeMatch = liveMatches.isEmpty() ? 2 : 1;
+
         if (liveMatches.isEmpty()) {
             matches = matchRepository.findLatestFinishedMatch();
-        } else  {
+        } else {
             matches = liveMatches;
         }
+
         int maxResults = limit != 0 ? limit : 3;
         if (matches.size() > maxResults) {
             matches = matches.subList(0, maxResults);
         }
-        return matches.stream().map(match -> modelToDtoConverter.convertToDto(match, MatchDTO.class))
-                .collect(Collectors.toList());
+
+        return matches.stream().map(match -> {
+            MatchDTO dto = modelToDtoConverter.convertToDto(match, MatchDTO.class);
+            dto.setType_match(typeMatch);
+            return dto;
+        }).collect(Collectors.toList());
     }
+
 }
 
