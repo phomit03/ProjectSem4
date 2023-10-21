@@ -14,11 +14,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@RequestMapping("/account")
 public class CustomerController {
-    @Autowired
     private UserService userService;
-
-    @RequestMapping("/account/info/{id}")
+    @Autowired
+    public CustomerController(UserService userService) {
+        this.userService = userService;
+    }
+    @GetMapping("/info/{id}")
     public String accountInfo(@PathVariable Long id, Model model) {
         model.addAttribute("overlay_title", "Account Info");
         model.addAttribute("title", "Account Info");
@@ -30,7 +33,7 @@ public class CustomerController {
         return "customer_info_account";
     }
 
-    @RequestMapping("/update/info/{id}")
+    @PostMapping("update/info/{id}")
     public String updateInfo(@PathVariable Long id, @ModelAttribute("user") User user, RedirectAttributes attributes) {
         try {
             userService.updateUser(id, user);
@@ -40,6 +43,6 @@ public class CustomerController {
             attributes.addFlashAttribute("error", "Failed to update!");
         }
 
-        return "customer_info_account";
+        return "redirect:/account/info/{id}";
     }
 }

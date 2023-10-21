@@ -134,6 +134,11 @@
           url: "/admin/new/delete/" + id,
           success: function () {
             newRow.remove();
+            Swal.fire(
+                    'Success',
+                    'Delete success',
+                    'success'
+            )
           }
         })
       }

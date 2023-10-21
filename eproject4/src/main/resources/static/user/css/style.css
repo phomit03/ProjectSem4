@@ -686,6 +686,8 @@ h1, h2, h3, h4, h5,
     font-size: 3rem;
     font-weight: 700;
     z-index: 2;
+    padding-left: 20px;
+    padding-bottom: 50px;
     letter-spacing: .2em; }
     @media (max-width: 991.98px) {
       .team-vs .score {
@@ -712,7 +714,7 @@ h1, h2, h3, h4, h5,
       background: #f6d743;
       background: #ee1e46;
       content: "";
-      left: -12%;
+      left: -8%;
       right: 0;
       top: 0;
       width: 200%;
@@ -1405,4 +1407,30 @@ input[type=text] {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+
+.match-div-4 {
+  position: relative;
+}
+
+.live-indicator {
+  position: absolute;
+  top: 5%;
+  right: 1%;
+  display: flex;
+  align-items: center;
+}
+
+.live-circle {
+  width: 15px;
+  height: 15px;
+  background-color: #09d509 ;
+  border-radius: 50%;
+}
+
+.live-text {
+  color: #09d509;
+  font-weight: bold;
+  margin-left: 5px;
 }

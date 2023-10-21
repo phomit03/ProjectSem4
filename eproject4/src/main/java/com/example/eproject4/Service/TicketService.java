@@ -9,6 +9,9 @@ import com.example.eproject4.Repository.MatchRepository;
 import com.example.eproject4.Repository.TicketRepository;
 import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -93,5 +96,10 @@ public class TicketService {
         return matchRepository.findMatchesBeforeTimeThreshold(currentTimeMinus15Minutes);
     }
 
-}
+    //phan trang
+    public Page<Ticket> findPaginated(int pageNo, int pageSize) {
 
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.ticketRepository.findAll(pageable);
+    }
+}

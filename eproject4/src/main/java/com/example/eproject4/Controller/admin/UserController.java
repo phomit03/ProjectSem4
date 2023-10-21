@@ -6,9 +6,12 @@ import com.example.eproject4.Entity.User;
 import com.example.eproject4.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +19,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/user")
 public class UserController {
-	@Autowired
+
 	private UserService userService;
+	@Autowired
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
@@ -38,15 +42,25 @@ public class UserController {
 	}
 
 	@PostMapping("/{id}/edit")
-	public String updateUser(@PathVariable Long id, @ModelAttribute("user") User user) {
-		userService.updateUser(id, user);
+	public String updateUser(@PathVariable Long id, @ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
+		try {
+			userService.updateUser(id, user);
+			redirectAttributes.addFlashAttribute("success", "Update successfully!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			redirectAttributes.addFlashAttribute("error", "Failed to update!");
+		}
 		return "redirect:/admin/user";
 	}
 
 	@GetMapping("/{id}/delete")
-	public String deleteUser(@PathVariable Long id) {
-		userService.deleteUser(id);
-		return "redirect:/admin/user";
+	public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+		try {
+			userService.deleteUser(id);
+			return ResponseEntity.ok("Delete user successfully.");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error!");
+		}
 	}
 
 	// phan trang
