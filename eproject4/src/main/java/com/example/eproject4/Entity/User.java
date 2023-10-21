@@ -37,7 +37,7 @@ public class User {
 
     @MapToDTO
     @Column(name = "date_of_birth", nullable = true)
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
 
     @MapToDTO
     @Column(name = "phone", nullable = true)
@@ -69,7 +69,7 @@ public class User {
 
     public User(String username, String email,
                    String password, String address,
-                    LocalDate dateOfBirth,
+                    String dateOfBirth,
                    String fullName,
                    String phone,
                    Collection<Role> roles) {
