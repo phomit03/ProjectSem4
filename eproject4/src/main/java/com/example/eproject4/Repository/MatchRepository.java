@@ -48,11 +48,8 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     // tim 3 tran vua ket thuc
     @Query("SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE md.match_end = 1 ORDER BY m.match_time DESC")
     List<Match> findLatestFinishedMatches(Pageable pageable);
-    // tran dau cbi bat dau gan nhat
-    @Query("SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE md.match_end  <> 1 ORDER BY m.match_time ASC")
-    List<Match> findNextUpcomingMatch(Pageable pageable);
 
     //Next Match (Random)
-    @Query("SELECT m FROM Match m WHERE m.match_time > CURRENT_TIMESTAMP")
-    Match findRandomNextMatch();
+    @Query(value = "SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE m.match_time > CURRENT_TIMESTAMP AND md.match_end = 0 ORDER BY m.match_time ASC")
+    Match findNextMatch();
 }

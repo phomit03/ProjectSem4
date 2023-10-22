@@ -86,7 +86,6 @@ public class NewController {
                                 Model model) {
         int pageSize = 6;
 
-
         Page<New> page = newService.findPaginated(pageNo, pageSize);
         List<New> news = page.getContent();
 

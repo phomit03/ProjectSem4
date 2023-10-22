@@ -32,21 +32,6 @@ public class HomePageUserController {
     public String home(Model model) {
         model.addAttribute("title", "Home Page");
         model.addAttribute("overlay_title", "World Cup Event");
-        model.addAttribute("description", "Welcome to the most exciting tournament on the planet ^.^");
-
-        List<MatchDTO> nextMatchesOrLiveMatches = matchService.getNextMatchesOrLiveMatches(3);
-        model.addAttribute("nextMatchesOrLiveMatches", nextMatchesOrLiveMatches);
-
-        //last-news
-        List<New> latestNews = newService.getLatestNews();
-        model.addAttribute("latestNews", latestNews);
-
-        return "customer_homepage";
-    }
-    @RequestMapping("/home")
-    public String homePage(Model model) {
-        model.addAttribute("title", "Home Page");
-        model.addAttribute("overlay_title", "Premier League 2023");
         model.addAttribute("description", "Welcome to the most exciting tournament on the planet");
 
         List<MatchDTO> nextMatchesOrLiveMatches = matchService.getNextMatchesOrLiveMatches(3);
@@ -57,8 +42,28 @@ public class HomePageUserController {
         model.addAttribute("latestNews", latestNews);
 
         //next match
-        Match randomNextMatch = matchService.getRandomNextMatch();
-        model.addAttribute("randomNextMatch", randomNextMatch);
+        Match findNextMatch = matchService.getFindNextMatch();
+        model.addAttribute("findNextMatch", findNextMatch);
+
+        return "customer_homepage";
+    }
+
+    @RequestMapping("/home")
+    public String homePage(Model model) {
+        model.addAttribute("title", "Home Page");
+        model.addAttribute("overlay_title", "Premier League 2023");
+        model.addAttribute("description", "Welcome to the most exciting tournament on the planet !");
+
+        List<MatchDTO> nextMatchesOrLiveMatches = matchService.getNextMatchesOrLiveMatches(3);
+        model.addAttribute("nextMatchesOrLiveMatches", nextMatchesOrLiveMatches);
+
+        //last-news
+        List<New> latestNews = newService.getLatestNews();
+        model.addAttribute("latestNews", latestNews);
+
+        //next match
+        Match findNextMatch = matchService.getFindNextMatch();
+        model.addAttribute("findNextMatch", findNextMatch);
 
         return "customer_homepage";
     }

@@ -23,15 +23,15 @@ public class MatchUserController {
     @RequestMapping("")
     public String matches(Model model) {
         List<Match> latestFinishedMatches = matchService.findLatestFinishedMatches();
-        List<Match> findNextUpcomingMatch = matchService.findNextUpcomingMatch();
         List<Match> findAllFinishedMatches = matchService.findAllFinishedMatches();
+        Match findNextMatch = matchService.getFindNextMatch();
 
         model.addAttribute("overlay_title", "Matches");
         model.addAttribute("title", "Matches");
-        model.addAttribute("description", "Matches have and will take place");
+        model.addAttribute("description", "Follow the schedule and results of the season's matches");
         model.addAttribute("latestFinishedMatches", latestFinishedMatches);
-        model.addAttribute("findNextUpcomingMatch", findNextUpcomingMatch);
         model.addAttribute("findAllFinishedMatches", findAllFinishedMatches);
+        model.addAttribute("findNextMatch", findNextMatch);
 
         return "customer_matches";
     }

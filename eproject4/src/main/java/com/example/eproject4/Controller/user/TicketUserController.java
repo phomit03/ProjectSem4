@@ -22,7 +22,7 @@ public class TicketUserController {
         model.addAttribute("overlay_title", "Tickets");
         model.addAttribute("title", "Tickets");
         model.addAttribute("description",
-                "List of tickets for matches currently on selling and matches that have stopped selling");
+                "Tickets are on sale, please book your tickets.");
 
         //Matches that have not yet taken place or are taking place 15 minutes before
         List<Match> upcomingMatches = ticketService.getUpcomingMatches();
