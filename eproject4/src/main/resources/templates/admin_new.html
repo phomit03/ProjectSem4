@@ -85,20 +85,20 @@
                 </tbody>
               </table>
 
-                <div th:if = "${totalPages > 1}">
-                  <div class = "row col-sm-10">
-                    <div class = "col-sm-2">
-                      Total Rows: [[${totalItems}]]
-                    </div>
-                    <!--danh sach cac trang-->
-                    <div class = "col-sm-1">
+              <div th:if = "${totalPages > 1}">
+                <div class = "row col-sm-10">
+                  <div class = "col-sm-2">
+                    Total Rows: [[${totalItems}]]
+                  </div>
+                  <!--danh sach cac trang-->
+                  <div class = "col-sm-1">
                       <span th:each="i: ${#numbers.sequence(1, totalPages)}">
                           <a th:if="${currentPage != i}" th:href="@{'/admin/new/' + ${i}}">[[${i}]]</a>
                           <span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
                       </span>
-                    </div>
                   </div>
                 </div>
+              </div>
             </div>
           </div>
         </div>

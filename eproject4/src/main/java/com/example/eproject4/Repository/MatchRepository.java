@@ -2,6 +2,8 @@ package com.example.eproject4.Repository;
 
 import com.example.eproject4.DTO.Response.MatchDTO;
 import com.example.eproject4.Entity.Match;
+import com.example.eproject4.Entity.MatchDetail;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -38,6 +40,17 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     List<Match> findMatchesAfterTimeThreshold(@Param("timeThreshold") LocalDateTime timeThreshold);
     @Query("SELECT m FROM Match m WHERE m.match_time < :timeThreshold")
     List<Match> findMatchesBeforeTimeThreshold(@Param("timeThreshold") LocalDateTime timeThreshold);
+
+    // tim 3 tran vua ket thuc
+    @Query("SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE md.match_end = 1")
+    List<Match> findAllFinishedMatches();
+
+    // tim 3 tran vua ket thuc
+    @Query("SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE md.match_end = 1 ORDER BY m.match_time DESC")
+    List<Match> findLatestFinishedMatches(Pageable pageable);
+    // tran dau cbi bat dau gan nhat
+    @Query("SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE md.match_end  <> 1 ORDER BY m.match_time ASC")
+    List<Match> findNextUpcomingMatch(Pageable pageable);
 
     //Next Match (Random)
     @Query("SELECT m FROM Match m WHERE m.match_time > CURRENT_TIMESTAMP")

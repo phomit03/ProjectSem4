@@ -11,6 +11,8 @@ import com.example.eproject4.Repository.MatchRepository;
 import com.example.eproject4.Utils.Helper;
 import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -142,6 +144,23 @@ public class MatchService {
     //Next Match
     public Match getRandomNextMatch() {
         return matchRepository.findRandomNextMatch();
+    }
+
+    //list tran dau da ket thuc
+    public List<Match> findAllFinishedMatches() {
+        return matchRepository.findAllFinishedMatches();
+    }
+
+    // Lấy 3 kết quả đầu tiên
+    public List<Match> findLatestFinishedMatches() {
+        Pageable pageable = PageRequest.of(0, 3);
+        return matchRepository.findLatestFinishedMatches(pageable);
+    }
+
+    // Lấy 3 kết quả đầu tiên
+    public List<Match> findNextUpcomingMatch() {
+        Pageable pageable = PageRequest.of(0, 1);
+        return matchRepository.findNextUpcomingMatch(pageable);
     }
 }
 
