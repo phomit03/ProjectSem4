@@ -960,7 +960,9 @@ h1, h2, h3, h4, h5,
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%); }
   .custom-nav a:hover {
-    background-color: #ee1e46; }
+    background-color: #ee1e46;
+    color: white;
+  }
 
 .owl-dots {
   position: absolute;

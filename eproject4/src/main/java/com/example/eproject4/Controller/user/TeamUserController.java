@@ -11,7 +11,7 @@ public class TeamUserController {
     public String teams(Model model) {
         model.addAttribute("overlay_title", "Teams");
         model.addAttribute("title", "Teams");
-        model.addAttribute("description", "Tournament teams");
+        model.addAttribute("description", "List of competing teams of the season");
 
         return "customer_teams";
     }

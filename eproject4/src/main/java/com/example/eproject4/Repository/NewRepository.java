@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface NewRepository extends JpaRepository<New, Long> {
-    @Query(value = "SELECT * FROM news WHERE status = 0 ORDER BY created_at ASC LIMIT 3", nativeQuery = true)
+    @Query(value = "SELECT * FROM news WHERE status = 1 ORDER BY created_at ASC LIMIT 3", nativeQuery = true)
     List<New> findLatestThreeNews();
 }

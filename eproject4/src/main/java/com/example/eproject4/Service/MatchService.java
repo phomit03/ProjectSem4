@@ -141,26 +141,20 @@ public class MatchService {
         }).collect(Collectors.toList());
     }
 
-    //Next Match
-    public Match getRandomNextMatch() {
-        return matchRepository.findRandomNextMatch();
-    }
-
     //list tran dau da ket thuc
     public List<Match> findAllFinishedMatches() {
         return matchRepository.findAllFinishedMatches();
     }
 
-    // Lấy 3 kết quả đầu tiên
+    // Lấy 3 kết quả gần nhất da ket thuc
     public List<Match> findLatestFinishedMatches() {
         Pageable pageable = PageRequest.of(0, 3);
         return matchRepository.findLatestFinishedMatches(pageable);
     }
 
-    // Lấy 3 kết quả đầu tiên
-    public List<Match> findNextUpcomingMatch() {
-        Pageable pageable = PageRequest.of(0, 1);
-        return matchRepository.findNextUpcomingMatch(pageable);
+    //Next Match (random)
+    public Match getFindNextMatch() {
+        return matchRepository.findNextMatch();
     }
 }
 
