@@ -12,12 +12,10 @@ import com.example.eproject4.Repository.MatchRepository;
 import com.example.eproject4.Repository.TicketRepository;
 import com.example.eproject4.Repository.cart_order.CartRepository;
 import com.example.eproject4.Repository.cart_order.OrderRepository;
-import com.example.eproject4.Service.AreaService;
-import com.example.eproject4.Service.CartService;
-import com.example.eproject4.Service.MatchService;
-import com.example.eproject4.Service.TicketService;
+import com.example.eproject4.Service.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +32,8 @@ import java.util.Optional;
 @Controller
 @RequestMapping("")
 public class TicketUserController {
+    @Autowired
+    private VNPayService vnPayService;
     private final TicketService ticketService;
     private final TicketRepository ticketRepository;
     private final MatchService matchService;
@@ -109,7 +110,7 @@ public class TicketUserController {
 
 
     @PostMapping("/ticket/detail/ok")
-    public String pay(@RequestBody String json) {
+    public String pay(@RequestBody String json, HttpServletRequest request) {
         try {
             // lấy tjhoong tin hóa đơn
             String a = json;
@@ -122,42 +123,60 @@ public class TicketUserController {
             for (Ticket1 ticket1 : tickets) {
                 total += ticket1.getPrice();
             }
-
             boolean isPaySucccess = true;
             // xử lý thanh toán ở đây
-
+            int orderTotal = total;
+            String orderInfo = "Thanh toan don hang: 123";
+            String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+            String vnpayUrl = vnPayService.createOrder(orderTotal, orderInfo, baseUrl);
+            return "redirect:" + vnpayUrl;
             //Phản hồi
-            if(true){
-                // luu order
-                Order order = new Order();
-                order.setTotalPrice(total);
-                order.setUserId(15);
-                order.setStatus(true);
-                Order ordersucss = orderRepository.save(order);
-                // lưu cart vào db
-                List<Cart> cartList = new ArrayList<>();
-                for (Ticket1 ticket1 : tickets) {
-                    Cart cart = new Cart();
-                    cart.setPayment(true);
-                    cart.setQuantity(ticket1.getQuantity());
-                    cart.setUserId(15);
-                    cart.setTicket((ticketRepository.findIdTicket(ticket1.getTicketId()).get(0)));
-                    cart.setOrderid(ordersucss.getUserId());
-                    cartList.add(cart);
-                }
-                cartService.saveCarts(cartList);
-                //return "Thanh tóan hóa thành công";
-                return "succes";
-            }else {
-                return "fail";
-            }
+//            if(true){
+//                // luu order
+//                Order order = new Order();
+//                order.setTotalPrice(total);
+//                order.setUserId(15);
+//                order.setStatus(true);
+//                Order ordersucss = orderRepository.save(order);
+//                // lưu cart vào db
+//                List<Cart> cartList = new ArrayList<>();
+//                for (Ticket1 ticket1 : tickets) {
+//                    Cart cart = new Cart();
+//                    cart.setPayment(true);
+//                    cart.setQuantity(ticket1.getQuantity());
+//                    cart.setUserId(15);
+//                    cart.setTicket((ticketRepository.findIdTicket(ticket1.getTicketId()).get(0)));
+//                    cart.setOrderid(ordersucss.getUserId());
+//                    cartList.add(cart);
+//                }
+//                cartService.saveCarts(cartList);
+//                //return "Thanh tóan hóa thành công";
+//                return "succes";
+//            }else {
+//                return "fail";
+//            }
             } catch (Exception e) {
                 return  e.getMessage();
             }
 
     }
 
+    @GetMapping("/vnpay-payment")
+    public String GetMapping(HttpServletRequest request, Model model){
+        int paymentStatus =vnPayService.orderReturn(request);
 
+        String orderInfo = request.getParameter("vnp_OrderInfo");
+        String paymentTime = request.getParameter("vnp_PayDate");
+        String transactionId = request.getParameter("vnp_TransactionNo");
+        String totalPrice = request.getParameter("vnp_Amount");
+
+        model.addAttribute("orderId", orderInfo);
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("paymentTime", paymentTime);
+        model.addAttribute("transactionId", transactionId);
+
+        return paymentStatus == 1 ? "succes" : "fail";
+    }
 
 
 }
