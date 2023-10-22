@@ -30,145 +30,54 @@
                                         <th scope="col">Action</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td scope="row">
-                                                <div class="d-flex align-items-center">
-                                                    <img src="https://i.imgur.com/2DsA49b.webp" class="img-fluid"
-                                                         style="width: 90px; padding:10px; height: 90px">
-                                                    vs
-                                                    <img src="https://i.imgur.com/2DsA49b.webp" class="img-fluid"
-                                                         style="width: 90px; padding:10px; height: 90px">
+                                    <tbody id="cart-list">
+<!--                                        <tr th:each="item : ${carts}">-->
+<!--                                            <td scope="row">-->
+<!--                                                <div class="d-flex align-items-center">-->
+<!--                                                    <img src="https://i.imgur.com/2DsA49b.webp" class="img-fluid"-->
+<!--                                                         style="width: 90px; padding:10px; height: 90px">-->
+<!--                                                    vs-->
+<!--                                                    <img src="https://i.imgur.com/2DsA49b.webp" class="img-fluid"-->
+<!--                                                         style="width: 90px; padding:10px; height: 90px">-->
 
-                                                    <!--
-                                                    <div class="flex-column ms-8" style="margin-left: 10px">
-                                                        <p class="mb-2">Thinking, Fast and Slow</p>
-                                                        <p class="mb-0">Daniel Kahneman</p>
-                                                    </div>
-                                                    -->
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <p class="mb-0" style="font-weight: 500;">Khan dai A1</p>
-                                            </td>
-                                            <td class="align-middle">
-                                                <div class="d-flex flex-row">
-                                                    <button class="px-2"
-                                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                        <i class="icon-minus" style="color: #666"></i>
-                                                    </button>
+<!--                                                    &lt;!&ndash;-->
+<!--                                                    <div class="flex-column ms-8" style="margin-left: 10px">-->
+<!--                                                        <p class="mb-2">Thinking, Fast and Slow</p>-->
+<!--                                                        <p class="mb-0">Daniel Kahneman</p>-->
+<!--                                                    </div>-->
+<!--                                                    &ndash;&gt;-->
+<!--                                                </div>-->
+<!--                                            </td>-->
+<!--                                            <td class="align-middle">-->
+<!--                                                <p class="mb-0" style="font-weight: 500;">Khan dai A1</p>-->
+<!--                                            </td>-->
+<!--                                            <td class="align-middle">-->
+<!--                                                <div class="d-flex flex-row">-->
+<!--                                                    <button class="px-2"-->
+<!--                                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-->
+<!--                                                        <i class="icon-minus" style="color: #666"></i>-->
+<!--                                                    </button>-->
 
-                                                    <input min="0" value="2" name="quantity" type="number"
-                                                           class="form-control form-control-sm" style="width: 50px;
-                                               color: #000 !important; border-color: #00000033;" />
+<!--                                                    <input min="0" th:value="${item.quantity}" name="quantity" type="number"-->
+<!--                                                           class="form-control form-control-sm" style="width: 50px;-->
+<!--                                               color: #000 !important; border-color: #00000033;"  />-->
 
-                                                    <button class="px-2"
-                                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                        <i class="icon-plus" style="color: #666"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <p class="mb-0" style="font-weight: 500;">$9.99</p>
-                                            </td>
-                                            <td>
-                                                <a class="hover-delete" href="">
-                                                    <i class="icon-delete" style="font-size: large; margin-left: 20px"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td scope="row">
-                                                <div class="d-flex align-items-center">
-                                                    <img src="https://i.imgur.com/2DsA49b.webp" class="img-fluid"
-                                                         style="width: 90px; padding:10px; height: 90px">
-                                                    vs
-                                                    <img src="https://i.imgur.com/2DsA49b.webp" class="img-fluid"
-                                                         style="width: 90px; padding:10px; height: 90px">
+<!--                                                    <button class="px-2"-->
+<!--                                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">-->
+<!--                                                        <i class="icon-plus" style="color: #666"></i>-->
+<!--                                                    </button>-->
+<!--                                                </div>-->
+<!--                                            </td>-->
+<!--                                            <td class="align-middle">-->
+<!--                                                <p class="mb-0" style="font-weight: 500;">$9.99</p>-->
+<!--                                            </td>-->
+<!--                                            <td>-->
+<!--                                                <a class="hover-delete" href="">-->
+<!--                                                    <i class="icon-delete" style="font-size: large; margin-left: 20px"></i>-->
+<!--                                                </a>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
 
-                                                    <!--
-                                                    <div class="flex-column ms-8" style="margin-left: 10px">
-                                                        <p class="mb-2">Thinking, Fast and Slow</p>
-                                                        <p class="mb-0">Daniel Kahneman</p>
-                                                    </div>
-                                                    -->
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <p class="mb-0" style="font-weight: 500;">Khan dai A1</p>
-                                            </td>
-                                            <td class="align-middle">
-                                                <div class="d-flex flex-row">
-                                                    <button class="px-2"
-                                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                        <i class="icon-minus" style="color: #666"></i>
-                                                    </button>
-
-                                                    <input min="0" value="2" name="quantity" type="number"
-                                                           class="form-control form-control-sm" style="width: 50px;
-                                               color: #000 !important; border-color: #00000033;" />
-
-                                                    <button class="px-2"
-                                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                        <i class="icon-plus" style="color: #666"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <p class="mb-0" style="font-weight: 500;">$9.99</p>
-                                            </td>
-                                            <td>
-                                                <a class="hover-delete" href="">
-                                                    <i class="icon-delete" style="font-size: large; margin-left: 20px"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td scope="row">
-                                                <div class="d-flex align-items-center">
-                                                    <img src="https://i.imgur.com/2DsA49b.webp" class="img-fluid"
-                                                         style="width: 90px; padding:10px; height: 90px">
-                                                    vs
-                                                    <img src="https://i.imgur.com/2DsA49b.webp" class="img-fluid"
-                                                         style="width: 90px; padding:10px; height: 90px">
-
-                                                    <!--
-                                                    <div class="flex-column ms-8" style="margin-left: 10px">
-                                                        <p class="mb-2">Thinking, Fast and Slow</p>
-                                                        <p class="mb-0">Daniel Kahneman</p>
-                                                    </div>
-                                                    -->
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <p class="mb-0" style="font-weight: 500;">Khan dai A1</p>
-                                            </td>
-                                            <td class="align-middle">
-                                                <div class="d-flex flex-row">
-                                                    <button class="px-2"
-                                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                        <i class="icon-minus" style="color: #666"></i>
-                                                    </button>
-
-                                                    <input min="0" value="2" name="quantity" type="number"
-                                                           class="form-control form-control-sm" style="width: 50px;
-                                               color: #000 !important; border-color: #00000033;" />
-
-                                                    <button class="px-2"
-                                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                        <i class="icon-plus" style="color: #666"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <p class="mb-0" style="font-weight: 500;">$9.99</p>
-                                            </td>
-                                            <td>
-                                                <a class="hover-delete" href="">
-                                                    <i class="icon-delete" style="font-size: large; margin-left: 20px"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -184,15 +93,15 @@
                                             <p class="title-info-cart">Full name
                                                 <span class="text-danger"> *</span></p>
                                             <div class="d-flex flex-row">
-                                                <input class="form-control" type="text"
-                                                       placeholder="Please update full name" disabled/>
+                                                <input id="fullname" class="form-control" type="text" value="${session.loggedInUser.fullName}"
+                                                       placeholder="Please update full name" />
                                             </div>
 
                                             <p class="title-info-cart">Phone number
                                                 <span class="text-danger"> (*)</span></p>
                                             <div class="d-flex flex-row">
                                                 <input class="form-control" type="text"
-                                                       placeholder="Please update phone number" disabled/>
+                                                       placeholder="Please update phone number" id="phone"/>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-4 col-xl-4 mb-4">
@@ -200,40 +109,44 @@
                                                 <span class="text-danger"> *</span></p>
                                             <div class="d-flex flex-row">
                                                 <input class="form-control" type="text"
-                                                       placeholder="Please update email" disabled/>
+                                                       placeholder="Please update email" id="email"/>
                                             </div>
 
                                             <p class="title-info-cart">Address
                                                 <span class="text-danger"> (*)</span></p>
                                             <div class="d-flex flex-row">
                                                 <input class="form-control" type="text"
-                                                       placeholder="Please update address" disabled/>
+                                                       placeholder="Please update address" id="address"/>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4 col-xl-4">
-                                            <div class="d-flex justify-content-between font-weight-bold">
-                                                <p class="mb-2">Subtotal</p>
-                                                <p class="mb-2">$23.49</p>
-                                            </div>
+<!--                                            <div class="d-flex justify-content-between font-weight-bold">-->
+<!--                                                <p class="mb-2">Subtotal</p>-->
+<!--                                                <p class="mb-2">$23.49</p>-->
+<!--                                            </div>-->
 
-                                            <div class="d-flex justify-content-between font-weight-bold">
-                                                <p class="mb-0">Shipping</p>
-                                                <p class="mb-0">free</p>
-                                            </div>
+<!--                                            <div class="d-flex justify-content-between font-weight-bold">-->
+<!--                                                <p class="mb-0">Shipping</p>-->
+<!--                                                <p class="mb-0">free</p>-->
+<!--                                            </div>-->
 
                                             <hr class="my-4">
 
                                             <div class="d-flex justify-content-between font-weight-bold">
                                                 <p class="mb-2" style="font-size: large">Total (tax included)</p>
-                                                <p class="mb-4" style="font-size: large">$26.48</p>
+                                                <p class="mb-4" style="font-size: large" id="total-price"></p>
                                             </div>
 
-                                            <button type="button" class="btn btn-primary btn-block btn-lg">
-                                                <div class="justify-content-between">
-                                                    <span>Checkout</span>
-                                                </div>
-                                            </button>
+                                            <form id="api-form" th:action="@{/ticket/detail/ok}" method="post">
+                                                <input type="text" id="cart-value" name="cart-value" hidden/>
+                                                <button type="button" class="btn btn-primary btn-block btn-lg" onclick="onCallApi()">
+                                                    <div class="justify-content-between">
+                                                        <span>Checkout</span>
+                                                    </div>
+                                                </button>
+                                            </form>
+
 
                                             <div class="float-right mt-3">
                                                 <a href="" style="color: #ca0f33; width: 100%;">
@@ -253,8 +166,134 @@
     </div>
     <!--end content-->
 
+<!--    <form th:action="@{/your-post-endpoint}" method="post">
+        &lt;!&ndash; Thêm một trường dữ liệu cho chuỗi &ndash;&gt;
+        <input type="text" name="yourString" />
+        &lt;!&ndash; Thêm các trường dữ liệu khác nếu cần &ndash;&gt;
+        <button type="submit">Gửi</button>
+    </form>-->
+
     <div th:replace="customer_fragments::bot-fragment"></div>
 
     <div th:replace="customer_fragments::script-fragment"></div>
+
 </body>
+<script th:inline="javascript">
+    const tickets = /*[[${tickets}]]*/ 'default' || [];
+
+    $(document).ready(() => {
+        let html = '';
+        const _carts = JSON.parse(window.localStorage.getItem('carts'));
+        if (!_carts) return;
+        _carts.forEach((cart, index) => {
+            html +=  `<tr>
+                                            <td scope="row">
+                                                <div class="d-flex align-items-center">
+                                                ${cart.homeName} vs ${cart.awayName} - ${cart.matchTime}
+<!--                                                    <img src="https://i.imgur.com/2DsA49b.webp" class="img-fluid"-->
+<!--                                                         style="width: 90px; padding:10px; height: 90px">-->
+<!--                                                    vs-->
+<!--                                                    <img src="https://i.imgur.com/2DsA49b.webp" class="img-fluid"-->
+<!--                                                         style="width: 90px; padding:10px; height: 90px">-->
+
+                                                </div>
+                                            </td>
+                                            <td class="align-middle">
+                                                <p class="mb-0" style="font-weight: 500;">${cart.name}</p>
+                                            </td>
+                                            <td class="align-middle">
+                                                <div class="d-flex flex-row">
+                                                    <button class="px-2"
+                                                            onclick="onStepDown(${index}, ${cart.originPrice})">
+                                                        <i class="icon-minus" style="color: #666"></i>
+                                                    </button>
+
+                                                    <input min="0" value="${cart.quantity}" name="quantity" type="number" id="quantity-input"
+                                                           class="form-control form-control-sm" style="width: 50px;
+                                               color: #000 !important; border-color: #00000033;"  />
+
+                                                    <button class="px-2"
+                                                            onclick="onStepUp(${cart.totalQuantity}, ${cart.originPrice}, ${index})">
+                                                        <i class="icon-plus" style="color: #666"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle">
+                                                <p class="mb-0" style="font-weight: 500;">${cart.price}</p>
+                                            </td>
+                                            <td>
+                                                <a class="hover-delete" onclick="onRemove(${index})">
+                                                    <i class="icon-delete" style="font-size: large; margin-left: 20px"></i>
+                                                </a>
+                                            </td>
+                                        </tr>`
+        })
+        $('#cart-list').append(html);
+        const totalPrice = _carts.reduce((prev, cart) => {
+            return prev + cart.price;
+        },0);
+        $('#total-price').text(`${totalPrice} $`);
+        $('#cart-value').val(JSON.stringify(_carts));
+    });
+
+    function onCallApi() {
+        const carts = JSON.parse(window.localStorage.getItem('carts'));
+
+        const fullname = $('#fullname').val();
+        const phone = $('#phone').val();
+        const email = $('#email').val();
+        const address = $('#address').val();
+        if (!carts.length) {
+            alert("Cart is empty");
+            return;
+        }
+        if (!fullname || !phone || !email || !address) {
+            alert("User info is not updated");
+            return;
+        }
+
+        $('#api-form').submit();
+    }
+
+    function onStepDown(index, originPrice) {
+        const quantity = $('#quantity-input').val();
+        if (quantity - 1 === 0) {
+            onRemove(index);
+        } else {
+            document.getElementById("quantity-input").stepDown(1);
+            const quantity = $('#quantity-input').val();
+            const carts = JSON.parse(window.localStorage.getItem('carts'));
+            carts[index].price = quantity * originPrice;
+            carts[index].quantity = quantity;
+            window.localStorage.setItem('carts', JSON.stringify(carts));
+            window.location.reload();
+        }
+    }
+
+    function onStepUp(totalQuantity, originPrice, index) {
+        const quantity = $('#quantity-input').val();
+        if (+quantity + 1 > totalQuantity) {
+            return;
+        } else {
+            document.getElementById("quantity-input").stepUp(1);
+            const quantity = $('#quantity-input').val();
+            const carts = JSON.parse(window.localStorage.getItem('carts'));
+            carts[index].quantity = quantity;
+            carts[index].price = quantity * originPrice;
+            window.localStorage.setItem('carts', JSON.stringify(carts));
+            window.location.reload();
+        }
+    }
+
+    function onRemove(index) {
+        try {
+            const carts = JSON.parse(window.localStorage.getItem('carts'));
+            carts.splice(index, 1);
+            window.localStorage.setItem('carts', JSON.stringify(carts));
+            window.location.reload();
+        } catch(e) {}
+    }
+
+</script>
+
 </html>

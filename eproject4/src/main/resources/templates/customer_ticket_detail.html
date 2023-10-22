@@ -19,15 +19,18 @@
                     <div class="mt-3 text-white text-md-center row" style="font-size: large">
                         <div class="col-md-4 col-sm-6 col-12">
                             <i class="icon-map-marker" style="color: #ca0f33"></i>
+                           <!-- ${match.Stadium.name}-->
                             Old Trafford
+                            <!--<h5 th:text="${match.Stadium.name}"></h5>-->
+                            <!--<td th:text="${item.area.area_name}">Value 1</td>-->
                         </div>
                         <div class="col-md-4 col-sm-6 col-12">
                             <i class="icon-calendar" style="color: #ca0f33"></i>
-                            22-10-2023
+                            <span id="date-format"></span>
                         </div>
                         <div class="col-md-4 col-sm-6 col-12">
                             <i class="icon-clock-o" style="color: #ca0f33"></i>
-                            19:15
+                            <span id="time-format"></span>
                         </div>
                     </div>
                 </div>
@@ -46,8 +49,22 @@
                                 <img th:src="@{/user/images/map_stadium.jpg}" alt="Image" class="img-fluid"></a>
                             </div>
                         </div>
+                        <div>
+                            <table>
+                                <tr>
+                                    <th>Khu vực   </th>
+                                    <th>Số lượng</th>
+                                </tr>
+                                <tr th:each="item : ${tickets}">
+                                    <td th:text="${item.area.area_name}">Value 1</td>
+                                    <td th:text="${item.quantity}">Value 2</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
+
                     <div class="col-xl-4 col-12">
+<!--                        TODO-->
                         <div class="text-lg-center w-100 mb-4 text-white font-weight-bold">
                             <h3>
                                 Select Tickets
@@ -57,12 +74,11 @@
                             <div class="p-3">
                                 <div class="form-group text-white">
                                     <label for="ticketType">Ticket Type</label>
-                                    <select class="form-control bg-white color-black" id="ticketType"
+                                     <select class="form-control bg-white color-black" id="ticketType"
                                             style="border: 2px solid #6c757d">
-                                        <option value="1000">Option 1</option>
-                                        <option value="1000">Option 2</option>
-                                        <option value="1000">Option 3</option>
-                                        <option value="1000">Option 4</option>
+                                         <option th:each="item : ${ticketsbyMatch}"
+                                                 th:value="${item.id}"
+                                                 th:text="${item.area.area_name}"></option>
                                         <!-- Thêm các option khác nếu cần -->
                                     </select>
                                 </div>
@@ -82,14 +98,58 @@
                                         </button>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-success btn-block text-white">
+                                <button type="button" class="btn btn-success btn-block text-white" onclick="onAddToCart()">
                                     Add to Cart <i class="icon-shopping-cart"></i>
                                 </button>
+                                <form th:action="@{/duy/order}" method="get">
+                                <button type="submit" class="btn btn-primary btn-block mt-2">
+                                    Order <i class="icon-arrow-right"></i>
+                                </button>
+                                </form>
+                            </div>
+                        </div>
+                        <!--<div class="rounded overflow-hidden stadium-container">
+                            <div class="p-3">
+                                <form th:action="@{/ticket/detail/add}" method="post">
+                                <div class="form-group text-white">
+                                    <label for="ticketType">Ticket Type</label>
+                                    <select class="form-control bg-white color-black" id="ticketType"
+                                            style="border: 2px solid #6c757d" name="ticket" >
+                                        <option th:each="item : ${tickets}"
+                                                th:value="${item.id}"
+                                                th:text="${item.area.area_name}"></option>
+                                        &lt;!&ndash; Thêm các option khác nếu cần &ndash;&gt;
+                                    </select>
+                                </div>
+                                <div class="form-group text-white mb-4">
+                                    <label for="quantity">Quantity</label>
+                                    <div class="input-group">
+                                        <button class="btn btn-outline-secondary bg-white crease color-black"
+                                                type="button"
+                                                id="decrease">-
+                                        </button>
+                                        <input
+                                               class="form-control rounded text-center bg-white color-black"
+                                               id="quantity" style="border: 2px solid #6c757d" name="quantity">
+                                        <button class="btn btn-outline-secondary bg-white crease color-black"
+                                                type="button"
+                                                id="increase">+
+                                        </button>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-block text-white">
+                                    Add to Cart <i class="icon-shopping-cart"></i>
+                                </button>
+                                </form>
                                 <button type="button" class="btn btn-primary btn-block mt-2">
                                     Order <i class="icon-arrow-right"></i>
                                 </button>
                             </div>
-                        </div>
+                        </div>-->
+
+
+
+
 
                         <div class="text-lg-center w-100 mt-3 mb-2 text-white font-weight-bold">
                             <h3>
@@ -104,25 +164,30 @@
                                         <p class="font-weight-bold" style="color: #8bc34a">You choose 0 tickets</p>
                                     </div>
                                 </div>
-                                <div class="py-2">
+                                <div class="py-2" >
                                     <div class="flex-nowrap mb-3 text-red" style="font-size: small;">
-                                        <i class="icon-add_alert"></i>
-                                        <span>Choose up to 4 tickets</span>
-                                        <span style="text-decoration: underline; float: right">Delete all</span>
+                                      <!--  <i class="icon-add_alert"></i>
+                                        <span>Choose up to 4 tickets</span>-->
+                                        <span style="text-decoration: underline; float: right" onclick="onDelete()">Delete all</span>
                                     </div>
-
+<!--
                                     <div class="p-2 mb-2" style="border: 1px dashed #666666">
-                                        <!--Cart added-->
-                                        <div class="d-flex align-items-center justify-content-between">
+                                        &lt;!&ndash;Cart added&ndash;&gt;
+                                        <div th:each="item : ${carts}" class="d-flex align-items-center justify-content-between">
                                             <div style="background-color: #e5e7eb">
                                                 <div class="">
-                                                    <p class="p-1">
-                                                        Area C - Quantity <i class="icon-close text-red ml-3"></i>
+                                                    <p class="p-1" th:text="${item.ticket.area.area_name} + ' - ' + ${item.quantity}">
+                                                        <i class="icon-close text-red ml-3"></i>
                                                     </p>
                                                 </div>
                                             </div>
-                                            <p class="ml-2 mr-1">250$</p>
-                                        </div>
+                                            <p th:text="${item.ticket.price}*${item.quantity}+'$'" class="ml-2 mr-1"></p>
+                                        </div>-->
+
+                                    <div id="tickets-list">
+
+                                    </div>
+
 
                                         <!--Cart no data-->
 <!--                                        <div class="mt-2">-->
@@ -139,7 +204,7 @@
                                         <p>Total ticket price: </p>
                                     </div>
                                     <div>
-                                        <p class="font-weight-bold" style="font-size: large">500$</p>
+                                        <p id="total-price" class="font-weight-bold" style="font-size: large"></p>
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +223,7 @@
 
 <div th:replace="customer_fragments::script-fragment"></div>
 
-<script>
+<script th:inline="javascript">
     document.getElementById('decrease').addEventListener('click', function () {
         var quantity = document.getElementById('quantity');
         if (parseInt(quantity.value) > 1) {
@@ -170,6 +235,120 @@
         var quantity = document.getElementById('quantity');
         quantity.value = parseInt(quantity.value) + 1;
     });
+
+
+    const tickets = /*[[${tickets}]]*/ 'default' || [];
+    const match = /*[[${match}]]*/ 'default' || [];
+
+    $(document).ready(() => {
+        let html = '';
+        const _carts = JSON.parse(window.localStorage.getItem('carts'));
+        if (!_carts) return;
+        _carts.forEach((cart) => {
+            html +=  `<div class="d-flex align-items-center justify-content-between" style="width: 100%;">
+                                            <div style="background-color: #e5e7eb">
+                                                <div class="">
+                                                    <p class="p-1">
+                                                        ${cart.homeName} - ${cart.awayName}
+                                                        ${cart.name} : ${cart.quantity}
+<!--                                                        <i class="icon-close text-red ml-3" onclick="onRemove(cart.ticket_id)"></i>-->
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p class="ml-2 mr-1">${cart.price} $</p>
+                                        </div>`
+        })
+        $('#tickets-list').append(html);
+        const totalPrice = _carts.reduce((prev, cart) => {
+            return prev + cart.price;
+        },0);
+        $('#total-price').text(`${totalPrice} $`);
+        $('#date-format').text(formatOnlyDate(new Date(match.match_time)));
+        $('#time-format').text(formatOnlyTime(new Date(match.match_time)))
+    })
+
+
+
+    function onDelete() {
+        window.localStorage.setItem('carts', JSON.stringify([]));
+        window.location.reload();
+    }
+
+    function onRemove(ticketId) {
+        const carts = JSON.parse(window.localStorage.getItem('carts')) || [];
+        const index = carts.findIndex((cart) => cart.ticket_id == ticketId);
+        if (index < 0) return;
+        carts.splice(index, 1);
+        window.localStorage.setItem('carts', JSON.stringify(carts));
+        window.location.reload();
+    }
+
+    function padTo2Digits(num) {
+        return num.toString().padStart(2, '0');
+    }
+
+    function formatOnlyDate(date) {
+        return [
+            date.getFullYear(),
+            padTo2Digits(date.getMonth() + 1),
+            padTo2Digits(date.getDate()),
+        ].join('-');
+    }
+
+    function formatOnlyTime(date) {
+        return [
+            padTo2Digits(date.getHours()),
+            padTo2Digits(date.getMinutes()),
+            padTo2Digits(date.getSeconds()),
+        ].join(':');
+    }
+    function formatDate(date) {
+        return (
+            [
+                padTo2Digits(date.getHours()),
+                padTo2Digits(date.getMinutes()),
+                padTo2Digits(date.getSeconds()),
+            ].join(':') + ' ' +
+            [
+                date.getFullYear(),
+                padTo2Digits(date.getMonth() + 1),
+                padTo2Digits(date.getDate()),
+            ].join('-')
+        );
+    }
+
+    function onAddToCart() {
+        const ticket_id = +$('#ticketType').find(":selected").val();
+        const quantity = +($('#quantity').val());
+
+        try {
+            const carts = JSON.parse(window.localStorage.getItem('carts')) || [];
+            const cart = carts.find((cart) => cart.ticket_id === ticket_id);
+            const ticket = tickets.find((ticket) => ticket.id == ticket_id);
+            if (quantity > ticket?.quantity) {
+                alert('Sold out');
+                return;
+            }
+            const name = ticket?.area?.area_name || '';
+            const price = ticket?.price * quantity;
+            const homeName = ticket?.match?.home_team?.name;
+            const awayName = ticket?.match?.away_team?.name;
+            const matchTime = formatDate(new Date(ticket?.match?.match_time));
+            const totalQuantity = ticket?.quantity;
+            const originPrice = ticket?.price;
+
+            if (cart) {
+                cart.quantity += quantity;
+            } else {
+                carts.push({ticket_id, quantity, name, price, homeName, awayName, totalQuantity, matchTime, originPrice});
+            }
+            window.localStorage.setItem('carts', JSON.stringify(carts));
+            window.location.reload()
+        } catch (e) {
+
+        }
+    }
+
 </script>
 
 </body>
