@@ -89,4 +89,8 @@ public class NewService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return this.newRepository.findAll(pageable);
     }
+
+    public List<New> getLatestNews() {
+        return newRepository.findLatestThreeNews();
+    }
 }

@@ -1,7 +1,5 @@
 package com.example.eproject4.Controller.admin;
 
-import com.example.eproject4.Entity.Employee;
-import com.example.eproject4.Entity.Role;
 import com.example.eproject4.Entity.User;
 import com.example.eproject4.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller

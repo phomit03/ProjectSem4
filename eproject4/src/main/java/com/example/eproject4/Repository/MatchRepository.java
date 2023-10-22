@@ -1,5 +1,6 @@
 package com.example.eproject4.Repository;
 
+import com.example.eproject4.DTO.Response.MatchDTO;
 import com.example.eproject4.Entity.Match;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -32,10 +33,13 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     List<Match> findLatestFinishedMatch();
 
 
-    //Ticket
+    //Ticket List
     @Query("SELECT m FROM Match m WHERE m.match_time >= :timeThreshold")
     List<Match> findMatchesAfterTimeThreshold(@Param("timeThreshold") LocalDateTime timeThreshold);
-
     @Query("SELECT m FROM Match m WHERE m.match_time < :timeThreshold")
     List<Match> findMatchesBeforeTimeThreshold(@Param("timeThreshold") LocalDateTime timeThreshold);
+
+    //Next Match (Random)
+    @Query("SELECT m FROM Match m WHERE m.match_time > CURRENT_TIMESTAMP")
+    Match findRandomNextMatch();
 }

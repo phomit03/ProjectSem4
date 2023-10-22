@@ -1,6 +1,8 @@
 package com.example.eproject4.Controller.user;
 
 import com.example.eproject4.DTO.Response.MatchDTO;
+import com.example.eproject4.Entity.Match;
+import com.example.eproject4.Entity.New;
 import com.example.eproject4.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,8 @@ public class HomePageUserController {
     private  PlayerService playerService;
     @Autowired
     private  MatchDetailEventService matchDetailEventService;
+    @Autowired
+    private  NewService newService;
 
     @RequestMapping("/")
     public String home(Model model) {
@@ -32,6 +36,11 @@ public class HomePageUserController {
 
         List<MatchDTO> nextMatchesOrLiveMatches = matchService.getNextMatchesOrLiveMatches(3);
         model.addAttribute("nextMatchesOrLiveMatches", nextMatchesOrLiveMatches);
+
+        //last-news
+        List<New> latestNews = newService.getLatestNews();
+        model.addAttribute("latestNews", latestNews);
+
         return "customer_homepage";
     }
     @RequestMapping("/home")
@@ -42,6 +51,18 @@ public class HomePageUserController {
 
         List<MatchDTO> nextMatchesOrLiveMatches = matchService.getNextMatchesOrLiveMatches(3);
         model.addAttribute("nextMatchesOrLiveMatches", nextMatchesOrLiveMatches);
+
+        //last-news
+        List<New> latestNews = newService.getLatestNews();
+        model.addAttribute("latestNews", latestNews);
+
+        //next match
+        Match randomNextMatch = matchService.getRandomNextMatch();
+        model.addAttribute("randomNextMatch", randomNextMatch);
+
         return "customer_homepage";
     }
+
+
+
 }

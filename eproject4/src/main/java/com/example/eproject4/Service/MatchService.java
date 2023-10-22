@@ -139,5 +139,9 @@ public class MatchService {
         }).collect(Collectors.toList());
     }
 
+    //Next Match
+    public Match getRandomNextMatch() {
+        return matchRepository.findRandomNextMatch();
+    }
 }
 
