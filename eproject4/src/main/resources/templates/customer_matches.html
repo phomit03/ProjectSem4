@@ -53,23 +53,45 @@
                         <div class="widget-title">
                             <h3>Next Match</h3>
                         </div>
-                        <div class="widget-body mb-3">
-                            <div class="widget-vs">
-                                <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
-                                    <div class="team-1 text-center">
-                                        <img th:src="@{/user/images/logo_1.png}" alt="Image">
-                                        <h3>Football League</h3>
-                                    </div>
-                                    <div>
-                                        <span class="vs"><span>VS</span></span>
-                                    </div>
-                                    <div class="team-2 text-center">
-                                        <img th:src="@{/user/images/logo_2.png}" alt="Image">
-                                        <h3>Soccer</h3>
+<!--                        <div class="widget-body mb-3">-->
+<!--                            <div class="widget-vs">-->
+<!--                                <div class="d-flex align-items-center justify-content-around justify-content-between w-100">-->
+<!--                                    <div class="team-1 text-center">-->
+<!--                                        <img th:src="@{/user/images/logo_1.png}" alt="Image">-->
+<!--                                        <h3>Football League</h3>-->
+<!--                                    </div>-->
+<!--                                    <div>-->
+<!--                                        <span class="vs"><span>VS</span></span>-->
+<!--                                    </div>-->
+<!--                                    <div class="team-2 text-center">-->
+<!--                                        <img th:src="@{/user/images/logo_2.png}" alt="Image">-->
+<!--                                        <h3>Soccer</h3>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <div th:each="match : ${findNextUpcomingMatch}">
+                            <div class="widget-body mb-3">
+                                <div class="widget-vs">
+                                    <!-- Hiển thị thông tin trận đấu từ match -->
+                                    <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                                        <div class="team-1 text-center">
+                                            <input type="hidden" class="live-match-id" th:value="${match.id}">
+                                            <img th:src="@{${match.home_team.logo_img}}" alt="Image" class="img-fluid" style="width: 70px; height: 75px">
+
+                                        </div>
+                                        <div>
+                                            <span class="vs"><span>VS</span></span>
+                                        </div>
+                                        <div class="team-2 text-center">
+                                            <img th:src="@{${match.away_team.logo_img}}" alt="Image" class="img-fluid" style="width: 70px; height: 75px">
+                                            <h3 class="mt-2" th:text="${match.away_team.name}"></h3>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
 
                         <div class="text-center widget-vs-contents mb-4">
                             <h4>World Cup League</h4>

@@ -47,5 +47,8 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     @Query("SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE md.match_end = 1 ORDER BY m.match_time DESC")
     List<Match> findLatestFinishedMatches(Pageable pageable);
 
+    @Query("SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE md.match_end  <> 1 ORDER BY m.match_time ASC")
+    List<Match> findNextUpcomingMatch(Pageable pageable);
+
 
 }

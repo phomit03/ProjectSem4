@@ -145,5 +145,10 @@ public class MatchService {
         Pageable pageable = PageRequest.of(0, 3); // Lấy 3 kết quả đầu tiên
         return matchRepository.findLatestFinishedMatches(pageable);
     }
+
+    public List<Match> findNextUpcomingMatch() {
+        Pageable pageable = PageRequest.of(0, 1); // Lấy 3 kết quả đầu tiên
+        return matchRepository.findNextUpcomingMatch(pageable);
+    }
 }
 
