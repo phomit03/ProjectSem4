@@ -24,12 +24,14 @@ public class MatchUserController {
     public String matches(Model model) {
         List<Match> latestFinishedMatches = matchService.findLatestFinishedMatches();
         List<Match> findNextUpcomingMatch = matchService.findNextUpcomingMatch();
+        List<Match> findAllFinishedMatches = matchService.findAllFinishedMatches();
 
         model.addAttribute("overlay_title", "Matches");
         model.addAttribute("title", "Matches");
         model.addAttribute("description", "Matches have and will take place");
         model.addAttribute("latestFinishedMatches", latestFinishedMatches);
         model.addAttribute("findNextUpcomingMatch", findNextUpcomingMatch);
+        model.addAttribute("findAllFinishedMatches", findAllFinishedMatches);
 
         return "customer_matches";
     }

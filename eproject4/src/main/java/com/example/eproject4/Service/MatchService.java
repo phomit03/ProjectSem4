@@ -141,6 +141,9 @@ public class MatchService {
         }).collect(Collectors.toList());
     }
 
+    public List<Match> findAllFinishedMatches() {
+        return matchRepository.findAllFinishedMatches();
+    }
     public List<Match> findLatestFinishedMatches() {
         Pageable pageable = PageRequest.of(0, 3); // Lấy 3 kết quả đầu tiên
         return matchRepository.findLatestFinishedMatches(pageable);
