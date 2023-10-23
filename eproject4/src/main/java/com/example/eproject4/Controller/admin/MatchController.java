@@ -236,7 +236,7 @@ public class MatchController {
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("match", match);
+        model.addAttribute("matches", match);
         return "admin_match";
     }
 
