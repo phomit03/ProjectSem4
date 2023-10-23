@@ -155,7 +155,7 @@ public class MatchService {
     }
 
     //Next Match (random)
-    public Match getFindNextMatch() {
+    public List<Match> getFindNextMatch() {
         return matchRepository.findNextMatch();
     }
 

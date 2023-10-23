@@ -51,5 +51,5 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
 
     //Next Match (Random)
     @Query(value = "SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE m.match_time > CURRENT_TIMESTAMP AND md.match_end = 0 ORDER BY m.match_time ASC")
-    Match findNextMatch();
+    List<Match> findNextMatch();
 }
