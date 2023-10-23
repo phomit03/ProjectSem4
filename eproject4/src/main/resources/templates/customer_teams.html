@@ -124,107 +124,18 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-3 mb-4">
+            <div class="col-lg-3 mb-4" th:each="team : ${teams}">
                 <div class="custom-media d-block">
                     <div class="img mb-4">
-                        <a th:href="@{/teams/detail}" href="single.html"><img th:src="@{/user/images/img_1.jpg}" alt="Image" class="img-fluid"></a>
+                        <a th:href="@{/teams/detail}">
+                            <img th:src="@{${team.logo_img}}" alt="Image" class="img-fluid img-thumbnail"
+                                 style="width: 250px; height: 260px; max-width: 100%">
+                        </a>
                     </div>
                     <div class="text text-center">
-
-                        <h3 class="mb-4"><a th:href="@{/teams/detail}">Romolu to stay at Real Nadrid?</a></h3>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 mb-4">
-                <div class="custom-media d-block">
-                    <div class="img mb-4">
-                        <a th:href="@{/teams/detail}" href="single.html"><img th:src="@{/user/images/img_3.jpg}" alt="Image" class="img-fluid"></a>
-                    </div>
-                    <div class="text text-center">
-
-                        <h3 class="mb-4"><a th:href="@{/teams/detail}">Romolu to stay at Real Nadrid?</a></h3>
-
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 mb-4">
-                <div class="custom-media d-block">
-                    <div class="img mb-4">
-                        <a th:href="@{/teams/detail}" href="single.html"><img th:src="@{/user/images/img_1.jpg}" alt="Image" class="img-fluid"></a>
-                    </div>
-                    <div class="text text-center">
-
-                        <h3 class="mb-4"><a th:href="@{/teams/detail}">Romolu to stay at Real Nadrid?</a></h3>
-
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 mb-4">
-                <div class="custom-media d-block">
-                    <div class="img mb-4">
-                        <a th:href="@{/teams/detail}" href="single.html"><img th:src="@{/user/images/img_1.jpg}" alt="Image" class="img-fluid"></a>
-                    </div>
-                    <div class="text text-centerr">
-
-                        <h3 class="mb-4"><a th:href="@{/teams/detail}">Romolu to stay at Real Nadrid?</a></h3>
-
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 mb-4">
-                <div class="custom-media d-block">
-                    <div class="img mb-4">
-                        <a th:href="@{/teams/detail}" href="single.html"><img th:src="@{/user/images/img_1.jpg}" alt="Image" class="img-fluid"></a>
-                    </div>
-                    <div class="text text-center">
-
-                        <h3 class="mb-4"><a th:href="@{/teams/detail}">Romolu to stay at Real Nadrid?</a></h3>
-
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 mb-4">
-                <div class="custom-media d-block">
-                    <div class="img mb-4">
-                        <a th:href="@{/teams/detail}" href="single.html"><img th:src="@{/user/images/img_3.jpg}" alt="Image" class="img-fluid"></a>
-                    </div>
-                    <div class="text text-center">
-
-                        <h3 class="mb-4"><a th:href="@{/teams/detail}">Romolu to stay at Real Nadrid?</a></h3>
-
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 mb-4">
-                <div class="custom-media d-block">
-                    <div class="img mb-4">
-                        <a th:href="@{/teams/detail}" href="single.html"><img th:src="@{/user/images/img_1.jpg}" alt="Image" class="img-fluid"></a>
-                    </div>
-                    <div class="text text-center">
-
-                        <h3 class="mb-4"><a th:href="@{/teams/detail}">Romolu to stay at Real Nadrid?</a></h3>
-
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 mb-4">
-                <div class="custom-media d-block">
-                    <div class="img mb-4">
-                        <a th:href="@{/teams/detail}" href="single.html"><img th:src="@{/user/images/img_1.jpg}" alt="Image" class="img-fluid"></a>
-                    </div>
-                    <div class="text text-center">
-
-                        <h3 class="mb-4"><a th:href="@{/teams/detail}">Romolu to stay at Real Nadrid?</a></h3>
-
-
+                        <h3 class="mb-4">
+                            <a th:href="@{/teams/detail}" th:text="${team.name}" style="font-size: 17px"></a>
+                        </h3>
                     </div>
                 </div>
             </div>
