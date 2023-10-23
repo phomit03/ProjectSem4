@@ -59,7 +59,8 @@
                                 </li>
                                 <li th:if="${session.loggedInUser != null}">
                                     <div class="nav-item dropdown">
-                                        <a href="#" class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a href="#" class="nav-link dropdown-toggle" id="userDropdown" role="button"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <img class="rounded-circle me-lg-2"
                                                  th:src="@{/admin_static/img/user.jpg}"
                                                  alt="" style="width: 40px; height: 40px;">
@@ -119,12 +120,14 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div th:if="${nextMatchesOrLiveMatches} and ${#lists.size(nextMatchesOrLiveMatches) > 0}" th:each="match : ${nextMatchesOrLiveMatches}" th:class="'d-flex team-vs match-div-' + ${match.id}">
+                <div th:if="${nextMatchesOrLiveMatches} and ${#lists.size(nextMatchesOrLiveMatches) > 0}"
+                     th:each="match : ${nextMatchesOrLiveMatches}" th:class="'d-flex team-vs match-div-' + ${match.id}">
                     <span th:class="'score live-score-' + ${match.id}"></span>
                     <div class="team-1 w-50">
                         <div class="team-details w-100 text-center">
                             <input type="hidden" class="live-match-id" th:value="${match.id}">
-                            <img th:src="@{${match.home_team.logo_img}}" alt="Image" class="img-fluid" style="width: 70px; height: 75px">
+                            <img th:src="@{${match.home_team.logo_img}}" alt="Image" class="img-fluid"
+                                 style="width: 70px; height: 75px">
                             <h3 class="mt-2" th:text="${match.home_team.name}"></h3>
                             <input type="hidden" class="home-team-id" th:value="${match.home_team.id}">
                             <ul th:class="'list-unstyled home-team-event-' + ${match.id}">
@@ -133,7 +136,8 @@
                     </div>
                     <div class="team-2 w-50">
                         <div class="team-details w-100 text-center">
-                            <img th:src="@{${match.away_team.logo_img}}" alt="Image" class="img-fluid" style="width: 70px; height: 75px">
+                            <img th:src="@{${match.away_team.logo_img}}" alt="Image" class="img-fluid"
+                                 style="width: 70px; height: 75px">
                             <h3 class="mt-2" th:text="${match.away_team.name}"></h3>
                             <input type="hidden" class="away-team-id" th:value="${match.away_team.id}">
                             <ul th:class="'list-unstyled away-team-event-' + ${match.id}">
@@ -159,19 +163,22 @@
             <div class="row no-gutters">
                 <div class="col-md-4" th:each="news : ${latestNews}">
                     <div class="post-entry">
-                        <img th:src="@{${news.new_img}}" alt="Image" class="img-fluid" style="width: auto; height: 300px; max-width: 100%">
+                        <img th:src="@{${news.new_img}}" alt="Image" class="img-fluid"
+                             style="width: auto; height: 300px; max-width: 100%">
                         <div class="caption">
                             <div class="caption-inner">
                                 <a th:href="@{'/news/detail/' + ${news.id}}">
                                     <div class="mb-3">
                                         <h3 th:if="${#strings.length(news.title) < 70}" th:text="${news.title}"></h3>
-                                        <h3 th:unless="${#strings.length(news.title) <= 70}" th:text="${#strings.substring(news.title, 0, 60)} + '...'"></h3>
+                                        <h3 th:unless="${#strings.length(news.title) <= 70}"
+                                            th:text="${#strings.substring(news.title, 0, 60)} + '...'"></h3>
                                     </div>
                                 </a>
                                 <div class="author d-flex align-items-center">
                                     <div class="img mb-2 mr-3">
                                         <a th:href="@{'/news/detail/' + ${news.id}}">
-                                            <img th:src="@{/user/images/author_avt.png}" alt="" style="width: 40px; height: 40px">
+                                            <img th:src="@{/user/images/author_avt.png}" alt=""
+                                                 style="width: 40px; height: 40px">
                                         </a>
                                     </div>
                                     <div class="text">
@@ -199,14 +206,16 @@
                             <div class="widget-vs">
                                 <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
                                     <div class="team-1 text-center">
-                                        <img th:src="${findNextMatch[0].home_team.logo_img}" alt="Image" style="max-width: 100px; height: 100px;">
+                                        <img th:src="${findNextMatch[0].home_team.logo_img}" alt="Image"
+                                             style="max-width: 100px; height: 100px;">
                                         <h3 class="mt-3" th:text="${findNextMatch[0].home_team.name}"></h3>
                                     </div>
                                     <div>
                                         <span class="vs"><span>VS</span></span>
                                     </div>
                                     <div class="team-2 text-center">
-                                        <img th:src="${findNextMatch[0].away_team.logo_img}" alt="Image" style="max-width: 100px; height: 100px;">
+                                        <img th:src="${findNextMatch[0].away_team.logo_img}" alt="Image"
+                                             style="max-width: 100px; height: 100px;">
                                         <h3 class="mt-3" th:text="${findNextMatch[0].away_team.name}"></h3>
                                     </div>
                                 </div>
@@ -214,10 +223,17 @@
                         </div>
 
                         <div class="text-center widget-vs-contents mb-4">
-                            <h4>Premier League <span th:text="${#dates.format(findNextMatch[0].created_at, 'yyyy')}"></span></h4>
-                            <p class="mb-5">
-                                <span class="d-block mt-2" th:text="${#temporals.format(findNextMatch[0].match_time, 'MMM dd, yyyy')}"> </span>
-                                <span class="d-block mt-2" th:text="${#temporals.format(findNextMatch[0].match_time, 'HH:mm') + ' (GMT+0)'}"> </span>
+                            <h4>Premier League <span
+                                    th:text="${#dates.format(findNextMatch[0].created_at, 'yyyy')}"></span></h4>
+                            <p class="mb-5 mt-3">
+                                <i class="icon-calendar mr-1 color-red"></i>
+                                <span th:text="${#temporals.format(findNextMatch[0].match_time, 'MMM dd, yyyy')}"></span>
+                                <br>
+                                <i class="icon-timer mr-1 color-red"></i>
+                                <span th:text="${#temporals.format(findNextMatch[0].match_time, 'HH:mm') + ' (GMT+0)'}"> </span>
+                                <br>
+                                <i class="icon-add_location mr-1 color-red"></i>
+                                <span th:text="${findNextMatch[0].stadium_id.name}"></span>
                             </p>
                             <div id="date-countdown2" class="pb-1"></div>
                             <input type="hidden" name="countdown-next-match" th:value="${findNextMatch[0].match_time}">
@@ -230,8 +246,9 @@
                         <p style="font-size: 48px; padding: 145px;">Not Found</p>
                     </div>
                 </div>
-                <div class="col-lg-6">
 
+                <!--bảng xếp hạng-->
+                <div class="col-lg-6">
                     <div class="widget-next-match">
                         <table class="table custom-table">
                             <thead>
@@ -271,7 +288,8 @@
                             </tr>
                             <tr>
                                 <td>4</td>
-                                <td><a th:href="@{/teams/detail}" class="text-white"><u>French Football League</u></a></td>
+                                <td><a th:href="@{/teams/detail}" class="text-white"><u>French Football League</u></a>
+                                </td>
                                 <td>22</td>
                                 <td>3</td>
                                 <td>2</td>
@@ -316,9 +334,113 @@
                 </div>
             </div>
         </div>
-    </div> <!-- .site-section -->
+    </div>
 
     <div class="site-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 title-section">
+                    <h2 class="heading">Upcoming Match</h2>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="bg-light p-4 rounded">
+                        <div class="widget-body">
+                            <div class="widget-vs">
+                                <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                                    <div class="team-1 text-center">
+                                        <img th:src="@{/user/images/logo_1.png}" alt="Image">
+                                        <h3>Football League</h3>
+                                    </div>
+                                    <div>
+                                        <span class="vs"><span>VS</span></span>
+                                    </div>
+                                    <div class="team-2 text-center">
+                                        <img th:src="@{/user/images/logo_2.png}" alt="Image">
+                                        <h3>Soccer</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center widget-vs-contents mb-4">
+                            <h4>World Cup League</h4>
+                            <p class="mb-5">
+                                <span class="d-block">December 20th, 2020</span>
+                                <span class="d-block">9:30 AM GMT+0</span>
+                                <strong class="text-primary">New Euro Arena</strong>
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="bg-light p-4 rounded">
+                        <div class="widget-body">
+                            <div class="widget-vs">
+                                <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                                    <div class="team-1 text-center">
+                                        <img th:src="@{/user/images/logo_3.png}" alt="Image">
+                                        <h3>Football League</h3>
+                                    </div>
+                                    <div>
+                                        <span class="vs"><span>VS</span></span>
+                                    </div>
+                                    <div class="team-2 text-center">
+                                        <img th:src="@{/user/images/logo_4.png}" alt="Image">
+                                        <h3>Soccer</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center widget-vs-contents mb-4">
+                            <h4>World Cup League</h4>
+                            <p class="mb-5">
+                                <span class="d-block">December 20th, 2020</span>
+                                <span class="d-block">9:30 AM GMT+0</span>
+                                <strong class="text-primary">New Euro Arena</strong>
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="bg-light p-4 rounded">
+                        <div class="widget-body">
+                            <div class="widget-vs">
+                                <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
+                                    <div class="team-1 text-center">
+                                        <img th:src="@{/user/images/logo_1.png}" alt="Image">
+                                        <h3>Football League</h3>
+                                    </div>
+                                    <div>
+                                        <span class="vs"><span>VS</span></span>
+                                    </div>
+                                    <div class="team-2 text-center">
+                                        <img th:src="@{/user/images/logo_2.png}" alt="Image">
+                                        <h3>Soccer</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center widget-vs-contents mb-4">
+                            <h4>World Cup League</h4>
+                            <p class="mb-5">
+                                <span class="d-block">December 20th, 2020</span>
+                                <span class="d-block">9:30 AM GMT+0</span>
+                                <strong class="text-primary">New Euro Arena</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="site-section" style="padding-bottom: 200px">
         <div class="container">
             <div class="row">
                 <div class="col-6 title-section">
@@ -338,7 +460,8 @@
                 <div class="item">
                     <div class="video-media">
                         <img th:src="@{/user/images/img_1.jpg}" alt="Image" class="img-fluid">
-                        <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
+                        <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center"
+                           data-fancybox>
             <span class="icon mr-3">
               <span class="icon-play"></span>
             </span>
@@ -351,7 +474,8 @@
                 <div class="item">
                     <div class="video-media">
                         <img th:src="@{/user/images/img_2.jpg}" alt="Image" class="img-fluid">
-                        <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
+                        <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center"
+                           data-fancybox>
             <span class="icon mr-3">
               <span class="icon-play"></span>
             </span>
@@ -364,7 +488,8 @@
                 <div class="item">
                     <div class="video-media">
                         <img th:src="@{/user/images/img_3.jpg}" alt="Image" class="img-fluid">
-                        <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
+                        <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center"
+                           data-fancybox>
             <span class="icon mr-3">
               <span class="icon-play"></span>
             </span>
@@ -378,7 +503,8 @@
                 <div class="item">
                     <div class="video-media">
                         <img th:src="@{/user/images/img_1.jpg}" alt="Image" class="img-fluid">
-                        <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
+                        <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center"
+                           data-fancybox>
             <span class="icon mr-3">
               <span class="icon-play"></span>
             </span>
@@ -391,7 +517,8 @@
                 <div class="item">
                     <div class="video-media">
                         <img th:src="@{/user/images/img_2.jpg}" alt="Image" class="img-fluid">
-                        <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
+                        <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center"
+                           data-fancybox>
             <span class="icon mr-3">
               <span class="icon-play"></span>
             </span>
@@ -404,10 +531,11 @@
                 <div class="item">
                     <div class="video-media">
                         <img th:src="@{/user/images/img_3.jpg}" alt="Image" class="img-fluid">
-                        <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center" data-fancybox>
-            <span class="icon mr-3">
-              <span class="icon-play"></span>
-            </span>
+                        <a href="https://vimeo.com/139714818" class="d-flex play-button align-items-center"
+                           data-fancybox>
+                            <span class="icon mr-3">
+                              <span class="icon-play"></span>
+                            </span>
                             <div class="caption">
                                 <h3 class="m-0">Ronado to stay at Real Madrid?</h3>
                             </div>
@@ -417,46 +545,6 @@
 
             </div>
 
-        </div>
-    </div>
-
-    <div class="container site-section">
-        <div class="row">
-            <div class="col-6 title-section">
-                <h2 class="heading">Our Blog</h2>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="custom-media d-flex">
-                    <div class="img mr-4">
-                        <a th:href="@{/news/detail}">
-                            <img th:src="@{/user/images/img_1.jpg}" alt="Image" class="img-fluid">
-                        </a>
-                    </div>
-                    <div class="text">
-                        <span class="meta">May 20, 2020</span>
-                        <h3 class="mb-4"><a th:href="@{/news/detail}">Romolu to stay at Real Nadrid?</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus deserunt saepe tempora dolorem.</p>
-                        <p><a href="#">Read more</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="custom-media d-flex">
-                    <div class="img mr-4">
-                        <a th:href="@{/news/detail}">
-                            <img th:src="@{/user/images/img_3.jpg}" alt="Image" class="img-fluid">
-                        </a>
-                    </div>
-                    <div class="text">
-                        <span class="meta">May 20, 2020</span>
-                        <h3 class="mb-4"><a th:href="@{/news/detail}">Romolu to stay at Real Nadrid?</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus deserunt saepe tempora dolorem.</p>
-                        <p><a href="#">Read more</a></p>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <!--/END CONTENT HERE/-->
@@ -484,7 +572,7 @@
                 var homeTeamEventsUl = $('.home-team-event-' + scoreUpdateObj.match_id);
                 homeTeamEventsUl.empty();
                 $.each(scoreUpdateObj.homeTeamEventGoal, function (index, event) {
-                    getPlayerById(event.player_id, function(player) {
+                    getPlayerById(event.player_id, function (player) {
                         var li = $('<li>').text(player.name + ' (' + event.time + ')');
                         homeTeamEventsUl.append(li);
                     });
@@ -493,7 +581,7 @@
                 var awayTeamEventsUl = $('.away-team-event-' + scoreUpdateObj.match_id);
                 awayTeamEventsUl.empty();
                 $.each(scoreUpdateObj.awayTeamEventGoal, function (index, event) {
-                    getPlayerById(event.player_id, function(player) {
+                    getPlayerById(event.player_id, function (player) {
                         var li = $('<li>').text(player.name + ' (' + event.time + ')');
                         awayTeamEventsUl.append(li);
                     });
@@ -511,7 +599,7 @@
             type: 'POST',
             url: '/api/getPlayerById',
             contentType: 'application/json',
-            data: JSON.stringify({ id: id }),
+            data: JSON.stringify({id: id}),
             success: function (res) {
                 callback(res);
             }
@@ -519,7 +607,8 @@
     }
 </script>
 
-<script th:if="${nextMatchesOrLiveMatches} and ${#lists.size(nextMatchesOrLiveMatches) > 0}" th:each="match : ${nextMatchesOrLiveMatches}">
+<script th:if="${nextMatchesOrLiveMatches} and ${#lists.size(nextMatchesOrLiveMatches) > 0}"
+        th:each="match : ${nextMatchesOrLiveMatches}">
     var matchId = [[${match.id}]];
     var homeTeamId = [[${match.home_team_id.id}]];
     var awayTeamId = [[${match.away_team_id.id}]];
@@ -540,7 +629,7 @@
                 var homeTeamEventsUl = $('.home-team-event-' + res.matchId);
                 homeTeamEventsUl.empty();
                 $.each(res.homeTeamEventGoal, function (index, event) {
-                    getPlayerById(event.player_id, function(player) {
+                    getPlayerById(event.player_id, function (player) {
                         var li = $('<li>').text(player.name + ' (' + event.time + ')');
                         homeTeamEventsUl.append(li);
                     });
@@ -549,7 +638,7 @@
                 var awayTeamEventsUl = $('.away-team-event-' + res.matchId);
                 awayTeamEventsUl.empty();
                 $.each(res.awayTeamEventGoal, function (index, event) {
-                    getPlayerById(event.player_id, function(player) {
+                    getPlayerById(event.player_id, function (player) {
                         var li = $('<li>').text(player.name + ' (' + event.time + ')');
                         awayTeamEventsUl.append(li);
                     });
@@ -559,12 +648,13 @@
             }
         });
     }
+
     function getPlayerById(id, callback) {
         $.ajax({
             type: 'POST',
             url: '/api/getPlayerById',
             contentType: 'application/json',
-            data: JSON.stringify({ id: id }),
+            data: JSON.stringify({id: id}),
             success: function (res) {
                 callback(res);
             }
@@ -573,7 +663,7 @@
 </script>
 
 <script>
-    var siteCountDown = function() {
+    var siteCountDown = function () {
         let timeString = $('input[name=countdown-next-match]').val();
         let time = new Date(timeString);
 
@@ -584,7 +674,7 @@
             ('0' + time.getMinutes()).slice(-2) + ':' +
             ('0' + time.getSeconds()).slice(-2);
 
-        $('#date-countdown2').countdown(formattedTime, function(event) {
+        $('#date-countdown2').countdown(formattedTime, function (event) {
             var $this = $(this).html(event.strftime(''
                 + '<span class="countdown-block"><span class="label">%w</span> weeks </span>'
                 + '<span class="countdown-block"><span class="label">%d</span> days </span>'

@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AreaRepository extends JpaRepository<Area, Long>{
-    @Query("SELECT e FROM Area e WHERE e.id = :matchIdValue")
+    @Query("SELECT e FROM Area e WHERE e.id = :matchIdValue and e.status = 1")
     Area findByAreaById(@Param("matchIdValue") int id);
 }

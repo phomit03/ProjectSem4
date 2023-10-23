@@ -24,39 +24,38 @@
         <div class="container-fluid pt-4 px-4">
             <div class="row g-4">
                 <div>
-                    <a>
+                    <a >
                         <button type="" class="btn btn-primary m-2" style="float: right">
-                            Role
+                            FEEDBACK
                         </button>
                     </a>
                 </div>
 
                 <div class="col-12">
                     <div class="bg-secondary rounded h-100 p-4">
-                        <h6 class="mb-4">LIST ROLE</h6>
+                        <h6 class="mb-4">LIST FEEDBACK</h6>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Subject</th>
+                                    <th scope="col">Comment</th>
                                 </tr>
                                 </thead>
-                                <tbody th:if="${roles != null and #lists.size(roles) > 0}">
-                                <tr th:each="role, iterStat : ${roles}">
+                                <tbody th:if="${feedbacks != null and #lists.size(feedbacks) > 0}">
+                                <tr th:each="feedback, iterStat : ${feedbacks}">
                                     <td th:text="${iterStat.index + 1}"></td>
-                                    <td th:text="${role.name}"></td>
-                                    <td th:if="${role.name != 'ROLE_ADMIN'}">
-                                        <button class="btn">
-                                            <a th:href="@{/admin/role/{id}/update/(id=${role.id})}">
-                                                <i class="fas fa-pencil-alt"></i>
-                                            </a>
-                                        </button>
+                                    <td th:text="${feedback.name}"></td>
+                                    <td th:text="${feedback.email}"></td>
+                                    <td th:text="${feedback.subject}"></td>
+                                    <td th:text="${feedback.content}"></td>
                                     </td>
                                 </tr>
                                 </tbody>
-                                <tbody th:if="${roles == null or #lists.size(roles) == 0}">
+                                <tbody th:if="${feedbacks == null or #lists.size(feedbacks) == 0}">
                                 <tr>
                                     <td colspan="8" style="text-align: center; padding: 10px 0px;">No data</td>
                                 </tr>
@@ -69,8 +68,8 @@
         </div>
     </div>
 
-    <!-- Back to Top -->
-    <div th:replace="admin_fragments::back-to-top"></div>
+<!-- Back to Top -->
+<div th:replace="admin_fragments::back-to-top"></div>
 </div>
 
 <div th:replace="admin_fragments::script"></div>

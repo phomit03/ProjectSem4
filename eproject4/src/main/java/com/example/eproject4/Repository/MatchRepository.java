@@ -36,20 +36,24 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
 
 
     //Ticket List
-    @Query("SELECT m FROM Match m WHERE m.match_time >= :timeThreshold")
+    @Query("SELECT m FROM Match m WHERE m.match_time >= :timeThreshold AND m.status = 1")
     List<Match> findMatchesAfterTimeThreshold(@Param("timeThreshold") LocalDateTime timeThreshold);
-    @Query("SELECT m FROM Match m WHERE m.match_time < :timeThreshold")
+    @Query("SELECT m FROM Match m WHERE m.match_time < :timeThreshold AND m.status = 1")
     List<Match> findMatchesBeforeTimeThreshold(@Param("timeThreshold") LocalDateTime timeThreshold);
 
     // tim 3 tran vua ket thuc
-    @Query("SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE md.match_end = 1")
+    @Query("SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE md.match_end = 1 AND m.status = 1")
     List<Match> findAllFinishedMatches();
 
     // tim 3 tran vua ket thuc
-    @Query("SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE md.match_end = 1 ORDER BY m.match_time DESC")
+    @Query("SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE md.match_end = 1 AND m.status = 1 ORDER BY m.match_time DESC")
     List<Match> findLatestFinishedMatches(Pageable pageable);
 
     //Next Match (Random)
-    @Query(value = "SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE m.match_time > CURRENT_TIMESTAMP AND md.match_end = 0 ORDER BY m.match_time ASC")
+    @Query(value = "SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE m.match_time > CURRENT_TIMESTAMP AND m.status = 1 AND md.match_end = 0 ORDER BY m.match_time ASC")
     List<Match> findNextMatch();
+
+    //Upcoming 6 tran (homepage)
+    /*@Query(value = "SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE m.match_time > CURRENT_TIMESTAMP AND m.status = 1 AND md.match_end = 0 ORDER BY m.match_time ASC LIMIT 6")
+    List<Match> find6UpComingMatches();*/
 }

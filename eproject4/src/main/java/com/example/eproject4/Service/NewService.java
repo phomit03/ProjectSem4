@@ -13,10 +13,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,6 +69,8 @@ public class NewService {
             aNew.setTitle(newDTO.getTitle());
             aNew.setSub_title(newDTO.getSub_title());
             aNew.setContent(newDTO.getContent());
+            aNew.setStatus(newDTO.getStatus());
+            aNew.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
             return newRepository.save(aNew);
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,8 +83,15 @@ public class NewService {
         return modelToDtoConverter.convertToDto(aNew, NewDTO.class);
     }
 
-    public void delete(Long id) {
-        newRepository.deleteById(id);
+    public void softDelete(Long id) {
+        Optional<New> optionalEntity = newRepository.findById(id);
+        if (optionalEntity.isPresent()) {
+            New aNew = optionalEntity.get();
+            aNew.setStatus(0);
+            newRepository.save(aNew);
+        } else {
+            throw new EntityNotFoundException("Entity with id " + id + " not found.");
+        }
     }
 
     //phan trang

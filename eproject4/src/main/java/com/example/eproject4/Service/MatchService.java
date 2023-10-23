@@ -3,10 +3,7 @@ package com.example.eproject4.Service;
 import com.example.eproject4.DTO.Request.MatchRequest;
 import com.example.eproject4.DTO.Response.MatchDTO;
 import com.example.eproject4.DTO.Response.TeamDTO;
-import com.example.eproject4.Entity.Area;
-import com.example.eproject4.Entity.Match;
-import com.example.eproject4.Entity.MatchDetail;
-import com.example.eproject4.Entity.Team;
+import com.example.eproject4.Entity.*;
 import com.example.eproject4.Repository.MatchDetailRepository;
 import com.example.eproject4.Repository.MatchRepository;
 import com.example.eproject4.Utils.Helper;
@@ -19,10 +16,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -81,8 +80,8 @@ public class MatchService {
             match.setHome_team_id(matchRequest.getHome_team_id());
             match.setAway_team_id(matchRequest.getAway_team_id());
             match.setStadium_id(matchRequest.getStadium_id());
+            match.setStatus(matchRequest.getStatus());
             match.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
-
 
             return matchRepository.save(match);
 
@@ -92,8 +91,15 @@ public class MatchService {
         }
     }
 
-    public void deleteMatch(Long id) {
-        matchRepository.deleteById(id);
+    public void softDelete(Long id) {
+        Optional<Match> optionalEntity = matchRepository.findById(id);
+        if (optionalEntity.isPresent()) {
+            Match match = optionalEntity.get();
+            match.setStatus(0);
+            matchRepository.save(match);
+        } else {
+            throw new EntityNotFoundException("Entity with id " + id + " not found.");
+        }
     }
 
     public String formatDateTime(String dateTimeStr) {
@@ -158,6 +164,11 @@ public class MatchService {
     public List<Match> getFindNextMatch() {
         return matchRepository.findNextMatch();
     }
+
+    //Upcoming homepage
+    /*public List<Match> getUpComingHomePage() {
+        return matchRepository.find6UpComingMatches();
+    }*/
 
     // phan trang
     public Page<Match> findPaginated(int pageNo, int pageSize) {

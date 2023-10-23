@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Controller
@@ -71,10 +72,12 @@ public class TeamController {
     }
 
     @GetMapping("/team/delete/{id}")
-    public ResponseEntity<String> deleteTeamById(@PathVariable Long id) {
+    public ResponseEntity<String> softDelete(@PathVariable Long id) {
         try {
-            teamService.delete(id);
+            teamService.softDelete(id);
             return ResponseEntity.ok("Delete team successfully.");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Entity not found.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error!");
         }
