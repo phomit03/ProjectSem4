@@ -39,6 +39,8 @@ public class OderController {
         /*List<Cart> carts = cartRepository.findAll();
         model.addAttribute("carts", carts);*/
         //User loggedInUser = (User) session.getAttribute("loggedInUser");
+        /*User loggedInUser = (User) session.getAttribute("loggedInUser");
+        model.addAttribute("loggedInUser", loggedInUser);*/
         List<Ticket> tickets = ticketRepository.findAll();
         model.addAttribute("tickets", tickets);
         return "shopping_cart";

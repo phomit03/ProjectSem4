@@ -93,15 +93,17 @@
                                             <p class="title-info-cart">Full name
                                                 <span class="text-danger"> *</span></p>
                                             <div class="d-flex flex-row">
-                                                <input id="fullname" class="form-control" type="text" value="${session.loggedInUser.fullName}"
-                                                       placeholder="Please update full name" />
+                                                <input id="fullname" class="form-control" type="text"
+                                                       th:value="${#session.getAttribute('loggedInUser') != null ? #session.getAttribute('loggedInUser').username : ''}"
+                                                       placeholder="Please update full name" disabled/>
                                             </div>
 
                                             <p class="title-info-cart">Phone number
                                                 <span class="text-danger"> (*)</span></p>
                                             <div class="d-flex flex-row">
                                                 <input class="form-control" type="text"
-                                                       placeholder="Please update phone number" id="phone"/>
+                                                       th:value="${#session.getAttribute('loggedInUser') != null ? #session.getAttribute('loggedInUser').phone : ''}"
+                                                       placeholder="Please update phone number" id="phone" />
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-4 col-xl-4 mb-4">
@@ -109,14 +111,16 @@
                                                 <span class="text-danger"> *</span></p>
                                             <div class="d-flex flex-row">
                                                 <input class="form-control" type="text"
-                                                       placeholder="Please update email" id="email"/>
+                                                       th:value="${#session.getAttribute('loggedInUser') != null ? #session.getAttribute('loggedInUser').email : ''}"
+                                                       placeholder="Please update email" id="email" disabled/>
                                             </div>
 
                                             <p class="title-info-cart">Address
                                                 <span class="text-danger"> (*)</span></p>
                                             <div class="d-flex flex-row">
                                                 <input class="form-control" type="text"
-                                                       placeholder="Please update address" id="address"/>
+                                                       th:value="${#session.getAttribute('loggedInUser') != null ? #session.getAttribute('loggedInUser').address : ''}"
+                                                       placeholder="Please update address" id="address" />
                                             </div>
                                         </div>
 
@@ -246,15 +250,21 @@
             alert("Cart is empty");
             return;
         }
-        // if (!fullname || !phone || !email || !address) {
-        //     alert("User info is not updated");
-        //     return;
-        // }
+        if (!fullname && !phone && !email && !address) {
+            alert("You need to login");
+            return;
+        }
+        if (!fullname || !phone || !email || !address) {
+             alert("User info is not updated");
+             return;
+        }
+
+        window.localStorage.removeItem('carts');
 
         $('#api-form').submit();
     }
 
-    function onStepDown(index, originPrice) {
+   /* function onStepDown(index, originPrice) {
         const quantity = $('#quantity-input').val();
         if (quantity - 1 === 0) {
             onRemove(index);
@@ -267,9 +277,34 @@
             window.localStorage.setItem('carts', JSON.stringify(carts));
             window.location.reload();
         }
+    }*/
+
+    function onStepDown(index, originPrice) {
+        const carts = JSON.parse(window.localStorage.getItem('carts'));
+        const nowquantity = carts[index].quantity;
+        if(nowquantity === 1){
+            onRemove(index);
+        }else {
+            carts[index].quantity --;
+            carts[index].price = carts[index].quantity * carts[index].originPrice;
+            window.localStorage.setItem('carts', JSON.stringify(carts));
+            window.location.reload();
+        }
     }
 
     function onStepUp(totalQuantity, originPrice, index) {
+        const carts = JSON.parse(window.localStorage.getItem('carts'));
+        if(carts[index].totalQuantity === carts[index].quantity){
+            alert("Limited Tickets");
+        }else {
+            carts[index].quantity ++;
+            carts[index].price = carts[index].quantity * carts[index].originPrice;
+            window.localStorage.setItem('carts', JSON.stringify(carts));
+            window.location.reload();
+        }
+    }
+
+    /*function onStepUp(totalQuantity, originPrice, index) {
         const quantity = $('#quantity-input').val();
         if (+quantity + 1 > totalQuantity) {
             return;
@@ -282,7 +317,7 @@
             window.localStorage.setItem('carts', JSON.stringify(carts));
             window.location.reload();
         }
-    }
+    }*/
 
     function onRemove(index) {
         try {

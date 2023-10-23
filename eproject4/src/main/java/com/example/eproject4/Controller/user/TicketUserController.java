@@ -13,6 +13,7 @@ import com.example.eproject4.Repository.TicketRepository;
 import com.example.eproject4.Repository.cart_order.CartRepository;
 import com.example.eproject4.Repository.cart_order.OrderRepository;
 import com.example.eproject4.Service.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,7 @@ public class TicketUserController {
     private final CartService cartService;
     private final MatchRepository matchRepository;
     private final OrderRepository orderRepository;
+    private String data;
 
     public TicketUserController(TicketService ticketService, TicketRepository ticketRepository, MatchService matchService, AreaService areaService, CartRepository cartRepository, CartService cartService, MatchRepository matchRepository, OrderRepository orderRepository) {
         this.ticketService = ticketService;
@@ -117,44 +119,21 @@ public class TicketUserController {
             String decodedString = URLDecoder.decode(a, "UTF-8");
             String cutString = decodedString.substring(11);
             ObjectMapper objectMapper = new ObjectMapper();
+            data = cutString;
             List<Ticket1> tickets = objectMapper.readValue(cutString, new TypeReference<List<Ticket1>>(){});
             //Lấy tổng giá hóa đơn
             int total = 0;
             for (Ticket1 ticket1 : tickets) {
                 total += ticket1.getPrice();
             }
-            boolean isPaySucccess = true;
+            //boolean isPaySucccess = true;
             // xử lý thanh toán ở đây
             int orderTotal = total;
             String orderInfo = "Thanh toan don hang: 123";
             String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
             String vnpayUrl = vnPayService.createOrder(orderTotal, orderInfo, baseUrl);
             return "redirect:" + vnpayUrl;
-            //Phản hồi
-//            if(true){
-//                // luu order
-//                Order order = new Order();
-//                order.setTotalPrice(total);
-//                order.setUserId(15);
-//                order.setStatus(true);
-//                Order ordersucss = orderRepository.save(order);
-//                // lưu cart vào db
-//                List<Cart> cartList = new ArrayList<>();
-//                for (Ticket1 ticket1 : tickets) {
-//                    Cart cart = new Cart();
-//                    cart.setPayment(true);
-//                    cart.setQuantity(ticket1.getQuantity());
-//                    cart.setUserId(15);
-//                    cart.setTicket((ticketRepository.findIdTicket(ticket1.getTicketId()).get(0)));
-//                    cart.setOrderid(ordersucss.getUserId());
-//                    cartList.add(cart);
-//                }
-//                cartService.saveCarts(cartList);
-//                //return "Thanh tóan hóa thành công";
-//                return "succes";
-//            }else {
-//                return "fail";
-//            }
+
             } catch (Exception e) {
                 return  e.getMessage();
             }
@@ -162,8 +141,8 @@ public class TicketUserController {
     }
 
     @GetMapping("/vnpay-payment")
-    public String GetMapping(HttpServletRequest request, Model model){
-        int paymentStatus =vnPayService.orderReturn(request);
+    public String GetMapping(HttpServletRequest request, Model model, HttpSession session) {
+        int paymentStatus = vnPayService.orderReturn(request);
 
         String orderInfo = request.getParameter("vnp_OrderInfo");
         String paymentTime = request.getParameter("vnp_PayDate");
@@ -175,8 +154,50 @@ public class TicketUserController {
         model.addAttribute("paymentTime", paymentTime);
         model.addAttribute("transactionId", transactionId);
 
-        return paymentStatus == 1 ? "succes" : "fail";
+        if (paymentStatus == 1) {
+            try {
+                User loggedInUser = (User) session.getAttribute("loggedInUser");
+                model.addAttribute("loggedInUser", loggedInUser);
+                ObjectMapper objectMapper = new ObjectMapper();
+                List<Ticket1> tickets = objectMapper.readValue(data, new TypeReference<List<Ticket1>>() {
+                });
+                // luu order
+                Order order = new Order();
+                order.setTotalPrice(Integer.parseInt(totalPrice));
+                order.setUserId(loggedInUser.getId().intValue());
+                //order.setUserId(15);
+                order.setStatus(true);
+                Order ordersucss = orderRepository.save(order);
+
+                // lưu cart vào db
+                List<Cart> cartList = new ArrayList<>();
+                for (Ticket1 ticket1 : tickets) {
+                    Cart cart = new Cart();
+                    cart.setPayment(true);
+                    cart.setQuantity(ticket1.getQuantity());
+                    cart.setUserId(loggedInUser.getId().intValue());
+                    //cart.setUserId(15);
+                    cart.setTicket((ticketRepository.findIdTicket(ticket1.getTicketId()).get(0)));
+                    cart.setOrderid(ordersucss.getUserId());
+                    cartList.add(cart);
+                }
+                cartService.saveCarts(cartList);
+                for (Ticket1 ticket1 : tickets) {
+                    Ticket ticketToUpdate = ticketRepository.findIdTicket(ticket1.getTicketId()).get(0);
+                    if (ticketToUpdate != null) {
+                        ticketToUpdate.setQuantity(ticketToUpdate.getQuantity()-ticket1.getQuantity());
+                        ticketRepository.save(ticketToUpdate);
+                    }
+                }
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return "succes";
+        }
+        return "fail";
     }
+
+
 
 
 }
