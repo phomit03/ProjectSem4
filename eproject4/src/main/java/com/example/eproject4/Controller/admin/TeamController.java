@@ -25,7 +25,7 @@ public class TeamController {
     }
 
     @RequestMapping("/team")
-    public String match(Model model) {
+    public String teams(Model model, @RequestParam(defaultValue = "1") int page) {
         model.addAttribute("title", "Teams");
         return findPaginated(1, model);
     }
