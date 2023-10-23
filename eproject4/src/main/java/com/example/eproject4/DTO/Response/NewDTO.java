@@ -24,7 +24,7 @@ public class NewDTO {
     @MapToDTO
     private Integer status;
     @MapToDTO
-    private Timestamp created_at;
+    private Timestamp createdAt;
     @MapToDTO
-    private Timestamp updated_at;
+    private Timestamp updatedAt;
 }

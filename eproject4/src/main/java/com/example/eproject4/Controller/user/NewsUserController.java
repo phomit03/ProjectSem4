@@ -25,15 +25,17 @@ public class NewsUserController {
     public String getAllNews(Model model){
         model.addAttribute("overlay_title", "News");
         model.addAttribute("title", "News");
-        model.addAttribute("description", "Always update hot football news");
+        model.addAttribute("description", "Always update the hottest and latest football news");
         return findPaginated(1, model);
     }
     //phan trang
     @GetMapping("/{pageNo}")
-    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
-                                Model model) {
-        int pageSize = 6;
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
+        model.addAttribute("overlay_title", "News");
+        model.addAttribute("title", "News");
+        model.addAttribute("description", "Always update the hottest and latest football news");
 
+        int pageSize = 6;
 
         Page<New> page = newService.findPaginated(pageNo, pageSize);
         List<New> news = page.getContent();
@@ -45,21 +47,13 @@ public class NewsUserController {
         return "customer_news";
     }
 
-    @GetMapping("/detail")
-    public String news_detail(Model model) {
-        model.addAttribute("overlay_title", "News");
-        model.addAttribute("title", "News Detail");
-        model.addAttribute("description", "Always update hot football news");
-
-        return "customer_news_detail";
-    }
     @GetMapping("/detail/{id}")
     public String newById(@PathVariable Long id, Model model){
         NewDTO news = newService.getNewById(id);
         model.addAttribute("aNew", news);
-        model.addAttribute("overlay_title", "News");
+        model.addAttribute("overlay_title", "News Detail");
         model.addAttribute("title", "News Detail");
-        model.addAttribute("description", "Always update hot football news");
+        model.addAttribute("description", news.getTitle());
 
         return "customer_news_detail";
     }

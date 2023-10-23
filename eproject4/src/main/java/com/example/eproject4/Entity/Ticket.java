@@ -4,6 +4,8 @@ import com.example.eproject4.Utils.MapToDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -38,11 +40,13 @@ public class Ticket {
     @MapToDTO
     private Integer status;
 
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     @MapToDTO
-    @Column(name = "created_at")
     private Timestamp created_at;
 
-    @MapToDTO
+    @UpdateTimestamp
     @Column(name = "updated_at")
+    @MapToDTO
     private Timestamp updated_at;
 }

@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import java.security.Timestamp;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.Collection;
 
 @Data
