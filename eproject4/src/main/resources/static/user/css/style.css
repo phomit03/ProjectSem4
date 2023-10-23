@@ -1418,21 +1418,37 @@ input[type=text] {
 
 .live-indicator {
   position: absolute;
-  top: 5%;
-  right: 1%;
+  top: 8%;
+  right: 2%;
   display: flex;
   align-items: center;
+  animation: pulse 0.8s infinite;
+  z-index: 2;
+  FONT-VARIANT: JIS90;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .live-circle {
   width: 15px;
   height: 15px;
-  background-color: #09d509 ;
+  background-color: #08cb08;
   border-radius: 50%;
 }
 
 .live-text {
-  color: #09d509;
+  color: #08cb08;
   font-weight: bold;
   margin-left: 5px;
+  font-size: 15px;
 }

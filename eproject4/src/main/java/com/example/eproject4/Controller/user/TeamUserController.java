@@ -13,6 +13,8 @@ public class TeamUserController {
         model.addAttribute("title", "Teams");
         model.addAttribute("description", "List of competing teams of the season");
 
+
+
         return "customer_teams";
     }
     @RequestMapping("/detail")
