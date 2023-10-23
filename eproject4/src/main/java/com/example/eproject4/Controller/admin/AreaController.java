@@ -43,8 +43,6 @@ public class AreaController {
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
                                 Model model) {
         int pageSize = 20;
-
-
         Page<Area> page = areaService.findPaginated(pageNo, pageSize);
         List<Area> areas = page.getContent();
 

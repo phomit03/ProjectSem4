@@ -26,7 +26,6 @@ public class UserController {
 	@GetMapping
 	public String getAllUsers(Model model) {
 		model.addAttribute("title", "Users");
-
 		return findPaginated(1, model);
 	}
 
@@ -64,16 +63,12 @@ public class UserController {
 	@GetMapping("/{pageNo}")
 	public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
 								Model model) {
-		int pageSize = 5;
-
-
+		int pageSize = 6;
 		Page<User> page = userService.findPaginated(pageNo, pageSize);
 		List<User> users = page.getContent();
-
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("totalItems", page.getTotalElements());
-
 		model.addAttribute("users", users);
 		return "admin_user_list";
 	}

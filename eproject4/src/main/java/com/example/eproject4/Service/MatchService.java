@@ -3,6 +3,7 @@ package com.example.eproject4.Service;
 import com.example.eproject4.DTO.Request.MatchRequest;
 import com.example.eproject4.DTO.Response.MatchDTO;
 import com.example.eproject4.DTO.Response.TeamDTO;
+import com.example.eproject4.Entity.Area;
 import com.example.eproject4.Entity.Match;
 import com.example.eproject4.Entity.MatchDetail;
 import com.example.eproject4.Entity.Team;
@@ -11,6 +12,7 @@ import com.example.eproject4.Repository.MatchRepository;
 import com.example.eproject4.Utils.Helper;
 import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -155,6 +157,13 @@ public class MatchService {
     //Next Match (random)
     public Match getFindNextMatch() {
         return matchRepository.findNextMatch();
+    }
+
+    // phan trang
+    public Page<Match> findPaginated(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.matchRepository.findAll(pageable);
     }
 }
 
