@@ -9,49 +9,38 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.sql.Time;
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "stadium")
-public class Stadium{
+@Table(name = "area")
+public class Area {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @MapToDTO
-    private Long id;
+    private int id;
 
-    @Column(name = "name")
+    @Column(name = "area_name")
     @MapToDTO
-    private String name;
+    private String area_name;
 
-    @Column(name = "map_img")
+    @ManyToOne
+    @JoinColumn(name = "stadium_id", nullable = false)
     @MapToDTO
-    private String map_img;
+    private Stadium stadium;
 
-    @Lob
-    @Column(name = "description", columnDefinition = "text")
-    @MapToDTO
-    private String description;
-
-    @Column(name = "status", columnDefinition = "INT DEFAULT 1")
+    @Column(name = "status")
     @MapToDTO
     private Integer status;
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at")
     @MapToDTO
     private Timestamp created_at;
 
-    @UpdateTimestamp
     @Column(name = "updated_at")
     @MapToDTO
     private Timestamp updated_at;
-
 }

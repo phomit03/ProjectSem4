@@ -1,6 +1,7 @@
 package com.example.eproject4.DTO.Response;
 
-import com.example.eproject4.Utils.MapToDTO;
+import com.example.eproject4.Entity.Area;
+import com.example.eproject4.Entity.Match;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,21 +11,13 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NewDTO {
-    @MapToDTO
+public class TicketDTO {
     private Long id;
-    @MapToDTO
-    private String new_img;
-    @MapToDTO
-    private String title;
-    @MapToDTO
-    private String sub_title;
-    @MapToDTO
-    private String content;
-    @MapToDTO
+    private Area area;
+    private Match match;
+    private Integer quantity;
+    private Float price;
     private Integer status;
-    @MapToDTO
     private Timestamp created_at;
-    @MapToDTO
     private Timestamp updated_at;
 }

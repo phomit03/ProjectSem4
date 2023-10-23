@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class InfoUserController {
     @RequestMapping("")
     public String feedback(Model model) {
-        model.addAttribute("overlay_title", "Info Account");
-        model.addAttribute("title", "Feedback");
+        model.addAttribute("overlay_title", "Account Info");
+        model.addAttribute("title", "Account Info");
         model.addAttribute("description", "Please give us your contributions");
 
         return "customer_info_account";

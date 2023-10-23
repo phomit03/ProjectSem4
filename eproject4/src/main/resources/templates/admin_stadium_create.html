@@ -30,6 +30,14 @@
                         </div>
                         <form th:action="@{/admin/stadium/new/save}" th:object="${stadium}" method="post">
                             <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Map Image Stadium</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="file" id="map_img"
+                                           required name="logo">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Name Stadium</label>
                                 <div class="col-sm-10">
                                     <input type="text" th:field="*{name}" class="form-control" required>
