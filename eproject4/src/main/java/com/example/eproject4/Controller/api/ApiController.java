@@ -42,6 +42,7 @@ public class ApiController {
         List<MatchDetailEventDTO> awayTeamEventGoal = matchDetailEventService.getEventsByTeamIdAndMatchIdAndType(awayTeamId, matchId, 1);
 
         Map<String, Object> response = new HashMap<>();
+        response.put("matchId", matchId);
         response.put("homeTeamScore", homeTeamScore);
         response.put("awayTeamScore", awayTeamScore);
         response.put("homeTeamEventGoal", homeTeamEventGoal);

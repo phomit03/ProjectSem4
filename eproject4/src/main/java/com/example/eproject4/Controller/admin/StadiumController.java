@@ -5,6 +5,7 @@ import com.example.eproject4.DTO.Response.StadiumDTO;
 import com.example.eproject4.Entity.Stadium;
 import com.example.eproject4.Service.StadiumService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,21 +29,10 @@ public class StadiumController {
     }
 
     @RequestMapping("/stadiums")
-    public String stadiums(Model model, @RequestParam(defaultValue = "1") int page) {
-        int pageSize = 20;
-        List<StadiumDTO> allStadiums = stadiumService.getAllStadiums();
-
-        int totalItems = allStadiums.size();
-        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
-
-        List<StadiumDTO> stadiums = allStadiums.subList((page - 1) * pageSize, Math.min(page * pageSize, totalItems));
-
-        model.addAttribute("stadiums", stadiums);
+    public String stadiums(Model model) {
         model.addAttribute("title", "Stadiums");
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", totalPages);
+        return findPaginated(1, model);
 
-        return "admin_stadium";
     }
 
     @GetMapping("/stadium/new")
@@ -102,5 +92,20 @@ public class StadiumController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error!");
         }
+    }
+
+    //phan trang
+    @GetMapping("/stadiums/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
+                                Model model) {
+        int pageSize = 5;
+        Page<Stadium> page = stadiumService.findPaginated(pageNo, pageSize);
+        List<Stadium> stadiums = page.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("stadiums", stadiums);
+        return "admin_stadium";
     }
 }

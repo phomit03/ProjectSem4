@@ -3,7 +3,7 @@ body {
   line-height: 1.7;
   color: gray;
   font-weight: 300;
-  background-color: #222831;
+  background-color: #0c0613;
   font-size: 16px; }
 
 ::-moz-selection {
@@ -686,6 +686,8 @@ h1, h2, h3, h4, h5,
     font-size: 3rem;
     font-weight: 700;
     z-index: 2;
+    padding-left: 20px;
+    padding-bottom: 50px;
     letter-spacing: .2em; }
     @media (max-width: 991.98px) {
       .team-vs .score {
@@ -712,7 +714,7 @@ h1, h2, h3, h4, h5,
       background: #f6d743;
       background: #ee1e46;
       content: "";
-      left: -12%;
+      left: -8%;
       right: 0;
       top: 0;
       width: 200%;
@@ -929,7 +931,7 @@ h1, h2, h3, h4, h5,
   padding: 70px 0;
   font-size: 14px;
   color: rgba(255, 255, 255, 0.5);
-  background: #1a1e25; }
+  background: #0e0a19; }
   .footer-section .widget h3 {
     color: #fff;
     font-size: 18px;
@@ -958,7 +960,9 @@ h1, h2, h3, h4, h5,
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%); }
   .custom-nav a:hover {
-    background-color: #ee1e46; }
+    background-color: #ee1e46;
+    color: white;
+  }
 
 .owl-dots {
   position: absolute;
@@ -980,7 +984,8 @@ h1, h2, h3, h4, h5,
   background: rgba(255, 255, 255, 0.05) !important; }
 
 .bg-dark {
-  background: #1a1e25 !important; }
+  background: #0e0a19 !important;
+}
 
 .custom-media .img {
   -webkit-box-flex: 0;
@@ -1005,7 +1010,7 @@ h1, h2, h3, h4, h5,
 
 .custom-pagination a, .custom-pagination span {
   display: inline-block;
-  color: #fff;
+  color: #ee1e46;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -1389,9 +1394,45 @@ input[type=text] {
 
 .dropdown-fix:hover {
   background-color: #f8f9fa;
+  padding-left: 5px;
 }
 
 .dropdown-fix2:hover {
   background-color: #f8f9fa;
   color: #ee1e46;
+  padding-left: 5px;
+}
+
+.text-2-line {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.match-div-4 {
+  position: relative;
+}
+
+.live-indicator {
+  position: absolute;
+  top: 5%;
+  right: 1%;
+  display: flex;
+  align-items: center;
+}
+
+.live-circle {
+  width: 15px;
+  height: 15px;
+  background-color: #09d509 ;
+  border-radius: 50%;
+}
+
+.live-text {
+  color: #09d509;
+  font-weight: bold;
+  margin-left: 5px;
 }

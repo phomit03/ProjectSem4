@@ -20,23 +20,8 @@ public class MainController {
 		this.userService = userService;
 	}
 
-	@GetMapping("/login")
-	public String showLoginForm(Model model) {
-		return "admin_login";
-	}
-
 	@ModelAttribute("user")
 	public UserRegistrationDto userRegistrationDto() {
 		return new UserRegistrationDto();
-	}
-
-	@GetMapping("/index")
-	public String home() {
-		return "admin_index";
-	}
-
-	@GetMapping("/index1")
-	public String home1() {
-		return "index1";
 	}
 }

@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "new")
+@Table(name = "news")
 public class New {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

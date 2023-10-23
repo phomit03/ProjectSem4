@@ -36,10 +36,12 @@ public class Area {
     @MapToDTO
     private Integer status;
 
-    @Column(name = "created_at")
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     @MapToDTO
     private Timestamp created_at;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
     @MapToDTO
     private Timestamp updated_at;

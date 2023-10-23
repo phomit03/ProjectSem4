@@ -3,6 +3,7 @@ package com.example.eproject4.Service;
 import com.example.eproject4.DTO.Request.MatchRequest;
 import com.example.eproject4.DTO.Response.MatchDTO;
 import com.example.eproject4.DTO.Response.TeamDTO;
+import com.example.eproject4.Entity.Area;
 import com.example.eproject4.Entity.Match;
 import com.example.eproject4.Entity.MatchDetail;
 import com.example.eproject4.Entity.Team;
@@ -11,6 +12,9 @@ import com.example.eproject4.Repository.MatchRepository;
 import com.example.eproject4.Utils.Helper;
 import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -115,15 +119,51 @@ public class MatchService {
         return true;
     }
 
-    public List<MatchDTO> getNextMatchesOrLiveMatches() {
+    public List<MatchDTO> getNextMatchesOrLiveMatches(int limit) {
         LocalDateTime currentDateTime = LocalDateTime.now();
-        List<Match> matches = matchRepository.findNextLiveOrUpcomingMatchesWithDetails(currentDateTime);
-        int maxResults = 5;
+        List<Match> matches;
+        List<Match> liveMatches = matchRepository.findLiveMatches(currentDateTime);
+        int typeMatch = liveMatches.isEmpty() ? 2 : 1;
+
+        if (liveMatches.isEmpty()) {
+            matches = matchRepository.findLatestFinishedMatch();
+        } else {
+            matches = liveMatches;
+        }
+
+        int maxResults = limit != 0 ? limit : 3;
         if (matches.size() > maxResults) {
             matches = matches.subList(0, maxResults);
         }
-        return matches.stream().map(match -> modelToDtoConverter.convertToDto(match, MatchDTO.class))
-                .collect(Collectors.toList());
+
+        return matches.stream().map(match -> {
+            MatchDTO dto = modelToDtoConverter.convertToDto(match, MatchDTO.class);
+            dto.setType_match(typeMatch);
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
+    //list tran dau da ket thuc
+    public List<Match> findAllFinishedMatches() {
+        return matchRepository.findAllFinishedMatches();
+    }
+
+    // Lấy 3 kết quả gần nhất da ket thuc
+    public List<Match> findLatestFinishedMatches() {
+        Pageable pageable = PageRequest.of(0, 3);
+        return matchRepository.findLatestFinishedMatches(pageable);
+    }
+
+    //Next Match (random)
+    public Match getFindNextMatch() {
+        return matchRepository.findNextMatch();
+    }
+
+    // phan trang
+    public Page<Match> findPaginated(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.matchRepository.findAll(pageable);
     }
 }
 

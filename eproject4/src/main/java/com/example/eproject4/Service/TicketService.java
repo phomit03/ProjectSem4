@@ -8,6 +8,9 @@ import com.example.eproject4.Repository.MatchRepository;
 import com.example.eproject4.Repository.TicketRepository;
 import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -81,24 +84,31 @@ public class TicketService {
         ticketRepository.deleteById(id);
     }
 
+    //Retrieve matches that have not yet taken place or took place 15 minutes before
     public List<Match> getUpcomingMatches() {
         LocalDateTime currentTimeMinus15Minutes = LocalDateTime.now().minusMinutes(15);
         return matchRepository.findMatchesAfterTimeThreshold(currentTimeMinus15Minutes);
     }
 
-/*    public List<TicketDTO> getAllTicketsByIdMath(int matchid) {
+    //Retrieve matches that have already taken place or take place after 15 minutes
+    public List<Match> getPastMatches() {
+        LocalDateTime currentTimeMinus15Minutes = LocalDateTime.now().minusMinutes(15);
+        return matchRepository.findMatchesBeforeTimeThreshold(currentTimeMinus15Minutes);
+    }
 
-        List<Ticket> tickets = ticketRepository.findByMatchId(matchid);
+    /*    public List<TicketDTO> getAllTicketsByIdMath(int matchid) {
 
-        return tickets.stream().map(ticket -> modelToDtoConverter.convertToDto(ticket, TicketDTO.class))
-                .collect(Collectors.toList());
-    }*/
+            List<Ticket> tickets = ticketRepository.findByMatchId(matchid);
+
+            return tickets.stream().map(ticket -> modelToDtoConverter.convertToDto(ticket, TicketDTO.class))
+                    .collect(Collectors.toList());
+        }*/
     public List<Ticket> getAllTicketsByIdMath(int matchid) {
 
         long longValue = (long) matchid;
         Optional<Match> match = matchRepository.findById(longValue);
         List<Ticket> tickets = ticketRepository.findByMatchId(match);
-        return  tickets;
+        return tickets;
 
     }
 
@@ -110,9 +120,14 @@ public class TicketService {
 
     }*/
 
-//    public List<Match> getPastMatches() {
+    //    public List<Match> getPastMatches() {
 //        return matchRepository.findPastMatches();
 //    }
+//phan trang
+    public Page<Ticket> findPaginated(int pageNo, int pageSize) {
 
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.ticketRepository.findAll(pageable);
+    }
 }
 

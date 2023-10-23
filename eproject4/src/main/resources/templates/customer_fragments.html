@@ -26,6 +26,10 @@
     <link rel="stylesheet" th:href="@{/user/account/vendor/select2/select2.min.css}">
     <link rel="stylesheet" th:href="@{/user/account/css/util.css}">
     <link rel="stylesheet" th:href="@{/user/account/css/main.css}">
+
+    <!-- Sweet Alert-->
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </head>
 <body>
 <div th:fragment="top-fragment">
@@ -64,6 +68,9 @@
                             <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/feedback') ? 'active' : ''}">
                                 <a th:href="@{/feedback}" class="nav-link">Feedback</a>
                             </li>
+                            <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/list_tickets') ? 'active' : ''}">
+                                <a th:href="@{/list_tickets}" class="nav-link">Book Tickets</a>
+                            </li>
 
                             <!--login/user-->
                             <li th:if="${session.loggedInUser == null }">
@@ -85,7 +92,8 @@
                                         <i class="bi bi-caret-down color-red icon-large"></i>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="userDropdown">
-                                        <a class="dropdown-item dropdown-fix color-grey" href="#">
+                                        <a class="dropdown-item dropdown-fix color-grey"
+                                           th:href="@{/account/info/{id} (id=${session.loggedInUser.id})}">
                                             <i class="icon-user mr-2 color-red"></i> Info Account
                                         </a>
                                         <a class="dropdown-item dropdown-fix color-grey" href="#">
