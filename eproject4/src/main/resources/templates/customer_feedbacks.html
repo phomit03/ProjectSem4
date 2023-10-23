@@ -12,18 +12,19 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-7">
-                    <form action="#">
+                        <form th:action="@{/feedback}" th:object="${feedbacks}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Name">
+                            <input type="text" class="form-control" placeholder="Name" th:field="*{name}">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Email">
+                            <input type="text" class="form-control" placeholder="Email" th:field="*{email}">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Subject">
+                            <input type="text" class="form-control" placeholder="Subject" th:field="*{subject}">
                         </div>
                         <div class="form-group">
-                            <textarea name="" class="form-control" id="" cols="30" rows="10" placeholder="Write something..."></textarea>
+                            <textarea name="" class="form-control" id="" cols="30" rows="10" th:field="*{content}" placeholder="Write something..."></textarea>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary py-3 px-5">Send Feedback</button>
@@ -58,6 +59,45 @@
 </div>
 
 <div th:replace="customer_fragments::script-fragment"></div>
+<script>
+    function validateForm() {
+        var email = document.getElementById("email").value;
+        var emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6})*$/
+        if (!emailRegex.test(email)) {
+            alert("Please enter a valid email");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+<div class="message" th:if="${error}" th:data="${error}" style="  display: none"></div>
+
+<script th:if="${error}">
+    $( document ).ready(function() {
+        var message = $('.message').attr('data');
+        Swal.fire(
+            'Error',
+            message,
+            'error'
+        )
+    });
+</script>
+
+<div class="message" th:if="${success}" th:data="${success}" style="display: none"></div>
+
+<script th:if="${success}">
+    $( document ).ready(function() {
+        var message = $('.message').attr('data');
+        Swal.fire(
+            'Success',
+            message,
+            'success'
+        )
+    });
+</script>
+
 </body>
 
 </html>
