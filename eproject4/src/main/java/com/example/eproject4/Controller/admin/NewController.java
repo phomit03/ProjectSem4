@@ -84,16 +84,12 @@ public class NewController {
     @GetMapping("/new/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
                                 Model model) {
-        int pageSize = 20;
-
-
+        int pageSize = 6;
         Page<New> page = newService.findPaginated(pageNo, pageSize);
         List<New> news = page.getContent();
-
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-
         model.addAttribute("news", news);
         return "admin_new";
     }

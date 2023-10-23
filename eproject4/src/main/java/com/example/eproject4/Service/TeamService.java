@@ -8,6 +8,9 @@ import com.example.eproject4.Repository.TeamRepository;
 import com.example.eproject4.Utils.Helper;
 import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -83,5 +86,12 @@ public class TeamService {
 
     public void delete(Long id) {
         teamRepository.deleteById(id);
+    }
+
+    // phan trang
+    public Page<Team> findPaginated(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.teamRepository.findAll(pageable);
     }
 }

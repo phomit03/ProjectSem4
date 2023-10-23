@@ -686,6 +686,8 @@ h1, h2, h3, h4, h5,
     font-size: 3rem;
     font-weight: 700;
     z-index: 2;
+    padding-left: 20px;
+    padding-bottom: 50px;
     letter-spacing: .2em; }
     @media (max-width: 991.98px) {
       .team-vs .score {
@@ -712,7 +714,7 @@ h1, h2, h3, h4, h5,
       background: #f6d743;
       background: #ee1e46;
       content: "";
-      left: -12%;
+      left: -8%;
       right: 0;
       top: 0;
       width: 200%;
@@ -958,7 +960,9 @@ h1, h2, h3, h4, h5,
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%); }
   .custom-nav a:hover {
-    background-color: #ee1e46; }
+    background-color: #ee1e46;
+    color: white;
+  }
 
 .owl-dots {
   position: absolute;
@@ -1006,7 +1010,7 @@ h1, h2, h3, h4, h5,
 
 .custom-pagination a, .custom-pagination span {
   display: inline-block;
-  color: #fff;
+  color: #ee1e46;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -1467,5 +1471,35 @@ input[type=text] {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+<<<<<<< HEAD
 >>>>>>> f8fdb17f19acb09859e22adcac15758cc9151a12
 }
+=======
+}
+
+
+.match-div-4 {
+  position: relative;
+}
+
+.live-indicator {
+  position: absolute;
+  top: 5%;
+  right: 1%;
+  display: flex;
+  align-items: center;
+}
+
+.live-circle {
+  width: 15px;
+  height: 15px;
+  background-color: #09d509 ;
+  border-radius: 50%;
+}
+
+.live-text {
+  color: #09d509;
+  font-weight: bold;
+  margin-left: 5px;
+}
+>>>>>>> a38a2b0b14362da940dd83c358b800fce98ab301

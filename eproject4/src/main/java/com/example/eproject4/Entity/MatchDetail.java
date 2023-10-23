@@ -4,9 +4,11 @@ import com.example.eproject4.Utils.MapToDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
@@ -63,10 +65,12 @@ public class MatchDetail {
     @MapToDTO
     private Integer status;
 
+    @CreationTimestamp
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @MapToDTO
     private Timestamp createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     @MapToDTO
     private Timestamp updatedAt;

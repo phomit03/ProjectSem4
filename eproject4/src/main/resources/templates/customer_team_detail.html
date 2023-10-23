@@ -11,17 +11,16 @@
     <div class="site-section">
         <div class="container">
             <div class="row">
-                <div class="col-12 title-section">
+                <div class="col-12 title-section mb-5">
                     <h2 class="heading">Info Club</h2>
                 </div>
 
-                <div class="col-lg-6">
-                    <img class="img-fluid img-thumbnail w-100 h-75" th:src="@{/user/images/logo_1.png}">
+                <div class="col-lg-6 d-flex justify-content-center align-items-center">
+                    <img class="img-fluid" th:src="@{/user/images/logo_1.png}" style="width: 400px; height: 400px;">
                 </div>
-
                 <div class="col-lg-6">
-                    <div class="p-4 rounded" style="font-size: 15rem;">
-                        <div style="font-size:25px; line-height: 3.5">
+                    <div class="p-4 rounded" style="font-size: 15rem; border-left: 2px solid #808080;">
+                        <div style="font-size:25px; line-height: 3.5;">
                             Name Club: <p></p>
                             Coach: <p></p>
                             Home Stadium: <p></p>
@@ -267,6 +266,7 @@
             </div>
         </div>
     </div>
+
     <!--/END CONTENT HERE/-->
 
     <div th:replace="customer_fragments::bot-fragment"></div>

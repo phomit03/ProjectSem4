@@ -1,7 +1,6 @@
 package com.example.eproject4.Service;
 
 import com.example.eproject4.DTO.Request.TicketRequest;
-import com.example.eproject4.DTO.Response.MatchDTO;
 import com.example.eproject4.DTO.Response.TicketDTO;
 import com.example.eproject4.Entity.Match;
 import com.example.eproject4.Entity.Ticket;
@@ -9,11 +8,15 @@ import com.example.eproject4.Repository.MatchRepository;
 import com.example.eproject4.Repository.TicketRepository;
 import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -93,5 +96,38 @@ public class TicketService {
         return matchRepository.findMatchesBeforeTimeThreshold(currentTimeMinus15Minutes);
     }
 
+    /*    public List<TicketDTO> getAllTicketsByIdMath(int matchid) {
+
+            List<Ticket> tickets = ticketRepository.findByMatchId(matchid);
+
+            return tickets.stream().map(ticket -> modelToDtoConverter.convertToDto(ticket, TicketDTO.class))
+                    .collect(Collectors.toList());
+        }*/
+    public List<Ticket> getAllTicketsByIdMath(int matchid) {
+
+        long longValue = (long) matchid;
+        Optional<Match> match = matchRepository.findById(longValue);
+        List<Ticket> tickets = ticketRepository.findByMatchId(match);
+        return tickets;
+
+    }
+
+    /*public List<Ticket> getAllTicketsById(int matchid) {
+
+        long longValue = (long) matchid;
+        List<Ticket> tickets = ticketRepository.findByMatchId(matchRepository.findById(longValue));
+        return  tickets;
+
+    }*/
+
+    //    public List<Match> getPastMatches() {
+//        return matchRepository.findPastMatches();
+//    }
+//phan trang
+    public Page<Ticket> findPaginated(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.ticketRepository.findAll(pageable);
+    }
 }
 

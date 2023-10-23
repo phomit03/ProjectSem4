@@ -18,6 +18,7 @@
             <div class="row">
                 <div class="col-md-8 blog-content">
                     <h2 class="mb-3 font-weight-bold" th:text="${aNew.title}"></h2>
+                    <div class="div-content mt-5 mb-3 font-weight-bold font-italic" th:utext="${aNew.sub_title}"></div>
                     <div class="div-content" th:utext="${aNew.content}"></div>
                 </div>
                 <div class="col-md-4 sidebar">
@@ -40,7 +41,7 @@
                         </div>
                     </div>
                     <div class="sidebar-box">
-                        <img th:src="@{/user/images/person_1.jpg}" alt="Image placeholder" class="img-fluid mb-4">
+                        <img th:src="@{/user/images/fabio_romaro.jpg}" alt="Image placeholder" class="img-fluid mb-4">
                         <h3 class="text-uppercase">About The Author</h3>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos fugit cupiditate numquam!</p>
                         <p><a href="#" class="btn btn-primary text-white">Read More</a></p>

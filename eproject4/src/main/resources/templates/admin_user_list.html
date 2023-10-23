@@ -48,8 +48,8 @@
                 </tr>
                 </thead>
                 <tbody th:if="${users != null and #lists.size(users) > 0}">
-                <tr th:each="user, iterStat : ${users}">
-                  <td th:text="${iterStat.index + 1}"></td>
+                <tr th:each="user, iterStat : ${users}" th:class="'user-' + ${user.id}">
+                <td th:text="${iterStat.index + 1}"></td>
                   <td th:text="${user.username}"></td>
                   <td th:text="${user.email}"></td>
                   <td th:text="${user.fullName}"></td>
@@ -66,8 +66,12 @@
                     </button>
                     <button class="btn">
                       <div th:each="userRole : ${user.roles}" th:if="${userRole.name != 'ROLE_ADMIN'}">
-                        <a th:href="@{/admin/user/{id}/delete(id=${user.id})}"
-                           onclick="return confirm('Are you sure you want to delete this item?');">
+<!--                        <a th:href="@{/admin/user/{id}/delete(id=${user.id})}"-->
+<!--                           onclick="return confirm('Are you sure you want to delete this item?');">-->
+<!--                          <i class="fas fa-trash"></i>-->
+<!--                        </a>-->
+                        <a th:data-id="${user.id}"
+                           class="delete-btn">
                           <i class="fas fa-trash"></i>
                         </a>
                       </div>
@@ -109,6 +113,63 @@
 </div>
 
 <div th:replace="admin_fragments::script"></div>
+
+<script>
+  $('.delete-btn').click(function () {
+    var id = $(this).attr('data-id');
+    var teamRow = $('.user-' + id);
+    Swal.fire({
+      title: 'Are you sure you want to delete this item?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: "/admin/user/"+ id+"/delete/",
+          success: function () {
+            teamRow.remove();
+            Swal.fire(
+                    'Success',
+                    'Delete success',
+                    'success'
+            )
+          }
+        })
+      }
+    })
+  })
+</script>
+
+<div class="message" th:if="${error}" th:data="${error}" style="display: none"></div>
+
+<script th:if="${error}">
+  $( document ).ready(function() {
+    var message = $('.message').attr('data');
+    Swal.fire(
+            'Error',
+            message,
+            'error'
+    )
+  });
+</script>
+
+<div class="message" th:if="${success}" th:data="${success}" style="display: none"></div>
+
+<script th:if="${success}">
+  $( document ).ready(function() {
+    var message = $('.message').attr('data');
+    Swal.fire(
+            'Success',
+            message,
+            'success'
+    )
+  });
+</script>
+
 </body>
 
 </html>
