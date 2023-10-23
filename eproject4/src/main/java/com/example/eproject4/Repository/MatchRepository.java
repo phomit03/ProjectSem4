@@ -35,25 +35,21 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     List<Match> findLatestFinishedMatch();
 
 
-    //Ticket
+    //Ticket List
     @Query("SELECT m FROM Match m WHERE m.match_time >= :timeThreshold")
     List<Match> findMatchesAfterTimeThreshold(@Param("timeThreshold") LocalDateTime timeThreshold);
-
     @Query("SELECT m FROM Match m WHERE m.match_time < :timeThreshold")
     List<Match> findMatchesBeforeTimeThreshold(@Param("timeThreshold") LocalDateTime timeThreshold);
 
     // tim 3 tran vua ket thuc
-
     @Query("SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE md.match_end = 1")
     List<Match> findAllFinishedMatches();
 
     // tim 3 tran vua ket thuc
-
     @Query("SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE md.match_end = 1 ORDER BY m.match_time DESC")
     List<Match> findLatestFinishedMatches(Pageable pageable);
-    // tran dau cbi bat dau gan nhat
-    @Query("SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE md.match_end  <> 1 ORDER BY m.match_time ASC")
-    List<Match> findNextUpcomingMatch(Pageable pageable);
 
-
+    //Next Match (Random)
+    @Query(value = "SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE m.match_time > CURRENT_TIMESTAMP AND md.match_end = 0 ORDER BY m.match_time ASC")
+    Match findNextMatch();
 }
