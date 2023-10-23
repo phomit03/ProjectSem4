@@ -23,7 +23,7 @@ public class TeamController {
     }
 
     @RequestMapping("/team")
-    public String match(Model model, @RequestParam(defaultValue = "1") int page) {
+    public String teams(Model model, @RequestParam(defaultValue = "1") int page) {
         int pageSize = 20;
         List<TeamDTO> allMatches = teamService.getAllTeams();
 

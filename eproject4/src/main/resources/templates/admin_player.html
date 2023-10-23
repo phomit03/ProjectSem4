@@ -44,8 +44,10 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Image</th>
                                     <th scope="col">Name</th>
+                                    <th scope="col">Date Of Birth</th>
                                     <th scope="col">Team</th>
                                     <th scope="col">National</th>
+                                    <th scope="col">Position</th>
                                     <th scope="col">Number</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
@@ -58,8 +60,10 @@
                                         <img style="width: 70px; height: 70px; object-fit: cover;" th:src="@{${player.avatar_img}}">
                                     </td>
                                     <td th:text="${player.name}"></td>
+                                    <td th:text="${player.date_of_birth}"></td>
                                     <td th:text="${player.team.name}"></td>
                                     <td th:text="${player.national}"></td>
+                                    <td th:text="${player.position}"></td>
                                     <td th:text="${player.number}"></td>
                                     <td>
                                         <th:block th:if="${player.status == 1}">
