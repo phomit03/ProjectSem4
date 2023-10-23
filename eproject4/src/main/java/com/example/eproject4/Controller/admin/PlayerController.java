@@ -2,8 +2,10 @@ package com.example.eproject4.Controller.admin;
 
 import com.example.eproject4.DTO.Response.PlayerDTO;
 import com.example.eproject4.DTO.Response.TeamDTO;
+import com.example.eproject4.Entity.Player;
 import com.example.eproject4.Service.PlayerService;
 import com.example.eproject4.Service.TeamService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
@@ -32,7 +34,8 @@ public class PlayerController {
 
         model.addAttribute("players", playerDTOList);
         model.addAttribute("title", "Players");
-        return "admin_player";
+        return findPaginated(1, model);
+
     }
 
     @GetMapping("/player/create")
@@ -88,5 +91,20 @@ public class PlayerController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error!");
         }
+    }
+
+    //phan trang
+    @GetMapping("/player/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
+                                Model model) {
+        int pageSize = 6;
+        Page<Player> page = playerService.findPaginated(pageNo, pageSize);
+        List<Player> players = page.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("players", players);
+        return "admin_player";
     }
 }

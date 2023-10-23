@@ -2,9 +2,12 @@ package com.example.eproject4.Controller.admin;
 
 import com.example.eproject4.DTO.Request.MatchRequest;
 import com.example.eproject4.DTO.Response.*;
+import com.example.eproject4.Entity.Area;
+import com.example.eproject4.Entity.Match;
 import com.example.eproject4.Entity.MatchDetail;
 import com.example.eproject4.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -49,21 +52,9 @@ public class MatchController {
     }
 
     @RequestMapping("/matches")
-    public String matches(Model model, @RequestParam(defaultValue = "1") int page) {
-        int pageSize = 20;
-        List<MatchDTO> allMatches = matchService.getAllMatches();
-
-        int totalItems = allMatches.size();
-        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
-
-        List<MatchDTO> matches = allMatches.subList((page - 1) * pageSize, Math.min(page * pageSize, totalItems));
-
-        model.addAttribute("matches", matches);
+    public String matches(Model model) {
         model.addAttribute("title", "Matches");
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", totalPages);
-
-        return "admin_match";
+        return findPaginated(1, model);
     }
 
     @GetMapping("/match/new")
@@ -234,4 +225,20 @@ public class MatchController {
             return "redirect:/admin/match/edit/" + matchDetailDTO.getMatch_id();
         }
     }
+
+    //phan trang
+    @GetMapping("/matches/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
+                                Model model) {
+        int pageSize = 6;
+        Page<Match> page = matchService.findPaginated(pageNo, pageSize);
+        List<Match> match = page.getContent();
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("match", match);
+        return "admin_match";
+    }
+
+
 }

@@ -1,8 +1,10 @@
 package com.example.eproject4.Controller.admin;
 
 import com.example.eproject4.DTO.Response.TeamDTO;
+import com.example.eproject4.Entity.Team;
 import com.example.eproject4.Repository.TeamRepository;
 import com.example.eproject4.Service.TeamService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,20 +26,8 @@ public class TeamController {
 
     @RequestMapping("/team")
     public String teams(Model model, @RequestParam(defaultValue = "1") int page) {
-        int pageSize = 20;
-        List<TeamDTO> allMatches = teamService.getAllTeams();
-
-        int totalItems = allMatches.size();
-        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
-
-        List<TeamDTO> teams = allMatches.subList((page - 1) * pageSize, Math.min(page * pageSize, totalItems));
-
-        model.addAttribute("teams", teams);
         model.addAttribute("title", "Teams");
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", totalPages);
-
-        return "admin_team";
+        return findPaginated(1, model);
     }
 
     @GetMapping("/team/create")
@@ -88,5 +78,20 @@ public class TeamController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error!");
         }
+    }
+
+    //phan trang
+    @GetMapping("/team/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
+                                Model model) {
+        int pageSize = 6;
+        Page<Team> page = teamService.findPaginated(pageNo, pageSize);
+        List<Team> teams = page.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("teams", teams);
+        return "admin_team";
     }
 }

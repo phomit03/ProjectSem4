@@ -86,11 +86,8 @@ public class TicketController {
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
                                 Model model) {
         int pageSize = 20;
-
-
         Page<Ticket> page = ticketService.findPaginated(pageNo, pageSize);
         List<Ticket> ticket = page.getContent();
-
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
