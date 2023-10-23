@@ -13,9 +13,9 @@ import java.util.Optional;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long>{
-    @Query("SELECT e FROM Ticket e WHERE e.match = :matchIdValue")
+    @Query("SELECT e FROM Ticket e WHERE e.match = :matchIdValue AND e.status = 1")
     List<Ticket> findByMatchId(@Param("matchIdValue") Optional<Match> matchId);
 
-    @Query("SELECT t FROM Ticket t WHERE t.id = :id")
+    @Query("SELECT t FROM Ticket t WHERE t.id = :id AND t.status = 1")
     List<Ticket> findIdTicket(@Param("id") Integer id);
 }

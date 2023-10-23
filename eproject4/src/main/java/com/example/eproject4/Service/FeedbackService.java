@@ -20,7 +20,7 @@ public class FeedbackService {
         return feedbackRepository.findAll();
     }
 
-    public Feedback createFB(FeedbackDTO feedbackDTO){
+    public Feedback create(FeedbackDTO feedbackDTO){
         Feedback feedback = new Feedback();
         feedback.setName(feedbackDTO.getName());
         feedback.setEmail(feedbackDTO.getEmail());

@@ -24,7 +24,7 @@ public class MatchUserController {
     public String matches(Model model) {
         List<Match> latestFinishedMatches = matchService.findLatestFinishedMatches();
         List<Match> findAllFinishedMatches = matchService.findAllFinishedMatches();
-        Match findNextMatch = matchService.getFindNextMatch();
+        List<Match> findNextMatch = matchService.getFindNextMatch();
 
         model.addAttribute("overlay_title", "Matches");
         model.addAttribute("title", "Matches");

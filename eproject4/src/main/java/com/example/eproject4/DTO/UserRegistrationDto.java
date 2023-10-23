@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Data
@@ -19,5 +20,4 @@ public class UserRegistrationDto {
 	private String phone;
 	private String email;
 	private String password;
-
 }

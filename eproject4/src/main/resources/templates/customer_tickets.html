@@ -16,7 +16,7 @@
     </div>
     <div class="row">
       <div class="col-lg-4 mb-5" th:each="upcomingMatch : ${upcomingMatches}">
-          <a href="">
+          <a th:href="@{/ticket/detail(matchid=${upcomingMatch.id})}">
               <div class="custom-media d-block text-center" style="border-radius: 0.25rem; border: 1px solid #4e535a; padding: 1rem">
                   <div class="img mb-4">
                     <div>

@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/admin")
 public class MainController {
+	@Autowired
 	private UserService userService;
 	@Autowired
 	public MainController(UserService userService) {

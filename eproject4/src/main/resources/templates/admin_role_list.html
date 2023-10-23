@@ -24,7 +24,7 @@
         <div class="container-fluid pt-4 px-4">
             <div class="row g-4">
                 <div>
-                    <a >
+                    <a>
                         <button type="" class="btn btn-primary m-2" style="float: right">
                             Role
                         </button>
@@ -47,7 +47,8 @@
                                 <tr th:each="role, iterStat : ${roles}">
                                     <td th:text="${iterStat.index + 1}"></td>
                                     <td th:text="${role.name}"></td>
-                                    <td th:if="${role.name != 'ROLE_ADMIN'}">                                        <button class="btn">
+                                    <td th:if="${role.name != 'ROLE_ADMIN'}">
+                                        <button class="btn">
                                             <a th:href="@{/admin/role/{id}/update/(id=${role.id})}">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
@@ -68,8 +69,8 @@
         </div>
     </div>
 
-<!-- Back to Top -->
-<div th:replace="admin_fragments::back-to-top"></div>
+    <!-- Back to Top -->
+    <div th:replace="admin_fragments::back-to-top"></div>
 </div>
 
 <div th:replace="admin_fragments::script"></div>
