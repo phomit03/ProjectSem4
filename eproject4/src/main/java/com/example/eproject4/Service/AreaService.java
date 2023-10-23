@@ -1,17 +1,9 @@
 package com.example.eproject4.Service;
 
 import com.example.eproject4.DTO.Request.AreaRequest;
-import com.example.eproject4.DTO.Request.MatchRequest;
 import com.example.eproject4.DTO.Response.AreaDTO;
-import com.example.eproject4.DTO.Response.MatchDTO;
 import com.example.eproject4.Entity.Area;
-import com.example.eproject4.Entity.Match;
-import com.example.eproject4.Entity.MatchDetail;
-import com.example.eproject4.Entity.New;
 import com.example.eproject4.Repository.AreaRepository;
-import com.example.eproject4.Repository.MatchDetailRepository;
-import com.example.eproject4.Repository.MatchRepository;
-import com.example.eproject4.Utils.Helper;
 import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,8 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,6 +40,11 @@ public class AreaService {
     public AreaDTO getAreaById(Long id) {
         Area area = areaRepository.findById(id).orElse(null);
         return modelToDtoConverter.convertToDto(area, AreaDTO.class);
+    }
+
+    public Area getAreaByIdArea(int id) {
+        Area area = areaRepository.findByAreaById(id);
+        return area;
     }
 
     public AreaDTO createArea(AreaRequest areaRequest) {
@@ -88,6 +85,8 @@ public class AreaService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return this.areaRepository.findAll(pageable);
     }
+
+
 
 }
 
