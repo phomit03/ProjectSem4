@@ -1,17 +1,29 @@
 package com.example.eproject4.Controller.user;
 
+import com.example.eproject4.DTO.Response.PlayerDTO;
+import com.example.eproject4.DTO.Response.TeamDTO;
+import com.example.eproject4.Service.TeamService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/teams")
 public class TeamUserController {
+    @Autowired
+    private TeamService teamService;
+
     @RequestMapping("")
     public String teams(Model model) {
         model.addAttribute("overlay_title", "Teams");
         model.addAttribute("title", "Teams");
         model.addAttribute("description", "List of competing teams of the season");
+
+        List<TeamDTO> teams = teamService.getAllTeams();
+        model.addAttribute("teams", teams);
 
         return "customer_teams";
     }

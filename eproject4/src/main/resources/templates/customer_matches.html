@@ -370,4 +370,67 @@
     <div th:replace="customer_fragments::script-fragment"></div>
     </body>
 
+<<<<<<< HEAD
     </html>
+=======
+    <div th:replace="customer_fragments::bot-fragment"></div>
+</div>
+
+<div th:replace="customer_fragments::script-fragment"></div>
+
+<script th:if="${latestFinishedMatches} and ${#lists.size(latestFinishedMatches) > 0}" th:each="match : ${latestFinishedMatches}">
+    var matchId = [[${match.id}]];
+    var homeTeamId = [[${match.home_team_id.id}]];
+    var awayTeamId = [[${match.away_team_id.id}]];
+
+    var dataToSend = {
+        homeTeamId: homeTeamId,
+        awayTeamId: awayTeamId,
+        matchId: matchId
+    };
+
+    if (!dataToSend.matchId.isEmpty) {
+        $.ajax({
+            type: 'POST',
+            url: '/api/getTeamEvent',
+            contentType: 'application/json',
+            data: JSON.stringify(dataToSend),
+            success: function (res) {
+                var homeTeamEventsUl = $('.home-team-event-' + res.matchId);
+                homeTeamEventsUl.empty();
+                $.each(res.homeTeamEventGoal, function (index, event) {
+                    getPlayerById(event.player_id, function(player) {
+                        var li = $('<li>').text(player.name + ' (' + event.time + ')');
+                        homeTeamEventsUl.append(li);
+                    });
+                });
+
+                var awayTeamEventsUl = $('.away-team-event-' + res.matchId);
+                awayTeamEventsUl.empty();
+                $.each(res.awayTeamEventGoal, function (index, event) {
+                    getPlayerById(event.player_id, function(player) {
+                        var li = $('<li>').text(player.name + ' (' + event.time + ')');
+                        awayTeamEventsUl.append(li);
+                    });
+                });
+
+                $('.live-score-' + res.matchId).html(res.homeTeamScore + '-' + res.awayTeamScore);
+            }
+        });
+    }
+    function getPlayerById(id, callback) {
+        $.ajax({
+            type: 'POST',
+            url: '/api/getPlayerById',
+            contentType: 'application/json',
+            data: JSON.stringify({ id: id }),
+            success: function (res) {
+                callback(res);
+            }
+        });
+    }
+</script>
+</body>
+
+</html>
+>>>>>>> 8f0d55035220e28420cf0dbdac166e3367e6a473
