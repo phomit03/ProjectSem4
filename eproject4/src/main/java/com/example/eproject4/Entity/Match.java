@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @AllArgsConstructor
@@ -66,4 +67,9 @@ public class Match{
     @JoinColumn(name = "away_team_id", referencedColumnName = "id", insertable = false, updatable = false)
     @MapToDTO
     private Team away_team;
+
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    public String getFormattedMatchTime() {
+        return match_time.format(dateTimeFormatter);
+    }
 }
