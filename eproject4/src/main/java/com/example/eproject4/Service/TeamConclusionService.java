@@ -50,10 +50,10 @@ public class TeamConclusionService {
             teamConclusion.setPoint(teamConclusion.getPoint() + 3);
         } else if ("lose".equals(type)) {
             teamConclusion.setLose(teamConclusion.getLose() + 1);
-            teamConclusion.setPoint(teamConclusion.getPoint() + 1);
+            teamConclusion.setPoint(teamConclusion.getPoint());
         } else if ("draw".equals(type)) {
             teamConclusion.setDraw(teamConclusion.getDraw() + 1);
-            teamConclusion.setPoint(teamConclusion.getPoint() + 2);
+            teamConclusion.setPoint(teamConclusion.getPoint() + 1);
         }
         return teamConclusionRepository.save(teamConclusion);
     }
