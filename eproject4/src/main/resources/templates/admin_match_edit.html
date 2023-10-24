@@ -133,11 +133,11 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">Status</label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-3 col-form-label">Status</label>
+                                <div class="col-sm-9">
                                     <select class="form-select" id="status" name="status" aria-label="status"
                                             th:field="*{status}" required>
-                                        <option value="" selected>-- choose option --</option>
+                                        <option value="" selected>-- Choose option --</option>
                                         <option value="0" th:selected="${matchDTO.status == 0}">Inactive</option>
                                         <option value="1" th:selected="${matchDTO.status == 1}">Active</option>
                                     </select>
@@ -153,7 +153,7 @@
             </div>
         </div>
 
-        <div class="container-fluid pt-4 px-4">
+        <div class="container-fluid pt-4 px-4" th:if="${notLive == 1}">
             <div class="row g-4" style="display: flex; justify-content: center;">
                 <div class="col-sm-12 col-xl-10">
                     <div class="bg-secondary rounded h-100 p-4">
@@ -180,10 +180,10 @@
                             <div class="col-sm-5">
                                 <div class="accordion" id="accordion-home-player">
                                     <div class="accordion-item" th:each="player, playerStat : ${homePlayers}">
-                                        <h2 class="accordion-header" th:id="'heading' + ${playerStat.index}">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" th:attr="data-bs-target='#collapse' + ${playerStat.index}" th:aria-controls="'collapse' + ${playerStat.index}" th:text="${player.name}"></button>
+                                        <h2 class="accordion-header" th:id="'headingHome' + ${playerStat.index}">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" th:attr="data-bs-target='#collapseHome' + ${playerStat.index}" th:aria-controls="'collapseHome' + ${playerStat.index}" th:text="${player.name}"></button>
                                         </h2>
-                                        <div th:id="'collapse' + ${playerStat.index}" class="accordion-collapse collapse" th:aria-labelledby="'heading' + ${playerStat.index}" data-bs-parent="#accordion-home-player">
+                                        <div th:id="'collapseHome' + ${playerStat.index}" class="accordion-collapse collapse" th:aria-labelledby="'headingHome' + ${playerStat.index}" data-bs-parent="#accordion-home-player">
                                             <div class="accordion-body">
                                                 <div class="mb-2">
                                                     <div th:class="'row mb-2 row-event-player row-event-' + ${events.id}" th:each="events : ${homePlayerEvents[playerStat.index]}" th:data-id="${events.id}">
@@ -211,10 +211,10 @@
                             <div class="col-sm-5">
                                 <div class="accordion" id="accordion-away-player">
                                     <div class="accordion-item" th:each="player, playerStat : ${awayPlayers}">
-                                        <h2 class="accordion-header" th:id="'heading' + ${playerStat.index}">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" th:attr="data-bs-target='#collapse' + ${playerStat.index}" th:aria-controls="'collapse' + ${playerStat.index}" th:text="${player.name}"></button>
+                                        <h2 class="accordion-header" th:id="'headingAway' + ${playerStat.index}">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" th:attr="data-bs-target='#collapseAway' + ${playerStat.index}" th:aria-controls="'collapseAway' + ${playerStat.index}" th:text="${player.name}"></button>
                                         </h2>
-                                        <div th:id="'collapse' + ${playerStat.index}" class="accordion-collapse collapse" th:aria-labelledby="'heading' + ${playerStat.index}" data-bs-parent="#accordion-away-player">
+                                        <div th:id="'collapseAway' + ${playerStat.index}" class="accordion-collapse collapse" th:aria-labelledby="'headingAway' + ${playerStat.index}" data-bs-parent="#accordion-away-player">
                                             <div class="accordion-body">
                                                 <div class="mb-2">
                                                     <div th:class="'row mb-2 row-event-player row-event-' + ${events.id}" th:each="events : ${awayPlayerEvents[playerStat.index]}" th:data-id="${events.id}">
@@ -298,6 +298,17 @@
                                         <input type="hidden" th:field="*{match_end}" name="match_end">
                                         <label class="switch">
                                             <input type="checkbox" class="match-end-check" th:checked="${matchDetailDTO.match_end == 1}">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 mb-3">
+                                    <div class="form-group">
+                                        <label for="detail-foul" class="mb-1">Update team ranking</label>
+                                        <br>
+                                        <input type="hidden" name="update_team_ranking">
+                                        <label class="switch">
+                                            <input type="checkbox" class="update_team_ranking-check">
                                             <span class="slider round"></span>
                                         </label>
                                     </div>
@@ -402,7 +413,14 @@
             } else {
                 $("[name='match_end']").val(0);
             }
-            console.log($("[name='match_end']").val())
+        });
+        $("[name='update_team_ranking']").val(0);
+        $(".update_team_ranking-check").change(function() {
+            if ($(this).is(":checked")) {
+                $("[name='update_team_ranking']").val(1);
+            } else {
+                $("[name='update_team_ranking']").val(0);
+            }
         });
     });
 </script>

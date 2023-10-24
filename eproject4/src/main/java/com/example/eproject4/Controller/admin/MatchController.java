@@ -2,9 +2,7 @@ package com.example.eproject4.Controller.admin;
 
 import com.example.eproject4.DTO.Request.MatchRequest;
 import com.example.eproject4.DTO.Response.*;
-import com.example.eproject4.Entity.Area;
 import com.example.eproject4.Entity.Match;
-import com.example.eproject4.Entity.MatchDetail;
 import com.example.eproject4.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,19 +35,22 @@ public class MatchController {
     private final PlayerService playerService;
     @Autowired
     private final MatchDetailEventService matchDetailEventService;
+    @Autowired
+    private final TeamConclusionService teamConclusionService;
 
     @Autowired
     private final SimpMessagingTemplate messagingTemplate;
 
 
     @Autowired
-    public MatchController(MatchService matchService, TeamService teamService, StadiumService stadiumService, MatchDetailService matchDetailService, PlayerService playerService, MatchDetailEventService matchDetailEventService, SimpMessagingTemplate messagingTemplate) {
+    public MatchController(MatchService matchService, TeamService teamService, StadiumService stadiumService, MatchDetailService matchDetailService, PlayerService playerService, MatchDetailEventService matchDetailEventService, TeamConclusionService teamConclusionService, SimpMessagingTemplate messagingTemplate) {
         this.matchService = matchService;
         this.teamService = teamService;
         this.stadiumService = stadiumService;
         this.matchDetailService = matchDetailService;
         this.playerService = playerService;
         this.matchDetailEventService = matchDetailEventService;
+        this.teamConclusionService = teamConclusionService;
         this.messagingTemplate = messagingTemplate;
     }
 
@@ -105,6 +107,9 @@ public class MatchController {
         List<StadiumDTO> stadiums = stadiumService.getAllStadiums();
         model.addAttribute("stadiums", stadiums);
         model.addAttribute("matchDTO", match);
+        if (match.getMatch_time().isBefore(LocalDateTime.now())) {
+            model.addAttribute("notLive", 1);
+        }
         MatchDetailDTO matchDetailDTO = matchDetailService.getMatchDetailByMatchId(id);
         model.addAttribute("matchDetailDTO", matchDetailDTO);
         List<PlayerDTO> homePlayers = playerService.findAllByTeam_id(match.getHome_team_id().getId());
@@ -216,10 +221,28 @@ public class MatchController {
     }
 
     @PostMapping("/match/detail/update/{id}")
-    public String updateMatchDetail(@PathVariable Long id, @ModelAttribute("matchDetailDTO") MatchDetailDTO matchDetailDTO, RedirectAttributes attributes) {
+    public String updateMatchDetail(@PathVariable Long id, @ModelAttribute("matchDetailDTO") MatchDetailDTO matchDetailDTO, @RequestParam(value = "update_team_ranking", required = false) Integer update_team_ranking , RedirectAttributes attributes) {
         try {
-            System.out.println(matchDetailDTO);
-            MatchDetail matchDetail = matchDetailService.updateMatchDetail(matchDetailDTO);
+            MatchDTO match = matchService.getMatchById(id);
+            if (match.getMatch_time().isAfter(LocalDateTime.now())) {
+                attributes.addFlashAttribute("error", "The match that has not started cannot be edited");
+                return "redirect:/admin/match/edit/" + matchDetailDTO.getMatch_id();
+            }
+            matchDetailService.updateMatchDetail(matchDetailDTO);
+            if (update_team_ranking == 1 && matchDetailDTO.getMatch_end() == 1) {
+                Long homeTeamScore = matchDetailEventService.countEvent(match.getHome_team_id().getId(), match.getId(), 1);
+                Long awayTeamScore = matchDetailEventService.countEvent(match.getAway_team_id().getId(), match.getId(), 1);
+                if (homeTeamScore == awayTeamScore) {
+                    teamConclusionService.updateTeamConclusion(match.getHome_team_id().getId(), "draw");
+                    teamConclusionService.updateTeamConclusion(match.getAway_team_id().getId(), "draw");
+                } else if (homeTeamScore < awayTeamScore) {
+                    teamConclusionService.updateTeamConclusion(match.getHome_team_id().getId(), "lose");
+                    teamConclusionService.updateTeamConclusion(match.getAway_team_id().getId(), "win");
+                } else if (homeTeamScore > awayTeamScore){
+                    teamConclusionService.updateTeamConclusion(match.getHome_team_id().getId(), "win");
+                    teamConclusionService.updateTeamConclusion(match.getAway_team_id().getId(), "lose");
+                }
+            }
             attributes.addFlashAttribute("success", "Update Success");
             return "redirect:/admin/match/edit/" + matchDetailDTO.getMatch_id();
         } catch (Exception e) {

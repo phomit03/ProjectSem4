@@ -1,6 +1,7 @@
 package com.example.eproject4.Controller.user;
 
 import com.example.eproject4.DTO.Response.MatchDTO;
+import com.example.eproject4.DTO.Response.TeamConclusionDTO;
 import com.example.eproject4.Entity.Match;
 import com.example.eproject4.Entity.New;
 import com.example.eproject4.Service.*;
@@ -14,19 +15,21 @@ import java.util.List;
 @Controller
 public class HomePageUserController {
     @Autowired
-    private  MatchService matchService;
+    private MatchService matchService;
     @Autowired
-    private  TeamService teamService;
+    private TeamConclusionService teamConclusionService;
     @Autowired
-    private  StadiumService stadiumService;
+    private TeamService teamService;
     @Autowired
-    private  MatchDetailService matchDetailService;
+    private StadiumService stadiumService;
     @Autowired
-    private  PlayerService playerService;
+    private MatchDetailService matchDetailService;
     @Autowired
-    private  MatchDetailEventService matchDetailEventService;
+    private PlayerService playerService;
     @Autowired
-    private  NewService newService;
+    private MatchDetailEventService matchDetailEventService;
+    @Autowired
+    private NewService newService;
 
     @RequestMapping("/")
     public String home(Model model) {
@@ -45,6 +48,10 @@ public class HomePageUserController {
         List<Match> findNextMatch = matchService.getFindNextMatch();
         model.addAttribute("findNextMatch", findNextMatch);
 
+        //Leader board
+        List<TeamConclusionDTO> teamConclusionDTOS = teamConclusionService.findAllOrderByPointDesc();
+        List<TeamConclusionDTO> limitedTeamConclusionDTOS = teamConclusionDTOS.subList(0, Math.min(teamConclusionDTOS.size(), 8));
+        model.addAttribute("teamConclusionDTOS", limitedTeamConclusionDTOS);
         return "customer_homepage";
     }
 
@@ -69,6 +76,11 @@ public class HomePageUserController {
         /*List<Match> find6UpComingMatches = matchService.getUpComingHomePage();
         model.addAttribute("find6UpComingMatches", find6UpComingMatches);*/
 
+        //Leader board
+        List<TeamConclusionDTO> teamConclusionDTOS = teamConclusionService.findAllOrderByPointDesc();
+        List<TeamConclusionDTO> limitedTeamConclusionDTOS = teamConclusionDTOS.subList(0, Math.min(teamConclusionDTOS.size(), 8));
+        model.addAttribute("teamConclusionDTOS", limitedTeamConclusionDTOS);
+git s
         return "customer_homepage";
     }
 
