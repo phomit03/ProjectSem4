@@ -42,37 +42,35 @@
                 <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Image</th>
-                  <th scope="col">Title</th>
+                  <th scope="col">Area Name</th>
+                  <th scope="col">Stadium</th>
                   <th scope="col">Status</th>
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
-                <tbody th:if="${news != null and #lists.size(news) > 0}">
-                <tr th:each="aNew, iterStat : ${news}" th:class="'new-' + ${aNew.id}">
+                <tbody th:if="${areas != null and #lists.size(areas) > 0}">
+                <tr th:each="area, iterStat : ${areas}" th:class="'area-' + ${area.id}">
                   <td th:text="${iterStat.index + 1}"></td>
+                  <td th:text="${area.area_name}"></td>
+                  <td th:text="${area.stadium.name}"></td>
                   <td>
-                    <img style="width: 70px; max-height: 100px" th:src="@{${aNew.new_img}}">
-                  </td>
-                  <td th:text="${aNew.title}"></td>
-                  <td>
-                    <th:block th:if="${aNew.status == 1}">
+                    <th:block th:if="${area.status == 1}">
                       Active
                     </th:block>
                     <span style="color: #EB1616">
-                      <th:block th:if="${aNew.status == 0}">
+                      <th:block th:if="${area.status == 0}">
                         Inactive
                       </th:block>
                     </span>
                   </td>
                   <td>
                     <button class="btn">
-                      <a th:href="@{/admin/new/update/{id} (id=${aNew.id})}">
+                      <a th:href="@{/admin/area/update/{id} (id=${area.id})}">
                         <i class="fas fa-pencil-alt"></i>
                       </a>
                     </button>
                     <button class="btn">
-                      <a th:data-id="${aNew.id}"
+                      <a th:data-id="${area.id}"
                          class="delete-btn">
                         <i class="fas fa-trash"></i>
                       </a>
@@ -80,7 +78,7 @@
                   </td>
                 </tr>
                 </tbody>
-                <tbody th:if="${news == null or #lists.size(news) == 0}">
+                <tbody th:if="${areas == null or #lists.size(areas) == 0}">
                 <tr>
                   <td colspan="8" style="text-align: center; padding: 10px 0px;">No data</td>
                 </tr>
@@ -88,14 +86,14 @@
               </table>
 
               <div th:if = "${totalPages > 1}">
-                <div class = "row col-sm-12">
-                  <div class = "col-sm-2">
+                <div class="row col-sm-12">
+                  <div class="col-sm-2">
                     Total Rows: [[${totalItems}]]
                   </div>
                   <!--danh sach cac trang-->
                   <div class = "col-sm-1">
                       <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-                          <a th:if="${currentPage != i}" th:href="@{'/admin/new/' + ${i}}" style="color: #666666">[[${i}]]</a>
+                          <a th:if="${currentPage != i}" th:href="@{'/admin/area/' + ${i}}" style="color: #666666">[[${i}]]</a>
                           <span th:unless="${currentPage != i}" style="color: #ca0f33">[[${i}]]</span> &nbsp;
                       </span>
                   </div>
@@ -121,7 +119,7 @@
 <script>
   $('.delete-btn').click(function () {
     var id = $(this).attr('data-id');
-    var newRow = $('.new-' + id);
+    var newRow = $('.area-' + id);
     Swal.fire({
       title: 'Are you sure you want to delete this item?',
       text: "You won't be able to revert this!",
@@ -133,7 +131,7 @@
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({
-          url: "/admin/new/delete/" + id,
+          url: "/admin/area/delete/" + id,
           success: function () {
             newRow.remove();
             Swal.fire(

@@ -47,24 +47,24 @@ public class AreaService {
         return area;
     }
 
-    public AreaDTO createArea(AreaRequest areaRequest) {
+    public AreaDTO createArea(AreaDTO areaDTO) {
         Area area = new Area();
 
-        area.setArea_name(areaRequest.getArea_name());
-        area.setStadium(areaRequest.getStadium_id());
+        area.setArea_name(areaDTO.getArea_name());
+        area.setStadium(areaDTO.getStadium());
         area.setStatus(1);
 
         area = areaRepository.save(area);
         return modelToDtoConverter.convertToDto(area, AreaDTO.class);
     }
 
-    public Area updateArea(AreaRequest areaRequest) {
+    public Area updateArea(AreaDTO areaDTO) {
         try {
-            Area area = areaRepository.getById(areaRequest.getId());
+            Area area = areaRepository.getById(areaDTO.getId());
 
-            area.setArea_name(areaRequest.getArea_name());
-            area.setStadium(areaRequest.getStadium_id());
-            area.setStatus(areaRequest.getStatus());
+            area.setArea_name(areaDTO.getArea_name());
+            area.setStadium(areaDTO.getStadium());
+            area.setStatus(areaDTO.getStatus());
             area.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
 
             return areaRepository.save(area);
