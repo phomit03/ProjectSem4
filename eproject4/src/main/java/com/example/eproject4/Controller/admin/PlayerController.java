@@ -100,7 +100,7 @@ public class PlayerController {
     @GetMapping("/player/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
                                 Model model) {
-        int pageSize = 6;
+        int pageSize = 8;
         Page<Player> page = playerService.findPaginated(pageNo, pageSize);
         List<Player> players = page.getContent();
 

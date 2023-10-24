@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin_fragments::head"></head>
+
+<body>
+<style>
+    tr td {
+        vertical-align: middle;
+    }
+</style>
+<div class="container-fluid position-relative d-flex p-0">
+    <!-- Sidebar Start -->
+    <div th:replace="admin_fragments::sidebar"></div>
+    <!-- Sidebar End -->
+
+
+    <!-- Content Start -->
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav th:replace="admin_fragments::navbar"></nav>
+        <!-- Navbar End -->
+
+
+        <!--CONTENT HERE-->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4">
+                <div class="col-12">
+                    <div class="bg-secondary rounded h-100 p-4">
+                        <h6 class="mb-4">LIST TICKET</h6>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Match Time</th>
+                                    <th scope="col" class="text-center">Home Team</th>
+                                    <th></th>
+                                    <th scope="col" class="text-center">Away Team</th>
+                                    <th scope="col">Stadium</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody th:if="${matches != null and #lists.size(matches) > 0}">
+                                <tr th:each="match, iterStat : ${matches}" th:class="'row-' + ${match.id}">
+                                    <td th:text="${iterStat.index + 1}"></td>
+                                    <td th:text="${match.formattedMatchTime}"></td>
+                                    <td class="text-center">
+                                        <img style="width: 50px;" th:src="@{${match.home_team_id.logo_img}}">
+                                    </td>
+                                    <td>
+                                        VS
+                                    </td>
+                                    <td class="text-center">
+                                        <img style="width: 50px;" th:src="@{${match.away_team_id.logo_img}}">
+                                    </td>
+                                    <td th:text="${match.stadium_id.name}"></td>
+                                    <td>
+                                        <th:block th:if="${match.status == 1}">
+                                            Active
+                                        </th:block>
+                                        <span style="color: #EB1616">
+                                          <th:block th:if="${match.status == 0}">
+                                            Inactive
+                                          </th:block>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button class="btn">
+                                            <a th:href="@{/admin/match/edit/{id} (id=${match.id})}">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tbody th:if="${matches == null or #lists.size(matches) == 0}">
+                                <tr>
+                                    <td colspan="7" style="text-align: center; padding: 10px 0px;">No data</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!--phan trang-->
+                            <div th:if="${totalPages > 1}">
+                                <div class="row col-sm-12">
+                                    <div class="col-sm-2">
+                                        Total Rows: [[${totalItems}]]
+                                    </div>
+                                    <!--danh sach cac trang-->
+                                    <div class="col-sm-10">
+                                      <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                                          <a th:if="${currentPage != i}" th:href="@{'/admin/matches/' + ${i}}" style="color: #666666">[[${i}]]</a>
+                                          <span th:unless="${currentPage != i}" style="color: #ca0f33">[[${i}]]</span>  &nbsp;
+                                      </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/END CONTENT-->
+</div>
+<!-- Content End -->
+
+
+<!-- Back to Top -->
+<div th:replace="admin_fragments::back-to-top"></div>
+
+<div th:replace="admin_fragments::script"></div>
+
+<!--alert-->
+<div class="message-error" th:if="${error}" th:data="${error}" style="display: none"></div>
+
+<script th:if="${error}">
+    $(document).ready(function () {
+        var message = $('.message-error').attr('data');
+        Swal.fire(
+            'Error',
+            message,
+            'error'
+        )
+    });
+</script>
+
+<div class="message" th:if="${success}" th:data="${success}" style="display: none"></div>
+
+<script th:if="${success}">
+    $(document).ready(function () {
+        var message = $('.message').attr('data');
+        Swal.fire(
+            'Success',
+            message,
+            'success'
+        )
+    });
+</script>
+
+</body>
+
+</html>
