@@ -54,6 +54,10 @@ public class PlayerService {
             String imgUrl = helper.uploadImage(img);
             player.setAvatar_img(imgUrl);
         }
+        player.setDate_of_birth(playerDTO.getDate_of_birth());
+        player.setNational(playerDTO.getNational());
+        player.setPosition(playerDTO.getPosition());
+        player.setNumber(playerDTO.getNumber());
         player.setStatus(1);
         player.setTeam_id(playerDTO.getTeam_id());
         return playerRepository.save(player);
@@ -76,6 +80,7 @@ public class PlayerService {
             player.setNational(playerDTO.getNational());
             player.setPosition(playerDTO.getPosition());
             player.setNumber(playerDTO.getNumber());
+            player.setWeight(playerDTO.getWeight());
             player.setHeight(playerDTO.getHeight());
             player.setAchievement(playerDTO.getAchievement());
             player.setTeam_id(playerDTO.getTeam_id());
