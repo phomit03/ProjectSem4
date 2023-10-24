@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin_fragments::head"></head>
+
+<body>
+<div class="container-fluid position-relative d-flex p-0">
+    <!-- Sidebar Start -->
+    <div th:replace="admin_fragments::sidebar"></div>
+    <!-- Sidebar End -->
+
+
+    <!-- Content Start -->
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav th:replace="admin_fragments::navbar"></nav>
+        <!-- Navbar End -->
+
+
+        <!--CONTENT HERE-->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4" style="display: flex; justify-content: center;">
+                <div class="col-sm-12 col-xl-10">
+                    <div class="bg-secondary rounded h-100 p-4">
+                        <div class="mb-4">
+                            <span style="font-weight: bold">CREATE AREA</span>
+                            <a class="mb-4" style="float: right;" th:href="@{/admin/area}">
+                                <i class="fas fa-arrow-left"></i>
+                            </a>
+                        </div>
+                        <form th:action="@{/admin/area/create/save}" th:object="${areas}" method="post" enctype="multipart/form-data">
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Area Name</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" id="area_name" name="area_name" required th:field="*{area_name}">
+                                        <option value="" selected>-- Choose option --</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label">Stadium Takes Place</label>
+                                <div class="col-sm-9">
+                                    <select class="form-select" th:field="*{stadium}" aria-label="Stadium" required>
+                                        <option value="" selected>-- Choose option --</option>
+                                        <option th:each="stadium : ${stadiums}" th:value="${stadium.id}" th:text="${stadium.name}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-4" style="float: right">
+                                <button type="submit" class="btn btn-primary">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/END CONTENT-->
+
+    </div>
+    <!-- Content End -->
+
+
+    <!-- Back to Top -->
+    <div th:replace="admin_fragments::back-to-top"></div>
+</div>
+
+<div th:replace="admin_fragments::script"></div>
+
+<!--CKEDITOR-->
+<script>
+    ClassicEditor
+        .create(document.querySelector('#content'), {
+
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
+<script>
+    var editor = CKEDITOR.replace('content', {
+        //toolbar: "Full",
+        filebrowserImageBrowseUrl : 'https://unica.vn/kcfinder_old/browse.php?opener=ckeditor&type=fund_info',
+        toolbar:
+            [
+                ['Bold', 'Italic', 'Underline', 'Strike'],
+                ['FontSize', 'Image'],
+                ['NumberedList', 'BulletedList'],
+            ]
+    });
+    // CKEDITOR.replace('content', {
+    //     filebrowserImageBrowseUrl : 'https://unica.vn/kcfinder_old/browse.php?opener=ckeditor&type=fund_info',
+    //     toolbar:
+    //         [
+    //             ['Bold', 'Italic', 'Underline', 'Strike'],
+    //             ['FontSize', 'Image'],
+    //             ['NumberedList', 'BulletedList'],
+    //         ]
+    // });
+</script>
+</body>
+
+</html>

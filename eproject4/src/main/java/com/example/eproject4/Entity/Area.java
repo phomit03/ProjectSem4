@@ -21,7 +21,7 @@ public class Area {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @MapToDTO
-    private int id;
+    private Long id;
 
     @Column(name = "area_name")
     @MapToDTO
