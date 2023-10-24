@@ -5,7 +5,7 @@
 
 <body>
 <div class="site-wrap">
-  <div th:replace="customer_fragments::top-fragment"></div>
+    <div th:replace="customer_fragments::top-fragment"></div>
 
   <!--/CONTENT HERE/-->
   <div class="container site-section">
@@ -39,57 +39,111 @@
                       </p>
                   </div>
             </div>
-            <div class="position-absolute top-0 ">
-              <div class="bg-success text-white p-2" style="border-radius: 0.25rem 0 0.25rem 0">
-                On selling
-              </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 mb-5" th:each="upcomingMatch : ${upcomingMatches}">
+                <a href="">
+                    <div class="custom-media d-block text-center"
+                         style="border-radius: 0.25rem; border: 1px solid #4e535a; padding: 1rem">
+                        <div class="img mb-4">
+                            <div>
+                                <img th:src="@{${upcomingMatch.home_team_id.logo_img}}" alt="Image" class="img-fluid"
+                                     style="height: 100px; width: 100px;">
+                                <span style="margin: 0 20px"> vs </span>
+                                <img th:src="@{${upcomingMatch.away_team_id.logo_img}}" alt="Image" class="img-fluid"
+                                     style="height: 100px; width: 100px;">
+                            </div>
+                        </div>
+                        <div class="text">
+                            <h3 class="mb-2"
+                                th:text="${upcomingMatch.home_team_id.name + ' - ' + upcomingMatch.away_team_id.name}"></h3>
+                            <p class="meta text-white">
+                                <i style="color: #ca0f33; font-size: large" class="icon-calendar mr-1"></i>
+                                <span th:text="${#temporals.format(upcomingMatch.match_time, 'yyyy-MM-dd')}"
+                                      style="font-size: 14px"></span>
+                                <i style="color: #ca0f33; font-size: large" class="icon-timer ml-2 mr-1"></i>
+                                <span th:text="${#temporals.format(upcomingMatch.match_time, 'HH:mm')}"
+                                      style="font-size: 14px"></span>
+                            </p>
+                            <p class="meta text-white ml-1">
+                                <i style="color: #ca0f33; font-size: large" class="icon-map-marker mr-1"></i>
+                                <span th:text="${upcomingMatch.stadium_id.name}" style="font-size: 14px"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="position-absolute top-0 ">
+                        <div class="bg-success text-white p-2" style="border-radius: 0.25rem 0 0.25rem 0">
+                            On selling
+                        </div>
+                    </div>
+                </a>
             </div>
-          </a>
-      </div>
+        </div>
     </div>
-  </div>
 
-  <div class="container" style="padding: 0 0 7em 0;">
-    <div class="row">
-      <div class="col-6 title-section">
-        <h2 class="heading" style="color: #ee1e46">The match was over</h2>
-      </div>
+    <div class="container" style="padding: 0 0 7em 0;">
+        <div class="row">
+            <div class="col-6 title-section">
+                <h2 class="heading" style="color: #ee1e46">The match was over</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-xs-12 mb-5" th:each="pastMatch : ${pastMatches}">
+                <a class="stop-selling" href="">
+                    <div class="custom-media d-block text-center"
+                         style="border-radius: 0.25rem; border: 1px solid #4e535a; padding: 1rem">
+                        <div class="img mb-4">
+                            <div>
+                                <img th:src="@{${pastMatch.home_team_id.logo_img}}" alt="Image" class="img-fluid"
+                                     style="height: 100px; width: 100px;">
+                                <span style="margin: 0 20px"> vs </span>
+                                <img th:src="@{${pastMatch.away_team_id.logo_img}}" alt="Image" class="img-fluid"
+                                     style="height: 100px; width: 100px;">
+                            </div>
+                        </div>
+                        <div class="text">
+                            <h3 class="mb-2" style="height: 43px;"
+                                th:text="${pastMatch.home_team_id.name + ' - ' + pastMatch.away_team_id.name}"></h3>
+                            <p class="meta text-white">
+                                <i style="color: #ca0f33; font-size: large" class="icon-calendar mr-1"></i>
+                                <span th:text="${#temporals.format(pastMatch.match_time, 'yyyy-MM-dd')}"
+                                      style="font-size: 14px"></span>
+                                <i style="color: #ca0f33; font-size: large" class="icon-timer ml-2 mr-1"></i>
+                                <span th:text="${#temporals.format(pastMatch.match_time, 'HH:mm')}"
+                                      style="font-size: 14px"></span>
+                            </p>
+                            <p class="meta text-white ml-1">
+                                <i style="color: #ca0f33; font-size: large" class="icon-map-marker mr-1"></i>
+                                <span th:text="${pastMatch.stadium_id.name}" style="font-size: 14px"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="position-absolute top-0 ">
+                        <div class="bg-danger text-white p-2" style="border-radius: 0.25rem 0 0.25rem 0">
+                            Stopped selling
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
-    <div class="row">
-      <div class="col-lg-4 mb-5" th:each="pastMatch : ${pastMatches}">
-        <a href="">
-          <div class="custom-media d-block text-center" style="border-radius: 0.25rem; border: 1px solid #4e535a; padding: 1rem">
-            <div class="img mb-4">
-              <div>
-                <img th:src="@{${pastMatch.home_team_id.logo_img}}" alt="Image" class="img-fluid" style="height: 100px; width: 100px;">
-                <span style="margin: 0 20px"> vs </span>
-                <img th:src="@{${pastMatch.away_team_id.logo_img}}" alt="Image" class="img-fluid" style="height: 100px; width: 100px;">
-              </div>
-            </div>
-            <div class="text">
-              <h3 class="mb-2" th:text="${pastMatch.home_team_id.name + ' - ' + pastMatch.away_team_id.name}"></h3>
-              <p class="meta text-white">
-                <i style="color: #ca0f33; font-size: large" class="icon-calendar mr-1"></i>
-                <span th:text="${#temporals.format(pastMatch.match_time, 'yyyy-MM-dd')}" style="font-size: 14px"></span>
-                <i style="color: #ca0f33; font-size: large" class="icon-timer ml-2 mr-1"></i>
-                <span th:text="${#temporals.format(pastMatch.match_time, 'HH:mm')}" style="font-size: 14px"></span>
-              </p>
-              <p class="meta text-white ml-1">
-                <i style="color: #ca0f33; font-size: large" class="icon-map-marker mr-1"></i>
-                <span th:text="${pastMatch.stadium_id.name}" style="font-size: 14px"></span>
-              </p>
-            </div>
-          </div>
-          <div class="position-absolute top-0 ">
-            <div class="bg-danger text-white p-2" style="border-radius: 0.25rem 0 0.25rem 0">
-              Stopped selling
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <!--/END CONTENT HERE/-->
+    <!--/END CONTENT HERE/-->
 
-  <div th:replace="customer_fragments::bot-fragment"></div>
+    <div th:replace="customer_fragments::bot-fragment"></div>
+    <div th:replace="customer_fragments::script-fragment"></div>
+    <script>
+        $(document).ready(function () {
+            $(".stop-selling").on("click", function (e) {
+                console.log(123)
+                Swal.fire(
+                    'Oops!',
+                    'This match has top selling!',
+                    'warning'
+                )
+            });
+        });
+    </script>
 </div>
+
+</body>
+</html>
