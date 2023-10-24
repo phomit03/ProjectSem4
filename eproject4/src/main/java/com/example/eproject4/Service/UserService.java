@@ -17,6 +17,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -40,16 +42,18 @@ public class UserService implements UserDetailsService {
 	}
 
 	public User save(UserRegistrationDto registrationDto) {
-		User user = new User(
-				registrationDto.getUsername(),
-				registrationDto.getEmail(),
-				passwordEncoder.encode(registrationDto.getPassword()),
-				registrationDto.getAddress(),
-				registrationDto.getDateOfBirth(),
-				registrationDto.getFullName(),
-				registrationDto.getPhone(),
-				Arrays.asList(new Role("ROLE_USER"))
-		);
+		User user = new User();
+
+		user.setUsername(registrationDto.getUsername());
+		user.setEmail(registrationDto.getEmail());
+		user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
+		user.setAddress(registrationDto.getAddress());
+		user.setDateOfBirth(registrationDto.getDateOfBirth());
+		user.setFullName(registrationDto.getFullName());
+		user.setPhone(registrationDto.getPhone());
+		user.setStatus(1);
+		user.setRoles(Arrays.asList(new Role("ROLE_USER")));
+
 		return userRepository.save(user);
 	}
 	public List<User> getAllUsers() {
@@ -69,6 +73,8 @@ public class UserService implements UserDetailsService {
 		existingUser.setPhone(user.getPhone());
 		existingUser.setDateOfBirth(user.getDateOfBirth());
 		existingUser.setAddress(user.getAddress());
+		existingUser.setStatus(user.getStatus());
+		existingUser.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
 
 		if (user.getPassword() != null && !user.getPassword().isEmpty() && !user.getPassword().equals(existingUser.getPassword())) {
 			existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
