@@ -80,7 +80,7 @@ public class HomePageUserController {
         List<TeamConclusionDTO> teamConclusionDTOS = teamConclusionService.findAllOrderByPointDesc();
         List<TeamConclusionDTO> limitedTeamConclusionDTOS = teamConclusionDTOS.subList(0, Math.min(teamConclusionDTOS.size(), 8));
         model.addAttribute("teamConclusionDTOS", limitedTeamConclusionDTOS);
-git s
+
         return "customer_homepage";
     }
 
