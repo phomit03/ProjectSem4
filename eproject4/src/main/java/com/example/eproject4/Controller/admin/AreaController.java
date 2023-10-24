@@ -50,7 +50,7 @@ public class AreaController {
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("areas", areas);
-        return "customer_news";
+        return "admin_area";
     }
 
     @GetMapping("/detail")
@@ -59,7 +59,7 @@ public class AreaController {
         model.addAttribute("title", "Areas Detail");
         model.addAttribute("description", "Information Area");
 
-        return "customer_area_detail";
+        return "admin_area_create";
     }
 
     @GetMapping("/detail/{id}")
@@ -70,6 +70,6 @@ public class AreaController {
         model.addAttribute("title", "Areas Detail");
         model.addAttribute("description", "Information Area");
 
-        return "customer_area_detail";
+        return "admin_area";
     }
 }

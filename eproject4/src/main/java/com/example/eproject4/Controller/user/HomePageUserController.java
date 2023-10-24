@@ -65,10 +65,6 @@ public class HomePageUserController {
         List<Match> findNextMatch = matchService.getFindNextMatch();
         model.addAttribute("findNextMatch", findNextMatch);
 
-        //upcoming (6matches)
-        /*List<Match> find6UpComingMatches = matchService.getUpComingHomePage();
-        model.addAttribute("find6UpComingMatches", find6UpComingMatches);*/
-
         return "customer_homepage";
     }
 

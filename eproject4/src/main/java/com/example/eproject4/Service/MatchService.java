@@ -165,10 +165,15 @@ public class MatchService {
         return matchRepository.findNextMatch();
     }
 
-    //Upcoming homepage
-    /*public List<Match> getUpComingHomePage() {
-        return matchRepository.find6UpComingMatches();
-    }*/
+    //Upcoming Matches
+    public List<Match> getUpComingMatches() {
+        return matchRepository.findUpComingMatches();
+    }
+
+    //The Matches WasOver
+    public List<Match> getTheMatchesWasOver() {
+        return matchRepository.findTheMatchesWasOver();
+    }
 
     // phan trang
     public Page<Match> findPaginated(int pageNo, int pageSize) {

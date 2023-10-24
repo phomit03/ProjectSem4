@@ -53,7 +53,11 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     @Query(value = "SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE m.match_time > CURRENT_TIMESTAMP AND m.status = 1 AND md.match_end = 0 ORDER BY m.match_time ASC")
     List<Match> findNextMatch();
 
-    //Upcoming 6 tran (homepage)
-    /*@Query(value = "SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE m.match_time > CURRENT_TIMESTAMP AND m.status = 1 AND md.match_end = 0 ORDER BY m.match_time ASC LIMIT 6")
-    List<Match> find6UpComingMatches();*/
+    //Upcoming Matches
+    @Query(value = "SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE m.match_time > CURRENT_TIMESTAMP AND m.status = 1 AND md.match_end = 0")
+    List<Match> findUpComingMatches();
+
+    //The Matches WasOver
+    @Query(value = "SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE m.match_time < CURRENT_TIMESTAMP AND m.status = 1 AND md.match_end = 1")
+    List<Match> findTheMatchesWasOver();
 }
