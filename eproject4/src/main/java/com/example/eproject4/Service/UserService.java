@@ -17,6 +17,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -44,16 +46,18 @@ public class UserService implements UserDetailsService {
 	}
 
 	public User save(UserRegistrationDto registrationDto) {
-		User user = new User(
-				registrationDto.getUsername(),
-				registrationDto.getEmail(),
-				passwordEncoder.encode(registrationDto.getPassword()),
-				registrationDto.getAddress(),
-				registrationDto.getDateOfBirth(),
-				registrationDto.getFullName(),
-				registrationDto.getPhone(),
-				Arrays.asList(new Role("ROLE_USER"))
-		);
+		User user = new User();
+
+		user.setUsername(registrationDto.getUsername());
+		user.setEmail(registrationDto.getEmail());
+		user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
+		user.setAddress(registrationDto.getAddress());
+		user.setDateOfBirth(registrationDto.getDateOfBirth());
+		user.setFullName(registrationDto.getFullName());
+		user.setPhone(registrationDto.getPhone());
+		user.setStatus(1);
+		user.setRoles(Arrays.asList(new Role("ROLE_USER")));
+
 		return userRepository.save(user);
 	}
 	public List<User> getAllUsers() {

@@ -4,6 +4,8 @@ import com.example.eproject4.Utils.MapToDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 
@@ -50,12 +52,13 @@ public class User {
     @Column(name = "status", columnDefinition = "INT DEFAULT 1")
     private Integer status;
 
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     @MapToDTO
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable =  false)
     private Timestamp createdAt;
 
-    @MapToDTO
-    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP", updatable = true)
+    @UpdateTimestamp
+    @Column(name = "updated_at")
     private Timestamp updatedAt;
 
     @MapToDTO

@@ -20,4 +20,8 @@ public class UserRegistrationDto {
 	private String phone;
 	private String email;
 	private String password;
+	private Integer status;
+	private Timestamp created_at;
+	private Timestamp updated_at;
+
 }
