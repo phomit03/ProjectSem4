@@ -216,14 +216,17 @@
                 <div class="text">
                     <span class="meta" th:text="${#dates.format(findNewLatestNews.created_at, 'MMM dd, yyyy')}"></span>
 
-                    <h3 class="mb-4" th:if="${#strings.length(findNewLatestNews.title) < 60}"
-                        th:text="${findNewLatestNews.title}">
-                        <a th:href="@{'/news/detail/' + ${findNewLatestNews.id}}"></a>
-                    </h3>
-                    <h3 class="mb-4" th:if="${#strings.length(findNewLatestNews.title) >= 60}"
-                        th:text="${#strings.substring(findNewLatestNews.title, 0, 60)} + '...'">
-                        <a th:href="@{'/news/detail/' + ${findNewLatestNews.id}}"></a>
-                    </h3>
+                    <a th:href="@{'/news/detail/' + ${findNewLatestNews.id}}">
+                        <h3 class="mb-4" th:if="${#strings.length(findNewLatestNews.title) < 60}"
+                            th:text="${findNewLatestNews.title}">
+
+                        </h3>
+                    </a>
+                    <a th:href="@{'/news/detail/' + ${findNewLatestNews.id}}">
+                        <h3 class="mb-3" th:if="${#strings.length(findNewLatestNews.title) >= 60}"
+                            th:text="${#strings.substring(findNewLatestNews.title, 0, 60)} + '...'">
+                        </h3>
+                    </a>
 
                     <p th:if="${#strings.length(findNewLatestNews.sub_title) < 80}"
                        th:text="${findNewLatestNews.sub_title}"></p>

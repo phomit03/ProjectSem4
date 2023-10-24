@@ -104,13 +104,14 @@ public class TicketService {
         return matchRepository.findMatchesBeforeTimeThreshold(currentTimeMinus15Minutes);
     }
 
-    /*    public List<TicketDTO> getAllTicketsByIdMath(int matchid) {
+    /*public List<TicketDTO> getAllTicketsByIdMath(int matchid) {
 
-            List<Ticket> tickets = ticketRepository.findByMatchId(matchid);
+        List<Ticket> tickets = ticketRepository.findByMatchId(matchid);
 
-            return tickets.stream().map(ticket -> modelToDtoConverter.convertToDto(ticket, TicketDTO.class))
-                    .collect(Collectors.toList());
-        }*/
+        return tickets.stream().map(ticket -> modelToDtoConverter.convertToDto(ticket, TicketDTO.class))
+                .collect(Collectors.toList());
+    }*/
+
     public List<Ticket> getAllTicketsByIdMath(int matchid) {
 
         long longValue = (long) matchid;

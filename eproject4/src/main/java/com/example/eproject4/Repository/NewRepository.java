@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface NewRepository extends JpaRepository<New, Long> {
     //News Homepage
-    @Query(value = "SELECT * FROM news WHERE status = 1 ORDER BY created_at ASC LIMIT 3", nativeQuery = true)
+    @Query(value = "SELECT * FROM news WHERE status = 1 ORDER BY created_at DESC LIMIT 3", nativeQuery = true)
     List<New> findLatestThreeNews();
 
     //News Matches
-    @Query(value = "SELECT * FROM news WHERE status = 1 ORDER BY created_at ASC LIMIT 2", nativeQuery = true)
+    @Query(value = "SELECT * FROM news WHERE status = 1 ORDER BY created_at DESC LIMIT 2", nativeQuery = true)
     List<New> findLatestTwoNews();
 }
