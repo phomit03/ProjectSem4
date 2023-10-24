@@ -2,6 +2,7 @@ package com.example.eproject4.Service;
 
 import com.example.eproject4.DTO.Request.StadiumRequest;
 import com.example.eproject4.DTO.Response.StadiumDTO;
+import com.example.eproject4.Entity.New;
 import com.example.eproject4.Entity.Stadium;
 import com.example.eproject4.Repository.StadiumRepository;
 import com.example.eproject4.Utils.Helper;
@@ -13,10 +14,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -70,6 +73,7 @@ public class StadiumService {
             }
             stadium.setName(stadiumRequest.getName());
             stadium.setDescription(stadiumRequest.getDescription());
+            stadium.setStatus(stadiumRequest.getStatus());
             stadium.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
 
             return stadiumRepository.save(stadium);
@@ -79,8 +83,15 @@ public class StadiumService {
         }
     }
 
-    public void deleteStadium(Long id) {
-        stadiumRepository.deleteById(id);
+    public void softDelete(Long id) {
+        Optional<Stadium> optionalEntity = stadiumRepository.findById(id);
+        if (optionalEntity.isPresent()) {
+            Stadium stadium = optionalEntity.get();
+            stadium.setStatus(0);
+            stadiumRepository.save(stadium);
+        } else {
+            throw new EntityNotFoundException("Entity with id " + id + " not found.");
+        }
     }
 
 

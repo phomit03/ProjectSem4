@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Controller
@@ -50,10 +51,12 @@ public class UserController {
 	}
 
 	@GetMapping("/{id}/delete")
-	public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+	public ResponseEntity<String> softDelete(@PathVariable Long id) {
 		try {
-			userService.deleteUser(id);
+			userService.softDelete(id);
 			return ResponseEntity.ok("Delete user successfully.");
+		} catch (EntityNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Entity not found.");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error!");
 		}

@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -80,8 +81,15 @@ public class TicketService {
         }
     }
 
-    public void deleteTicket(Long id) {
-        ticketRepository.deleteById(id);
+    public void softDelete(Long id) {
+        Optional<Ticket> optionalEntity = ticketRepository.findById(id);
+        if (optionalEntity.isPresent()) {
+            Ticket ticket = optionalEntity.get();
+            ticket.setStatus(0);
+            ticketRepository.save(ticket);
+        } else {
+            throw new EntityNotFoundException("Entity with id " + id + " not found.");
+        }
     }
 
     //Retrieve matches that have not yet taken place or took place 15 minutes before

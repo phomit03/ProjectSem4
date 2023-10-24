@@ -3,6 +3,7 @@ package com.example.eproject4.Service;
 import com.example.eproject4.DTO.Response.MatchDetailEventDTO;
 import com.example.eproject4.DTO.Response.PlayerDTO;
 import com.example.eproject4.Entity.MatchDetailEvent;
+import com.example.eproject4.Entity.New;
 import com.example.eproject4.Entity.Player;
 import com.example.eproject4.Repository.MatchDetailEventRepository;
 import com.example.eproject4.Repository.PlayerRepository;
@@ -15,10 +16,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,6 +54,10 @@ public class PlayerService {
             String imgUrl = helper.uploadImage(img);
             player.setAvatar_img(imgUrl);
         }
+        player.setDate_of_birth(playerDTO.getDate_of_birth());
+        player.setNational(playerDTO.getNational());
+        player.setPosition(playerDTO.getPosition());
+        player.setNumber(playerDTO.getNumber());
         player.setStatus(1);
         player.setTeam_id(playerDTO.getTeam_id());
         return playerRepository.save(player);
@@ -73,9 +80,11 @@ public class PlayerService {
             player.setNational(playerDTO.getNational());
             player.setPosition(playerDTO.getPosition());
             player.setNumber(playerDTO.getNumber());
+            player.setWeight(playerDTO.getWeight());
             player.setHeight(playerDTO.getHeight());
             player.setAchievement(playerDTO.getAchievement());
             player.setTeam_id(playerDTO.getTeam_id());
+            player.setStatus(playerDTO.getStatus());
             player.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
             return playerRepository.save(player);
         } catch (Exception e) {
@@ -89,8 +98,15 @@ public class PlayerService {
         return modelToDtoConverter.convertToDto(player, PlayerDTO.class);
     }
 
-    public void delete(Long id) {
-        playerRepository.deleteById(id);
+    public void softDelete(Long id) {
+        Optional<Player> optionalEntity = playerRepository.findById(id);
+        if (optionalEntity.isPresent()) {
+            Player player = optionalEntity.get();
+            player.setStatus(0);
+            playerRepository.save(player);
+        } else {
+            throw new EntityNotFoundException("Entity with id " + id + " not found.");
+        }
     }
 
     public List<PlayerDTO> findAllByTeam_id (Long id) {

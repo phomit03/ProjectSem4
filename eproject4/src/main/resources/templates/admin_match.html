@@ -73,7 +73,16 @@
                                         <img style="width: 50px;" th:src="@{${match.away_team_id.logo_img}}">
                                     </td>
                                     <td th:text="${match.stadium_id.name}"></td>
-                                    <td th:text="${(match.status == 1) ? 'Active' : 'Inactive'}"></td>
+                                    <td>
+                                        <th:block th:if="${match.status == 1}">
+                                            Active
+                                        </th:block>
+                                        <span style="color: #EB1616">
+                                          <th:block th:if="${match.status == 0}">
+                                            Inactive
+                                          </th:block>
+                                        </span>
+                                    </td>
                                     <td>
                                         <button class="btn">
                                             <a th:href="@{/admin/match/edit/{id} (id=${match.id})}">
@@ -95,18 +104,18 @@
                                 </tr>
                                 </tbody>
                             </table>
-<!--                            phan trang-->
-                            <div th:if = "${totalPages > 1}">
-                                <div class = "row col-sm-10">
-                                    <div class = "col-sm-2">
+                            <!--phan trang-->
+                            <div th:if="${totalPages > 1}">
+                                <div class="row col-sm-12">
+                                    <div class="col-sm-2">
                                         Total Rows: [[${totalItems}]]
                                     </div>
                                     <!--danh sach cac trang-->
-                                    <div class = "col-sm-1">
-                      <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-                          <a th:if="${currentPage != i}" th:href="@{'/admin/matches/' + ${i}}">[[${i}]]</a>
-                          <span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
-                      </span>
+                                    <div class="col-sm-10">
+                                      <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                                          <a th:if="${currentPage != i}" th:href="@{'/admin/matches/' + ${i}}" style="color: #666666">[[${i}]]</a>
+                                          <span th:unless="${currentPage != i}" style="color: #ca0f33">[[${i}]]</span>  &nbsp;
+                                      </span>
                                     </div>
                                 </div>
                             </div>
@@ -155,7 +164,7 @@
 <div class="message-error" th:if="${error}" th:data="${error}" style="display: none"></div>
 
 <script th:if="${error}">
-    $( document ).ready(function() {
+    $(document).ready(function () {
         var message = $('.message-error').attr('data');
         Swal.fire(
             'Error',
@@ -168,7 +177,7 @@
 <div class="message" th:if="${success}" th:data="${success}" style="display: none"></div>
 
 <script th:if="${success}">
-    $( document ).ready(function() {
+    $(document).ready(function () {
         var message = $('.message').attr('data');
         Swal.fire(
             'Success',
