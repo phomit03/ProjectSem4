@@ -68,6 +68,7 @@ public class MatchService {
 
         MatchDetail matchDetail = new MatchDetail();
         matchDetail.setMatch_id(match.getId());
+        matchDetail.setMatch_end(0);
         matchDetailRepository.save(matchDetail);
         return modelToDtoConverter.convertToDto(match, MatchDTO.class);
     }
