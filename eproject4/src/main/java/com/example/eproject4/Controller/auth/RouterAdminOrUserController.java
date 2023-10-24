@@ -42,7 +42,8 @@ public class RouterAdminOrUserController {
         model.addAttribute("loggedInUser", loggedInUser);
 
         String firstRoleName = roleRepository.findFirstRoleNameByUsername(loggedInUser.getUsername());
-        //List<Role> roles = (List<Role>) loggedInUser.getRoles(); // Sử dụng phương thức getRoles trong User Entity
+        //List<Role> roles = (List<Role>) loggedInUser.getRoles();
+        // Sử dụng phương thức getRoles trong User Entity
 
         model.addAttribute("roles", firstRoleName);
         if (Objects.equals(firstRoleName, "ROLE_ADMIN")){

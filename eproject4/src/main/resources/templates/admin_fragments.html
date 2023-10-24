@@ -84,7 +84,7 @@
             <a th:href="@{/admin/stadiums}" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/admin/stadiums') ? 'active' : ''}">
                 <i class="fa fa-th me-2"></i>Stadiums
             </a>
-            <a th:href="@{/admin/feedback}" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/admin/feedback') ? 'active' : ''}">
+            <a th:href="@{/admin/feedbacks}" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/admin/feedbacks') ? 'active' : ''}">
                 <i class="fa fa-th me-2"></i>Feedbacks
             </a>
 <!--            <div class="nav-item dropdown">-->
@@ -192,7 +192,6 @@
             </a>
             <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                 <a href="#" class="dropdown-item">My Profile</a>
-                <a href="#" class="dropdown-item">Settings</a>
                 <a th:href="@{/logout}" class="dropdown-item">Log Out</a>
             </div>
         </div>

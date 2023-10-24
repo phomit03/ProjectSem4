@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -180,10 +181,12 @@ public class MatchController {
     }
 
     @GetMapping("/match/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<String> softDelete(@PathVariable Long id) {
         try {
-            matchService.deleteMatch(id);
-            return ResponseEntity.ok("Delete successfully.");
+            matchService.softDelete(id);
+            return ResponseEntity.ok("Delete match successfully.");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Entity not found.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error!");
         }

@@ -19,9 +19,13 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import javax.persistence.EntityNotFoundException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,7 +64,6 @@ public class UserService implements UserDetailsService {
 		return userRepository.findAll();
 	}
 
-
 	public User getUserById(Long id) {
 		return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
 	}
@@ -84,12 +87,18 @@ public class UserService implements UserDetailsService {
 			existingUser.setUsername(user.getUsername());
 		}
 
-
 		return userRepository.save(existingUser);
 	}
 
-	public void deleteUser(Long id) {
-		userRepository.deleteById(id);
+	public void softDelete(Long id) {
+		Optional<User> optionalEntity = userRepository.findById(id);
+		if (optionalEntity.isPresent()) {
+			User user = optionalEntity.get();
+			user.setStatus(0);
+			userRepository.save(user);
+		} else {
+			throw new EntityNotFoundException("Entity with id " + id + " not found.");
+		}
 	}
 
 	@Override
