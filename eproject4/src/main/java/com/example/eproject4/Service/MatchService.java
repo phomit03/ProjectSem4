@@ -10,6 +10,7 @@ import com.example.eproject4.Utils.Helper;
 import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -175,12 +176,22 @@ public class MatchService {
     public List<Match> getTheMatchesWasOver() {
         return matchRepository.findTheMatchesWasOver();
     }
-
     // phan trang
     public Page<Match> findPaginated(int pageNo, int pageSize) {
 
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return this.matchRepository.findAll(pageable);
+    }
+
+    // phan trang customer_matches
+    public Page<Match> findPaginated1(int pageNo, int pageSize, List<Match> matches) {
+        // Tạo một danh sách Pageable từ danh sách các trận đấu
+        List<Match> paginatedMatches = matches.stream()
+                .skip((long) (pageNo - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(paginatedMatches, PageRequest.of(pageNo - 1, pageSize), matches.size());
     }
 }
 
