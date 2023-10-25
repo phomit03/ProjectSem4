@@ -57,7 +57,7 @@ public class TicketController {
         model.addAttribute("ticketDTOS", ticketDTOS);
         MatchDTO matchDTO = matchService.getMatchById(id);
         model.addAttribute("matchDTO", matchDTO);
-        return "admin_ticket_edit";
+        return "admin_ticket_update";
     }
 
     @PostMapping("/update/{id}")
