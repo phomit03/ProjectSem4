@@ -107,6 +107,13 @@
 			<artifactId>thymeleaf-extras-java8time</artifactId>
 			<version>3.0.4.RELEASE</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.4.0</version> <!-- Điều chỉnh phiên bản tùy chọn -->
+		</dependency>
+
     </dependencies>
 
 	<build>

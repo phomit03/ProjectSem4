@@ -15,4 +15,8 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
     //lấy giỏ hàng chưa thanh tpnaf
     @Query("SELECT c FROM Cart c WHERE c.userId = :userId AND c.isPayment = false")
     List<Cart> findByUserIdAndStatusFalse(@Param("userId") int userId);
+
+    //lấy giỏ hàng qua order
+    @Query("SELECT c FROM Cart c WHERE c.orderid = :orderId ")
+    List<Cart> findByOrder(@Param("orderId") int orderId);
 }
