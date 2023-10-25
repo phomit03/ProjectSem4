@@ -1,11 +1,13 @@
 package com.example.eproject4.Controller.user;
 
+import com.example.eproject4.DTO.Response.NewDTO;
 import com.example.eproject4.DTO.Response.PlayerDTO;
 import com.example.eproject4.DTO.Response.TeamDTO;
 import com.example.eproject4.Service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -27,11 +29,14 @@ public class TeamUserController {
 
         return "customer_teams";
     }
-    @RequestMapping("/detail")
-    public String teamDetail(Model model) {
+    @RequestMapping("/detail/{id}")
+    public String teamDetail(@PathVariable Long id, Model model) {
         model.addAttribute("title", "Teams Detail");
         model.addAttribute("overlay_title", "Day la ten doi bong");
         model.addAttribute("description", "Mo ta doi bong");
+
+        TeamDTO teamDetail = teamService.getTeamById(id);
+        model.addAttribute("teamDetail", teamDetail);
 
         return "customer_team_detail";
     }
