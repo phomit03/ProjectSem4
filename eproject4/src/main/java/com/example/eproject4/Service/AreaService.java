@@ -86,7 +86,10 @@ public class AreaService {
         return this.areaRepository.findAll(pageable);
     }
 
-
-
+    public List<AreaDTO> getAreaByStadiumId (Long stadiumId) {
+        List<Area> areas = areaRepository.findByStadium(stadiumId);
+        return areas.stream().map(area -> modelToDtoConverter.convertToDto(area, AreaDTO.class))
+                .collect(Collectors.toList());
+    }
 }
 

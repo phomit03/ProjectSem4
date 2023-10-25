@@ -1,6 +1,7 @@
 package com.example.eproject4.Service;
 
 import com.example.eproject4.DTO.Request.TicketRequest;
+import com.example.eproject4.DTO.Response.AreaDTO;
 import com.example.eproject4.DTO.Response.TicketDTO;
 import com.example.eproject4.Entity.Match;
 import com.example.eproject4.Entity.Ticket;
@@ -62,6 +63,19 @@ public class TicketService {
         ticket.setMatch(ticketRequest.getMatch_id());
         ticket.setQuantity(ticketRequest.getQuantity());
         ticket.setPrice(ticketRequest.getPrice());
+        ticket.setStatus(1);
+
+        ticket = ticketRepository.save(ticket);
+        return modelToDtoConverter.convertToDto(ticket, TicketDTO.class);
+    }
+
+    public TicketDTO create(Long matchId, AreaDTO areaDTO) {
+        Ticket ticket = new Ticket();
+
+        ticket.setArea_id(areaDTO.getId());
+        ticket.setMatch_id(matchId);
+        ticket.setQuantity(100);
+        ticket.setPrice(100F);
         ticket.setStatus(1);
 
         ticket = ticketRepository.save(ticket);

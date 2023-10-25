@@ -6,9 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public interface AreaRepository extends JpaRepository<Area, Long>{
     @Query("SELECT e FROM Area e WHERE e.id = :matchIdValue and e.status = 1")
     Area findByAreaById(@Param("matchIdValue") int id);
+
+    @Query("SELECT a FROM Area a where a.stadium_id = :stadiumId AND a.status = 1")
+    List<Area> findByStadium (@Param("stadiumId") Long stadiumId);
 }
