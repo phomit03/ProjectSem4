@@ -86,6 +86,18 @@ public class TicketService {
         }
     }
 
+    public Ticket update(Long ticketId, Integer quantity, Float price) {
+        try {
+            Ticket ticket = ticketRepository.getById(ticketId);
+            ticket.setPrice(price);
+            ticket.setQuantity(quantity);
+            return ticketRepository.save(ticket);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void softDelete(Long id) {
         Optional<Ticket> optionalEntity = ticketRepository.findById(id);
         if (optionalEntity.isPresent()) {

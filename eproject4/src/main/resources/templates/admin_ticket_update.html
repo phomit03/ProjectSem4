@@ -98,35 +98,35 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-5" style="text-align: center">
-                                <img style="width: 100px; max-height: 150px" src="https://res.cloudinary.com/dpbbb3imz/image/upload/v1696864355/cpstvpdp9phyduc9dcli.png">
+                                <img style="width: 100px; max-height: 150px" th:src="@{${matchDTO.home_team.logo_img}}">
                             </div>
-                            <div class="col-sm-2" style="display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 30px;">
+                            <div class="col-sm-2"
+                                 style="display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 30px;">
                                 VS
                             </div>
                             <div class="col-sm-5" style="text-align: center">
-                                <img style="width: 100px; max-height: 150px" src="https://res.cloudinary.com/dpbbb3imz/image/upload/v1696868850/nb4j9nxyycetrhzaoki8.png">
+                                <img style="width: 100px; max-height: 150px" th:src="@{${matchDTO.away_team.logo_img}}">
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <p class="col-sm-5 text-center" style="font-size: 40px; font-weight: bold; color: white">
-                                Chelsea
-                            </p>
+                            <p class="col-sm-5 text-center" style="font-size: 40px; font-weight: bold; color: white"
+                               th:text="${matchDTO.home_team.name}"></p>
                             <p class="col-sm-2"></p>
-                            <p class="col-sm-5 text-center" style="font-size: 40px; font-weight: bold; color: white">
-                                Manchester United
-                            </p>
+                            <p class="col-sm-5 text-center" style="font-size: 40px; font-weight: bold; color: white"
+                               th:text="${matchDTO.away_team.name}">
                         </div>
 
                         <div style="font-size: 25px; color: #EB1616">
                             <p class="text-center">
-                                <i class="fa fa-calendar mr-1"></i>16:00 - Oct 26, 2023
+                                <i class="fa fa-calendar mr-1"></i> <span
+                                    th:text="${matchDTO.formattedMatchTime}"></span>
                             </p>
                             <p class="text-center">
-                                <i class="fa fa-map-marker mr-1"></i> Manchester United
+                                <i class="fa fa-map-marker mr-1"></i> <span
+                                    th:text="${matchDTO.stadium_id.name}"></span>
                             </p>
                         </div>
                         <div class="col-sm-10 col-xl-10 mx-auto">
-                            <form action="" method="post" enctype="multipart/form-data">
                             <div class="mt-5 text-center">
                                 <table class="table">
                                     <thead>
@@ -138,27 +138,27 @@
                                     </tr>
                                     </thead>
                                     <tbody style="color: white">
-                                        <tr>
-                                            <td style="padding: 12px 8px; font-weight: bold">1</td>
-                                            <td style="color: #EB1616; padding: 12px 8px; font-weight: bold">
-                                                A-1
-                                            </td>
-                                            <td>
-                                                <input type="number" min="0" class="form-control" id="quantity"
-                                                       name="quantity" placeholder="Quantity">
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control" id="price"
-                                                       name="price" placeholder="Price">
-                                            </td>
-                                        </tr>
+                                    <tr th:each="ticket, iterStat : ${ticketDTOS}">
+                                        <td style="padding: 12px 8px; font-weight: bold"
+                                            th:text="${iterStat.index + 1}"></td>
+                                        <td style="color: #EB1616; padding: 12px 8px; font-weight: bold"
+                                            th:text="${ticket.area.area_name}"></td>
+                                        <td>
+                                            <input type="number" min="0" th:data-id="${ticket.id}"
+                                                   th:class="'form-control input-change-update quantity-ticket-' + ${ticket.id}"
+                                                   id="quantity" th:value="${ticket.quantity}"
+                                                   name="quantity" placeholder="Quantity">
+                                        </td>
+                                        <td>
+                                            <input type="text" th:data-id="${ticket.id}"
+                                                   th:class="'form-control input-change-update price-ticket-' + ${ticket.id}"
+                                                   id="price"
+                                                   name="price" placeholder="Price" th:value="${ticket.price}">
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="mb-4" style="float: right">
-                                <button type="submit" class="btn btn-primary">Update</button>
-                            </div>
-                        </form>
                         </div>
                     </div>
                 </div>
@@ -175,6 +175,38 @@
 </div>
 
 <div th:replace="admin_fragments::script"></div>
+
+<script>
+    $('.input-change-update').on('change', function () {
+        var ticketId = $(this).attr('data-id');
+        var quantity = $('.quantity-ticket-' + ticketId).val();
+        var price = $('.price-ticket-' + ticketId).val();
+
+        var dataToSend = {
+            ticketId: ticketId,
+            quantity: quantity,
+            price: price
+        };
+
+        if (!dataToSend.ticketId.isEmpty) {
+            $.ajax({
+                type: 'POST',
+                url: '/admin/ticket/api/update',
+                contentType: 'application/json',
+                data: JSON.stringify(dataToSend),
+                success: function (res) {
+                    if (res) {
+                        Swal.fire(
+                            'Success',
+                            "Update ticket success",
+                            'success'
+                        )
+                    }
+                }
+            });
+        }
+    })
+</script>
 
 </body>
 

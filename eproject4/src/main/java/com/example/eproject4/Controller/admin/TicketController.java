@@ -20,7 +20,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -58,6 +60,20 @@ public class TicketController {
         MatchDTO matchDTO = matchService.getMatchById(id);
         model.addAttribute("matchDTO", matchDTO);
         return "admin_ticket_update";
+    }
+
+    @PostMapping("ticket/api/update")
+    public ResponseEntity<Map<String, Object>> apiUpdate(@RequestBody Map<String, Object> requestBody, RedirectAttributes attributes) {
+        System.out.println(requestBody);
+        Long ticketId = Long.parseLong(requestBody.get("ticketId").toString());
+        Integer quantity = Integer.parseInt(requestBody.get("quantity").toString());
+        Float price = Float.parseFloat(requestBody.get("price").toString());
+
+        Ticket ticketUpdated = ticketService.update(ticketId, quantity, price);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("ticketUpdated", ticketUpdated);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/update/{id}")
