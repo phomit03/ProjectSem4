@@ -22,9 +22,8 @@ public class Ticket {
     private Long id;
 
     @MapToDTO
-    @ManyToOne
     @JoinColumn(name = "area_id", nullable = false)
-    private Area area;
+    private Long area_id;
 
     @MapToDTO
     private Long match_id;
@@ -52,4 +51,9 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "match_id", insertable = false, updatable = false)
     private Match match;
+
+    @MapToDTO
+    @ManyToOne
+    @JoinColumn(name = "area_id", nullable = false, insertable = false, updatable = false)
+    private Area area;
 }

@@ -2,6 +2,7 @@ package com.example.eproject4.Controller.admin;
 
 import com.example.eproject4.DTO.Request.MatchRequest;
 import com.example.eproject4.DTO.Response.*;
+import com.example.eproject4.Entity.Area;
 import com.example.eproject4.Entity.Match;
 import com.example.eproject4.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class MatchController {
     @Autowired
     private final MatchService matchService;
     @Autowired
+    private final AreaService areaService;
+    @Autowired
     private final TeamService teamService;
     @Autowired
     private final StadiumService stadiumService;
@@ -37,20 +40,24 @@ public class MatchController {
     private final MatchDetailEventService matchDetailEventService;
     @Autowired
     private final TeamConclusionService teamConclusionService;
+    @Autowired
+    private final TicketService ticketService;
 
     @Autowired
     private final SimpMessagingTemplate messagingTemplate;
 
 
     @Autowired
-    public MatchController(MatchService matchService, TeamService teamService, StadiumService stadiumService, MatchDetailService matchDetailService, PlayerService playerService, MatchDetailEventService matchDetailEventService, TeamConclusionService teamConclusionService, SimpMessagingTemplate messagingTemplate) {
+    public MatchController(MatchService matchService, AreaService areaService, TeamService teamService, StadiumService stadiumService, MatchDetailService matchDetailService, PlayerService playerService, MatchDetailEventService matchDetailEventService, TeamConclusionService teamConclusionService, TicketService ticketService, SimpMessagingTemplate messagingTemplate) {
         this.matchService = matchService;
+        this.areaService = areaService;
         this.teamService = teamService;
         this.stadiumService = stadiumService;
         this.matchDetailService = matchDetailService;
         this.playerService = playerService;
         this.matchDetailEventService = matchDetailEventService;
         this.teamConclusionService = teamConclusionService;
+        this.ticketService = ticketService;
         this.messagingTemplate = messagingTemplate;
     }
 
@@ -83,7 +90,13 @@ public class MatchController {
             }
 
             if (matchService.checkMatchExist(matchRequest)) {
-                matchService.createMatch(matchRequest);
+                MatchDTO matchCreated = matchService.createMatch(matchRequest);
+                if (matchCreated != null) {
+                    List<AreaDTO> areaDTOS = areaService.getAreaByStadiumId(matchCreated.getStadium_id().getId());
+                    for (AreaDTO area : areaDTOS) {
+                        ticketService.create(matchCreated.getId(), area);
+                    }
+                }
                 redirectAttributes.addFlashAttribute("success", "Create successfully!");
             } else  {
                 redirectAttributes.addFlashAttribute("error", "Creating a match failed because the time and field were the same or the time and team were the same! ");

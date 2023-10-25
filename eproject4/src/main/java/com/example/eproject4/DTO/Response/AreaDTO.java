@@ -16,8 +16,9 @@ import java.time.format.DateTimeFormatter;
 public class AreaDTO {
     private Long id;
     private String area_name;
-    private Stadium stadium;
+    private Long stadium_id;
     private Integer status;
     private Timestamp created_at;
     private Timestamp updated_at;
+    private Stadium stadium;
 }
