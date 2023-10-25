@@ -53,13 +53,6 @@ public class TicketController {
 
     @GetMapping("/ticket/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
-        MatchDTO match = matchService.getMatchById(id);
-        TicketDTO ticket = ticketService.getTicketById(id);
-
-
-        model.addAttribute("matchDTO", match);
-        model.addAttribute("ticketDTO", ticket);
-
 
         return "admin_match_edit";
     }
