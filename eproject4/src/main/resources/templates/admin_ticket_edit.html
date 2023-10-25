@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin_fragments::head"></head>
+<style>
+    .accordion-button:not(.collapsed) {
+        background: transparent;
+    }
+
+     .switch {
+         position: relative;
+         display: inline-block;
+         width: 60px;
+         height: 34px;
+     }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+</style>
+<body>
+<div class="container-fluid position-relative d-flex p-0">
+    <!-- Sidebar Start -->
+    <div th:replace="admin_fragments::sidebar"></div>
+    <!-- Sidebar End -->
+
+
+    <!-- Content Start -->
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav th:replace="admin_fragments::navbar"></nav>
+        <!-- Navbar End -->
+
+
+        <!--CONTENT HERE-->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4" style="display: flex; justify-content: center;">
+                <div class="col-sm-12 col-xl-10">
+                    <div class="bg-secondary rounded h-100 p-4">
+                        <div class="mb-4 text-center">
+                            <span style="font-weight: bold; text-transform: uppercase">Live match updates</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5" style="text-align: center">
+                                <img style="width: 100px; max-height: 150px" th:src="@{${matchDTO.home_team.logo_img}}">
+                            </div>
+                            <div class="col-sm-2" style="display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 30px;">
+                                VS
+                            </div>
+                            <div class="col-sm-5" style="text-align: center">
+                                <img style="width: 100px; max-height: 150px" th:src="@{${matchDTO.away_team.logo_img}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/END CONTENT-->
+
+    </div>
+    <!-- Content End -->
+
+
+    <!-- Back to Top -->
+    <div th:replace="admin_fragments::back-to-top"></div>
+</div>
+
+<div th:replace="admin_fragments::script"></div>
+
+</body>
+
+</html>
