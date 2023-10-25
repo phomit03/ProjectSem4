@@ -29,12 +29,20 @@
         <!--CONTENT HERE-->
         <div class="container-fluid pt-4 px-4">
             <div class="row g-4">
-                <div>
-                    <a th:href="@{/admin/stadium/new}">
-                        <button type="button" class="btn btn-primary m-2" style="float: right">
-                            + Stadium
-                        </button>
-                    </a>
+                <div class="row g-4 align-items-center">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </div>
+                    <div class="col-6 text-end">
+                        <a th:href="@{/admin/stadium/new}">
+                            <button type="button" class="btn btn-primary m-2">
+                                + Stadium
+                            </button>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="col-12">
@@ -45,8 +53,8 @@
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Name</th>
                                     <th scope="col">Map</th>
+                                    <th scope="col">Name</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>

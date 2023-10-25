@@ -46,23 +46,30 @@
                 <div class="pt-3 row">
                     <div class="col-xl-8 col-12">
                         <div class="text-lg-center w-100 mb-4 text-white font-weight-bold">
-                            <h3 th:text="${match.stadium_id.name}"></h3>
+                            <h3 class="color-red" th:text="${match.stadium_id.name}"></h3>
                         </div>
                         <div class="rounded overflow-hidden stadium-container">
                             <div class="position-relative user-select-none main-stage" style="min-height: 350px;">
-                                <img th:src="@{/user/images/map_stadium.jpg}" alt="Image" class="img-fluid"></a>
+                                <img th:src="@{${match.stadium_id.map_img}}" alt="Image" class="img-fluid"
+                                    style="border-radius: 12px;"></a>
                             </div>
                         </div>
-                        <div>
-                            <table>
-                                <tr>
-                                    <th>Khu vực   </th>
-                                    <th>Số lượng</th>
-                                </tr>
-                                <tr th:each="item : ${tickets}">
-                                    <td th:text="${item.area.area_name}">Value 1</td>
-                                    <td th:text="${item.quantity}">Value 2</td>
-                                </tr>
+                        <div class="mt-5 text-center text-white">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr style="background-color: #ee1e46;">
+                                        <th scope="col">Area name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">The remaining amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="item : ${tickets}">
+                                        <td th:text="${item.area.area_name}"></td>
+                                        <td th:text="${item.price}"></td>
+                                        <td th:text="${item.quantity}"></td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -79,7 +86,7 @@
                                 <div class="form-group text-white">
                                     <label for="ticketType">Ticket Type</label>
                                      <select class="form-control bg-white color-black" id="ticketType"
-                                            style="border: 2px solid #6c757d">
+                                            style="border: 2px solid #6c757d; padding: 0 1.125rem;">
                                          <option th:each="item : ${ticketsbyMatch}"
                                                  th:value="${item.id}"
                                                  th:text="${item.area.area_name}"></option>
