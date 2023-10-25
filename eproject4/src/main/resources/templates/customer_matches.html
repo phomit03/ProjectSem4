@@ -228,6 +228,18 @@
             </div>
 
         </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-7 text-center">
+                <div class="custom-pagination">
+                    <span class="ml-2" th:if="${totalPages > 1}" th:each="i: ${#numbers.sequence(1, totalPages)}">
+                        <a class="color-red" th:if="${currentPage != i}" th:href="@{'/matches/' + ${i}}" th:text="${i}"
+                           style="background-color: white; color: #ca0f33"></a>
+                        <span th:unless="${currentPage != i}" th:text="${i}"
+                              style="background-color: #ca0f33; color: white"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
 </div> <!-- .site-section -->
 
