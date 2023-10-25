@@ -53,8 +53,11 @@ public class TicketController {
 
     @GetMapping("/ticket/edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
-
-        return "admin_match_edit";
+        List<TicketDTO> ticketDTOS = ticketService.getTicketByMatchId(id);
+        model.addAttribute("ticketDTOS", ticketDTOS);
+        MatchDTO matchDTO = matchService.getMatchById(id);
+        model.addAttribute("matchDTO", matchDTO);
+        return "admin_ticket_edit";
     }
 
     @PostMapping("/update/{id}")

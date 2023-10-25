@@ -19,7 +19,7 @@ public class Ticket {
     @MapToDTO
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @MapToDTO
     @ManyToOne
@@ -27,9 +27,7 @@ public class Ticket {
     private Area area;
 
     @MapToDTO
-    @ManyToOne
-    @JoinColumn(name = "match_id", nullable = false)
-    private Match match;
+    private Long match_id;
 
     @MapToDTO
     private Integer quantity;
@@ -49,4 +47,9 @@ public class Ticket {
     @Column(name = "updated_at")
     @MapToDTO
     private Timestamp updated_at;
+
+    @MapToDTO
+    @ManyToOne
+    @JoinColumn(name = "match_id", insertable = false, updatable = false)
+    private Match match;
 }

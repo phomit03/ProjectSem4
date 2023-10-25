@@ -49,6 +49,11 @@ public class TicketService {
         Ticket ticket = ticketRepository.findById(id).orElse(null);
         return modelToDtoConverter.convertToDto(ticket, TicketDTO.class);
     }
+    public List<TicketDTO> getTicketByMatchId(Long matchId) {
+        List<Ticket> tickets = ticketRepository.findByMatch_id(matchId);
+        return tickets.stream().map(ticket -> modelToDtoConverter.convertToDto(ticket, TicketDTO.class))
+                .collect(Collectors.toList());
+    }
 
     public TicketDTO createTicket(TicketRequest ticketRequest) {
         Ticket ticket = new Ticket();
