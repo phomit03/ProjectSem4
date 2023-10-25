@@ -14,10 +14,11 @@ import java.sql.Timestamp;
 public class TicketDTO {
     private Long id;
     private Area area;
-    private Match match;
+    private Long match_id;
     private Integer quantity;
     private Float price;
     private Integer status;
     private Timestamp created_at;
     private Timestamp updated_at;
+    private Match match;
 }

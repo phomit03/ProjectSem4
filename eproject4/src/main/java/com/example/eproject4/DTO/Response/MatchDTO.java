@@ -29,7 +29,7 @@ public class MatchDTO {
     //type = 1 => Live | type = 2 => Done
     private Integer type_match;
 
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     public String getFormattedMatchTime() {
         return match_time.format(dateTimeFormatter);
     }
