@@ -64,7 +64,6 @@ public class TicketController {
 
     @PostMapping("ticket/api/update")
     public ResponseEntity<Map<String, Object>> apiUpdate(@RequestBody Map<String, Object> requestBody, RedirectAttributes attributes) {
-        System.out.println(requestBody);
         Long ticketId = Long.parseLong(requestBody.get("ticketId").toString());
         Integer quantity = Integer.parseInt(requestBody.get("quantity").toString());
         Float price = Float.parseFloat(requestBody.get("price").toString());
