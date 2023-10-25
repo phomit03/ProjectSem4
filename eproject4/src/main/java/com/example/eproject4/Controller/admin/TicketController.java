@@ -51,10 +51,9 @@ public class TicketController {
         return "admin_ticket";
     }
 
-    @GetMapping("/ticket/edit/{id}")
-    public String edit(@PathVariable Long id, Model model) {
-
-        return "admin_match_edit";
+    @GetMapping("/ticket/edit")
+    public String edit() {
+        return "admin_ticket_update";
     }
 
     @PostMapping("/update/{id}")
