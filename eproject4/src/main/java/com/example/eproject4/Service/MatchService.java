@@ -68,6 +68,7 @@ public class MatchService {
 
         MatchDetail matchDetail = new MatchDetail();
         matchDetail.setMatch_id(match.getId());
+        matchDetail.setMatch_end(0);
         matchDetailRepository.save(matchDetail);
         return modelToDtoConverter.convertToDto(match, MatchDTO.class);
     }
@@ -165,10 +166,15 @@ public class MatchService {
         return matchRepository.findNextMatch();
     }
 
-    //Upcoming homepage
-    /*public List<Match> getUpComingHomePage() {
-        return matchRepository.find6UpComingMatches();
-    }*/
+    //Upcoming Matches
+    public List<Match> getUpComingMatches() {
+        return matchRepository.findUpComingMatches();
+    }
+
+    //The Matches WasOver
+    public List<Match> getTheMatchesWasOver() {
+        return matchRepository.findTheMatchesWasOver();
+    }
 
     // phan trang
     public Page<Match> findPaginated(int pageNo, int pageSize) {

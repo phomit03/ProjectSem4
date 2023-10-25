@@ -11,14 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class MatchDetailService {
     @Autowired
-    private final Helper helper;
-    @Autowired
     private final MatchDetailRepository matchDetailRepository;
     @Autowired
     private final ModelToDtoConverter modelToDtoConverter;
 
-    public MatchDetailService(Helper helper, MatchDetailRepository matchDetailRepository, ModelToDtoConverter modelToDtoConverter) {
-        this.helper = helper;
+    public MatchDetailService(MatchDetailRepository matchDetailRepository, ModelToDtoConverter modelToDtoConverter) {
         this.matchDetailRepository = matchDetailRepository;
         this.modelToDtoConverter = modelToDtoConverter;
     }
