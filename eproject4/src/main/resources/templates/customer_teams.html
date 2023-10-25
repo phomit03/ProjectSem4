@@ -202,14 +202,15 @@
             <div class="col-lg-3 mb-4" th:each="team : ${teams}">
                 <div class="custom-media d-block">
                     <div class="img mb-4">
-                        <a th:href="@{/teams/detail}">
+                        <a th:href="@{/team/detail/{id} (id=${team.id})}">
                             <img th:src="@{${team.logo_img}}" alt="Image" class="img-fluid img-thumbnail"
-                                 style="width: 250px; height: 260px; max-width: 100%">
+                                 style="width: 250px; height: 260px; max-width: 100%; background-color: #00000000;
+                                 border: 1px solid #4e535a; padding: 20px">
                         </a>
                     </div>
                     <div class="text text-center">
                         <h3 class="mb-4">
-                            <a th:href="@{/teams/detail}" th:text="${team.name}" style="font-size: 17px"></a>
+                            <a th:href="@{/team/detail/{id} (id=${team.id})}" th:text="${team.name}" style="font-size: 17px"></a>
                         </h3>
                     </div>
                 </div>
