@@ -183,6 +183,12 @@ public class MatchService {
         return this.matchRepository.findAll(pageable);
     }
 
+    // 4 tran gan nhat da end cua 1 clb
+    public List<Match> findRecentMatchesByTeamId(Long id) {
+        Pageable pageable = PageRequest.of(0, 4);
+        return matchRepository.findRecentMatchesByTeamId(id, pageable);
+    }
+
     // phan trang customer_matches
     public Page<Match> findPaginated1(int pageNo, int pageSize, List<Match> matches) {
         // Tạo một danh sách Pageable từ danh sách các trận đấu
@@ -193,5 +199,7 @@ public class MatchService {
 
         return new PageImpl<>(paginatedMatches, PageRequest.of(pageNo - 1, pageSize), matches.size());
     }
+
+
 }
 

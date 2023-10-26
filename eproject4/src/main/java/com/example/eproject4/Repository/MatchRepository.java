@@ -49,6 +49,10 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     @Query("SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE md.match_end = 1 AND m.status = 1 ORDER BY m.match_time DESC")
     List<Match> findLatestFinishedMatches(Pageable pageable);
 
+    // 4 tran gan nhat da end cua 1 clb
+    @Query("SELECT m FROM Match m  WHERE (m.home_team_id.id = :teamId OR m.away_team_id.id = :teamId) AND m.match_time < CURRENT_TIMESTAMP ORDER BY m.match_time DESC")
+    List<Match> findRecentMatchesByTeamId(@Param("teamId") Long id, Pageable pageable);
+
     //Next Match (Random)
     @Query(value = "SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE m.match_time > CURRENT_TIMESTAMP AND m.status = 1 AND md.match_end = 0 ORDER BY m.match_time ASC")
     List<Match> findNextMatch();
@@ -60,4 +64,6 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     //The Matches WasOver
     @Query(value = "SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE m.match_time < CURRENT_TIMESTAMP AND m.status = 1 AND md.match_end = 1")
     List<Match> findTheMatchesWasOver();
+
+
 }
