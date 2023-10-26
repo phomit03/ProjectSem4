@@ -17,4 +17,5 @@ public class TicketDetailInfo {
     private String hour;
     private Float price;
     private String area;
+    private String stadium;
 }

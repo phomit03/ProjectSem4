@@ -1517,16 +1517,24 @@ input[type=text] {
   font-weight: bold;
 }
 
+.player-title {
+  font-weight: bold;
+  font-size: 25px;
+}
+
 .player-number {
-  top: 45%;
+  top: 50%;
   border-bottom: 2px solid #ee1e46;
   max-width: 24px;
   font-size: 25px;
 }
+.player-number:hover {
+  color: #ee1e46;
+}
 
 .player-name {
-  top: 60%;
-  max-width: 120px;
+  top: 67%;
+  max-width: 200px;
   font-size: 40px;
   line-height: 1;
 }
@@ -1541,8 +1549,26 @@ input[type=text] {
 .player-team {
   padding-right: 20px;
   padding-left: 20px;
+  position: relative;
+  transition: transform 0.3s;
 }
 
-.player-number:hover {
+.player-team:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.player-img:hover {
+  filter: brightness(60%);
+}
+
+
+.team-club-text {
+  font-size:25px;
+  line-height: 2.7;
   color: #ee1e46;
+  border-bottom: 1px solid #666666
+}
+
+.team-club-text2 {
+  color: white;
 }
