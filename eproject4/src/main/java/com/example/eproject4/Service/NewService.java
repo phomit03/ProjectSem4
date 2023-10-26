@@ -104,4 +104,8 @@ public class NewService {
     public List<New> getLatestNews() {
         return newRepository.findLatestThreeNews();
     }
+
+    public List<New> getTwoLatestNews() {
+        return newRepository.findLatestTwoNews();
+    }
 }

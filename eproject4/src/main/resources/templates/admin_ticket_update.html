@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin_fragments::head"></head>
+<style>
+    .accordion-button:not(.collapsed) {
+        background: transparent;
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+</style>
+<body>
+<div class="container-fluid position-relative d-flex p-0">
+    <!-- Sidebar Start -->
+    <div th:replace="admin_fragments::sidebar"></div>
+    <!-- Sidebar End -->
+
+
+    <!-- Content Start -->
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav th:replace="admin_fragments::navbar"></nav>
+        <!-- Navbar End -->
+
+
+        <!--CONTENT HERE-->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4" style="display: flex; justify-content: center;">
+                <div class="col-sm-12 col-xl-10">
+
+                    <div class="bg-secondary rounded h-100 p-4">
+                        <div class="text-end">
+                            <a class="mb-4" style="float: right;" th:href="@{/admin/tickets}">
+                                <i class="fas fa-arrow-left"></i>
+                            </a>
+                        </div>
+
+                        <div class="mb-4 text-center">
+                            <span style="font-weight: bold; text-transform: uppercase">Ticket updates</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5" style="text-align: center">
+                                <img style="width: 100px; max-height: 150px" th:src="@{${matchDTO.home_team.logo_img}}">
+                            </div>
+                            <div class="col-sm-2"
+                                 style="display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 30px;">
+                                VS
+                            </div>
+                            <div class="col-sm-5" style="text-align: center">
+                                <img style="width: 100px; max-height: 150px" th:src="@{${matchDTO.away_team.logo_img}}">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <p class="col-sm-5 text-center" style="font-size: 40px; font-weight: bold; color: white"
+                               th:text="${matchDTO.home_team.name}"></p>
+                            <p class="col-sm-2"></p>
+                            <p class="col-sm-5 text-center" style="font-size: 40px; font-weight: bold; color: white"
+                               th:text="${matchDTO.away_team.name}">
+                        </div>
+
+                        <div style="font-size: 25px; color: #EB1616">
+                            <p class="text-center">
+                                <i class="fa fa-calendar mr-1"></i> <span
+                                    th:text="${matchDTO.formattedMatchTime}"></span>
+                            </p>
+                            <p class="text-center">
+                                <i class="fa fa-map-marker mr-1"></i> <span
+                                    th:text="${matchDTO.stadium_id.name}"></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-10 col-xl-10 mx-auto">
+                            <div class="mt-5 text-center">
+                                <table class="table">
+                                    <thead>
+                                    <tr style="color: white">
+                                        <th scope="col" style="width: 10%">#</th>
+                                        <th scope="col" style="width: 20%">Area name</th>
+                                        <th scope="col" style="width: 30%">Number of areas</th>
+                                        <th scope="col" style="width: 40%">Price</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody style="color: white">
+                                    <tr th:each="ticket, iterStat : ${ticketDTOS}">
+                                        <td style="padding: 12px 8px; font-weight: bold"
+                                            th:text="${iterStat.index + 1}"></td>
+                                        <td style="color: #EB1616; padding: 12px 8px; font-weight: bold"
+                                            th:text="${ticket.area.area_name}"></td>
+                                        <td>
+                                            <input type="number" min="0" th:data-id="${ticket.id}"
+                                                   th:class="'form-control input-change-update quantity-ticket-' + ${ticket.id}"
+                                                   id="quantity" th:value="${ticket.quantity}"
+                                                   name="quantity" placeholder="Quantity">
+                                        </td>
+                                        <td>
+                                            <input type="text" th:data-id="${ticket.id}"
+                                                   th:class="'form-control input-change-update price-ticket-' + ${ticket.id}"
+                                                   id="price"
+                                                   name="price" placeholder="Price" th:value="${ticket.price}">
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/END CONTENT-->
+
+    </div>
+    <!-- Content End -->
+
+
+    <!-- Back to Top -->
+    <div th:replace="admin_fragments::back-to-top"></div>
+</div>
+
+<div th:replace="admin_fragments::script"></div>
+
+<script>
+    $('.input-change-update').on('change', function () {
+        var ticketId = $(this).attr('data-id');
+        var quantity = $('.quantity-ticket-' + ticketId).val();
+        var price = $('.price-ticket-' + ticketId).val();
+
+        var dataToSend = {
+            ticketId: ticketId,
+            quantity: quantity,
+            price: price
+        };
+
+        if (!dataToSend.ticketId.isEmpty) {
+            $.ajax({
+                type: 'POST',
+                url: '/admin/ticket/api/update',
+                contentType: 'application/json',
+                data: JSON.stringify(dataToSend),
+                success: function (res) {
+                    if (res) {
+                        Swal.fire(
+                            'Success',
+                            "Update ticket success",
+                            'success'
+                        )
+                    }
+                }
+            });
+        }
+    })
+</script>
+
+</body>
+
+</html>

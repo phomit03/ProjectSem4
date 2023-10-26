@@ -49,11 +49,13 @@ public class AreaController {
     }
 
     @PostMapping("/create/save")
-    public String createArea(@ModelAttribute AreaDTO areaDTO) {
+    public String createArea(@ModelAttribute AreaDTO areaDTO, RedirectAttributes attributes) {
         try {
             areaService.createArea(areaDTO);
+            attributes.addFlashAttribute("success", "Create Area Successfully!");
         } catch (Exception e) {
             e.printStackTrace();
+            attributes.addFlashAttribute("error", "Failed To Create!");
         }
         return "redirect:/admin/area";
     }

@@ -101,7 +101,7 @@ public class StadiumController {
     @GetMapping("/stadiums/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
                                 Model model) {
-        int pageSize = 5;
+        int pageSize = 6;
         Page<Stadium> page = stadiumService.findPaginated(pageNo, pageSize);
         List<Stadium> stadiums = page.getContent();
 

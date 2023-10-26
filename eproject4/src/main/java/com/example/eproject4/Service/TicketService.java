@@ -1,6 +1,7 @@
 package com.example.eproject4.Service;
 
 import com.example.eproject4.DTO.Request.TicketRequest;
+import com.example.eproject4.DTO.Response.AreaDTO;
 import com.example.eproject4.DTO.Response.TicketDTO;
 import com.example.eproject4.Entity.Match;
 import com.example.eproject4.Entity.Ticket;
@@ -49,6 +50,11 @@ public class TicketService {
         Ticket ticket = ticketRepository.findById(id).orElse(null);
         return modelToDtoConverter.convertToDto(ticket, TicketDTO.class);
     }
+    public List<TicketDTO> getTicketByMatchId(Long matchId) {
+        List<Ticket> tickets = ticketRepository.findByMatch_id(matchId);
+        return tickets.stream().map(ticket -> modelToDtoConverter.convertToDto(ticket, TicketDTO.class))
+                .collect(Collectors.toList());
+    }
 
     public TicketDTO createTicket(TicketRequest ticketRequest) {
         Ticket ticket = new Ticket();
@@ -57,6 +63,19 @@ public class TicketService {
         ticket.setMatch(ticketRequest.getMatch_id());
         ticket.setQuantity(ticketRequest.getQuantity());
         ticket.setPrice(ticketRequest.getPrice());
+        ticket.setStatus(1);
+
+        ticket = ticketRepository.save(ticket);
+        return modelToDtoConverter.convertToDto(ticket, TicketDTO.class);
+    }
+
+    public TicketDTO create(Long matchId, AreaDTO areaDTO) {
+        Ticket ticket = new Ticket();
+
+        ticket.setArea_id(areaDTO.getId());
+        ticket.setMatch_id(matchId);
+        ticket.setQuantity(100);
+        ticket.setPrice(100F);
         ticket.setStatus(1);
 
         ticket = ticketRepository.save(ticket);
@@ -74,6 +93,18 @@ public class TicketService {
             ticket.setStatus(ticketRequest.getStatus());
             ticket.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
 
+            return ticketRepository.save(ticket);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Ticket update(Long ticketId, Integer quantity, Float price) {
+        try {
+            Ticket ticket = ticketRepository.getById(ticketId);
+            ticket.setPrice(price);
+            ticket.setQuantity(quantity);
             return ticketRepository.save(ticket);
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,13 +135,14 @@ public class TicketService {
         return matchRepository.findMatchesBeforeTimeThreshold(currentTimeMinus15Minutes);
     }
 
-    /*    public List<TicketDTO> getAllTicketsByIdMath(int matchid) {
+    /*public List<TicketDTO> getAllTicketsByIdMath(int matchid) {
 
-            List<Ticket> tickets = ticketRepository.findByMatchId(matchid);
+        List<Ticket> tickets = ticketRepository.findByMatchId(matchid);
 
-            return tickets.stream().map(ticket -> modelToDtoConverter.convertToDto(ticket, TicketDTO.class))
-                    .collect(Collectors.toList());
-        }*/
+        return tickets.stream().map(ticket -> modelToDtoConverter.convertToDto(ticket, TicketDTO.class))
+                .collect(Collectors.toList());
+    }*/
+
     public List<Ticket> getAllTicketsByIdMath(int matchid) {
 
         long longValue = (long) matchid;

@@ -1510,4 +1510,39 @@ input[type=text] {
   margin-left: 5px;
   font-size: 15px;
 }
->>>>>>> a38a2b0b14362da940dd83c358b800fce98ab301
+
+.player-text {
+  color: white;
+  left: 13%;
+  font-weight: bold;
+}
+
+.player-number {
+  top: 45%;
+  border-bottom: 2px solid #ee1e46;
+  max-width: 24px;
+  font-size: 25px;
+}
+
+.player-name {
+  top: 60%;
+  max-width: 120px;
+  font-size: 40px;
+  line-height: 1;
+}
+
+.player-img {
+  width: 100%;
+  height: 300px;
+  border-radius: 0.25rem;
+  filter: brightness(70%);
+}
+
+.player-team {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.player-number:hover {
+  color: #ee1e46;
+}

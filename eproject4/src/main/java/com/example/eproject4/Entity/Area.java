@@ -27,10 +27,9 @@ public class Area {
     @MapToDTO
     private String area_name;
 
-    @ManyToOne
-    @JoinColumn(name = "stadium_id", nullable = false)
     @MapToDTO
-    private Stadium stadium;
+    @JoinColumn(name = "stadium_id", nullable = false)
+    private Long stadium_id;
 
     @Column(name = "status")
     @MapToDTO
@@ -45,4 +44,9 @@ public class Area {
     @Column(name = "updated_at")
     @MapToDTO
     private Timestamp updated_at;
+
+    @ManyToOne
+    @JoinColumn(name = "stadium_id", nullable = false, insertable = false, updatable = false)
+    @MapToDTO
+    private Stadium stadium;
 }

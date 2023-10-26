@@ -3,7 +3,9 @@ package com.example.eproject4.Controller.admin;
 import com.example.eproject4.DTO.Response.TeamDTO;
 import com.example.eproject4.Entity.Team;
 import com.example.eproject4.Repository.TeamRepository;
+import com.example.eproject4.Service.TeamConclusionService;
 import com.example.eproject4.Service.TeamService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,8 @@ import java.util.List;
 @RequestMapping("/admin")
 public class TeamController {
     private final TeamService teamService;
+    @Autowired
+    private TeamConclusionService teamConclusionService;
 
     public TeamController(TeamService teamService) {
         this.teamService = teamService;
@@ -42,6 +46,7 @@ public class TeamController {
     public String createTeam(@ModelAttribute TeamDTO teamDTO, @RequestParam("logo") MultipartFile logo, RedirectAttributes attributes) {
         try {
             teamService.createTeam(teamDTO, logo);
+            teamConclusionService.create(teamDTO.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }

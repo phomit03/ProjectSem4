@@ -10,6 +10,7 @@ import com.example.eproject4.Utils.Helper;
 import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -68,6 +69,7 @@ public class MatchService {
 
         MatchDetail matchDetail = new MatchDetail();
         matchDetail.setMatch_id(match.getId());
+        matchDetail.setMatch_end(0);
         matchDetailRepository.save(matchDetail);
         return modelToDtoConverter.convertToDto(match, MatchDTO.class);
     }
@@ -165,16 +167,39 @@ public class MatchService {
         return matchRepository.findNextMatch();
     }
 
-    //Upcoming homepage
-    /*public List<Match> getUpComingHomePage() {
-        return matchRepository.find6UpComingMatches();
-    }*/
+    //Upcoming Matches
+    public List<Match> getUpComingMatches() {
+        return matchRepository.findUpComingMatches();
+    }
 
+    //The Matches WasOver
+    public List<Match> getTheMatchesWasOver() {
+        return matchRepository.findTheMatchesWasOver();
+    }
     // phan trang
     public Page<Match> findPaginated(int pageNo, int pageSize) {
 
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return this.matchRepository.findAll(pageable);
     }
+
+    // 4 tran gan nhat da end cua 1 clb
+    public List<Match> findRecentMatchesByTeamId(Long id) {
+        Pageable pageable = PageRequest.of(0, 4);
+        return matchRepository.findRecentMatchesByTeamId(id, pageable);
+    }
+
+    // phan trang customer_matches
+    public Page<Match> findPaginated1(int pageNo, int pageSize, List<Match> matches) {
+        // Tạo một danh sách Pageable từ danh sách các trận đấu
+        List<Match> paginatedMatches = matches.stream()
+                .skip((long) (pageNo - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(paginatedMatches, PageRequest.of(pageNo - 1, pageSize), matches.size());
+    }
+
+
 }
 
