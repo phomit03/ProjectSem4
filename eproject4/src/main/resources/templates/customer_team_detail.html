@@ -98,71 +98,22 @@
                             <th scope="col">Achievements</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>Ronaldo</td>
-                            <td><img class="img-fluid img-thumbnail" th:src="@{/user/images/logo_1.png}"></td>
-                            <td>01/01/2001</td>
-                            <td>Portugal</td>
-                            <td>Left Winger</td>
-                            <td>7</td>
-                            <td>80kg</td>
-                            <td>1.85m</td>
-                            <td>Real Madrid</td>
-                            <td>Championship C1, LaLiga</td>
-                        </tr>
-                        <tr>
-                            <th>1</th>
-                            <td>Ronaldo</td>
-                            <td><img class="img-fluid img-thumbnail" th:src="@{/user/images/logo_1.png}"></td>
-                            <td>01/01/2001</td>
-                            <td>Portugal</td>
-                            <td>Left Winger</td>
-                            <td>7</td>
-                            <td>80kg</td>
-                            <td>1.85m</td>
-                            <td>Real Madrid</td>
-                            <td>Championship C1, LaLiga</td>
-                        </tr>
-                        <tr>
-                            <th>1</th>
-                            <td>Ronaldo</td>
-                            <td><img class="img-fluid img-thumbnail" th:src="@{/user/images/logo_1.png}"></td>
-                            <td>01/01/2001</td>
-                            <td>Portugal</td>
-                            <td>Left Winger</td>
-                            <td>7</td>
-                            <td>80kg</td>
-                            <td>1.85m</td>
-                            <td>Real Madrid</td>
-                            <td>Championship C1, LaLiga</td>
-                        </tr>
-                        <tr>
-                            <th>1</th>
-                            <td>Ronaldo</td>
-                            <td><img class="img-fluid img-thumbnail" th:src="@{/user/images/logo_1.png}"></td>
-                            <td>01/01/2001</td>
-                            <td>Portugal</td>
-                            <td>Left Winger</td>
-                            <td>7</td>
-                            <td>80kg</td>
-                            <td>1.85m</td>
-                            <td>Real Madrid</td>
-                            <td>Championship C1, LaLiga</td>
-                        </tr>
-                        <tr>
-                            <th>1</th>
-                            <td>Ronaldo</td>
-                            <td><img class="img-fluid img-thumbnail" th:src="@{/user/images/logo_1.png}"></td>
-                            <td>01/01/2001</td>
-                            <td>Portugal</td>
-                            <td>Left Winger</td>
-                            <td>7</td>
-                            <td>80kg</td>
-                            <td>1.85m</td>
-                            <td>Real Madrid</td>
-                            <td>Championship C1, LaLiga</td>
+                        <tbody th:if="${players != null and #lists.size(players) > 0}">
+                        <tr th:each="player, iterStat : ${players}" th:class="'player-' + ${player.id}">
+                            <td th:text="${iterStat.index + 1}"></td>
+                            <td th:text="${player.name}"></td>
+
+                            <td>
+                                <img style="width: 70px; height: 70px; object-fit: cover;" th:src="@{${player.avatar_img}}">
+                            </td>
+                            <td style="width: 150px" th:text="${player.date_of_birth}"></td>
+                            <td th:text="${player.national}"></td>
+                            <td th:text="${player.position}"></td>
+                            <td th:text="${player.number}"></td>
+                            <td th:text="${player.weight}"></td>
+                            <td th:text="${player.height}"></td>
+                            <td th:text="${player.team.name}"></td>
+                            <td th:text="${player.achievement}"></td>
                         </tr>
                         </tbody>
                     </table>
