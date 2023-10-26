@@ -39,11 +39,11 @@ public class DetailTicketPrintController {
         this.orderRepository = orderRepository;
     }
 
-    @GetMapping("/printdetaiorder/{content}")
-    public String generateQRCode(@PathVariable int content, Model model) {
+    @GetMapping("/print_ticket/{id}")
+    public String generateQRCode(@PathVariable int id, Model model) {
         try {
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
-            BitMatrix bitMatrix = qrCodeWriter.encode("http://localhost:8080/printdetaiorder/" + Integer.toString(content), BarcodeFormat.QR_CODE, 200, 200);
+            BitMatrix bitMatrix = qrCodeWriter.encode("http://localhost:8080/print_ticket/" + Integer.toString(id), BarcodeFormat.QR_CODE, 200, 200);
             // Chuyển BitMatrix thành hình ảnh BufferedImage
             BufferedImage image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
             for (int x = 0; x < 200; x++) {
@@ -51,6 +51,7 @@ public class DetailTicketPrintController {
                     image.setRGB(x, y, bitMatrix.get(x, y) ? 0x000000 : 0xFFFFFF);
                 }
             }
+
             // Lưu hình ảnh vào model để hiển thị trên trang Thymeleaf
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(image, "png", baos);
@@ -60,7 +61,7 @@ public class DetailTicketPrintController {
             model.addAttribute("qrcode", imageSrc);
 
             // lấy giỏ hàng
-            List<Cart> carts = cartRepository.findByOrder(content);
+            List<Cart> carts = cartRepository.findByOrder(id);
             List<TicketDetailInfo> list = new ArrayList<>();
 
             for (Cart cart : carts) {
@@ -82,23 +83,23 @@ public class DetailTicketPrintController {
                 String hour = time.format(timeFormatter);
                 String stadium = match.getStadium_id().getName();
                 Float price = ticket.getPrice();
-                String khuvuc = ticket.getArea().getArea_name();
+                String area = ticket.getArea().getArea_name();
                 // thêm thông tin vé
-                TicketDetailInfo info = new TicketDetailInfo(name_a, image_a, name_b, image_b, date, hour, price, khuvuc);
+                TicketDetailInfo info = new TicketDetailInfo(name_a, image_a, name_b, image_b, date, hour, price, area, stadium);
                 for (int i = 0; i < cart.getQuantity(); i++) {
                     list.add(info);
                 }
             }
             // thông tin hiển thị
             model.addAttribute("list", list);
-            return "print_ticket"; // Trả về trang Thymeleaf
+            return "print_ticket";
         } catch (Exception e) {
             e.printStackTrace();
-            return "error"; // Trả về trang lỗi nếu có lỗi
+            return "error_notfound";
         }
     }
 
-    @GetMapping("/duy/myorder")
+    @GetMapping("/myticket/duy")
     public String myOrder(Model model, HttpSession session) {
         // lấy thông tin người dùng
         User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -131,9 +132,9 @@ public class DetailTicketPrintController {
                 String hour = time.format(timeFormatter);
                 String stadium = match.getStadium_id().getName();
                 Float price = ticket.getPrice();
-                String khuvuc = ticket.getArea().getArea_name();
+                String area = ticket.getArea().getArea_name();
                 // thêm thông tin vé
-                TicketDetailInfo info = new TicketDetailInfo(name_a, image_a, name_b, image_b, date, hour, price, khuvuc);
+                TicketDetailInfo info = new TicketDetailInfo(name_a, image_a, name_b, image_b, date, hour, price, area, stadium);
                 for (int i = 0; i < cart.getQuantity(); i++) {
                     list.add(info);
                 }
@@ -142,14 +143,15 @@ public class DetailTicketPrintController {
             listOrderRespond.add(new OrderDetailInfo(order.getTotalPrice(),qrcode,list));
         }
         model.addAttribute("listOrderRespond", listOrderRespond);
-        return "my_order";
+        return "customer_my_ticket";
     }
 
-    @GetMapping("/sucssesorder/{content}")
-    public String sucssesOrder(@PathVariable int content, Model model) {
+    @GetMapping("/success_order/{id}")
+    public String successOrder(@PathVariable int id, Model model) {
         try {
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
-            BitMatrix bitMatrix = qrCodeWriter.encode("http://localhost:8080/printdetaiorder/" + Integer.toString(content), BarcodeFormat.QR_CODE, 200, 200);
+            BitMatrix bitMatrix = qrCodeWriter.encode("http://localhost:8080/print_ticket/" + Integer.toString(id),
+                    BarcodeFormat.QR_CODE, 200, 200);
             // Chuyển BitMatrix thành hình ảnh BufferedImage
             BufferedImage image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
             for (int x = 0; x < 200; x++) {
@@ -166,7 +168,7 @@ public class DetailTicketPrintController {
             model.addAttribute("qrcode", imageSrc);
 
             // lấy giỏ hàng
-            List<Cart> carts = cartRepository.findByOrder(content);
+            List<Cart> carts = cartRepository.findByOrder(id);
             List<TicketDetailInfo> list = new ArrayList<>();
 
             for (Cart cart : carts) {
@@ -188,26 +190,29 @@ public class DetailTicketPrintController {
                 String hour = time.format(timeFormatter);
                 String stadium = match.getStadium_id().getName();
                 Float price = ticket.getPrice();
-                String khuvuc = ticket.getArea().getArea_name();
+                String area = ticket.getArea().getArea_name();
                 // thêm thông tin vé
-                TicketDetailInfo info = new TicketDetailInfo(name_a, image_a, name_b, image_b, date, hour, price, khuvuc);
+                TicketDetailInfo info = new TicketDetailInfo(name_a, image_a, name_b, image_b, date, hour, price,
+                        area, stadium);
                 for (int i = 0; i < cart.getQuantity(); i++) {
                     list.add(info);
                 }
             }
             // thông tin hiển thị
             model.addAttribute("list", list);
-            return "success"; // Trả về trang Thymeleaf
+            return "customer_order_success";
         } catch (Exception e) {
             e.printStackTrace();
-            return "error"; // Trả về trang lỗi nếu có lỗi
+            return "error_notfound";
         }
     }
 
     public String CreateQrCode(int idOrder) {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         try {
-            BitMatrix bitMatrix = qrCodeWriter.encode("http://localhost:8080/printdetaiorder/" + Integer.toString(idOrder), BarcodeFormat.QR_CODE, 200, 200);
+            BitMatrix bitMatrix = qrCodeWriter.encode("http://localhost:8080/print_ticket/" + Integer.toString(idOrder),
+                    BarcodeFormat.QR_CODE, 200, 200);
+
             // Chuyển BitMatrix thành hình ảnh BufferedImage
             BufferedImage image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
             for (int x = 0; x < 200; x++) {

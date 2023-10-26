@@ -64,7 +64,11 @@
         var email = document.getElementById("email").value;
         var emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6})*$/
         if (!emailRegex.test(email)) {
-            alert("Please enter a valid email");
+            Swal.fire(
+                'Oops!',
+                'Please enter a valid email address!',
+                'warning'
+            )
             return false;
         }
 

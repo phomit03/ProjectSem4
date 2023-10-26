@@ -195,9 +195,9 @@ public class TicketUserController {
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
-            return "succes";
+            return "customer_order_success";
         }
-        return "fail";
+        return "error_notfound";
     }
 
 
