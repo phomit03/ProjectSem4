@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Order Details</title>
+</head>
+<body>
+<h1>Order Details</h1>
+
+<!--<div th:if="${listOrderRespond != null and not #lists.isEmpty(listOrderRespond)}">-->
+  <div th:each="orderDetail : ${listOrderRespond}">
+    <h2>Total Price: <span th:text="${orderDetail.totalPrice}"></span></h2>
+    <img th:src="${orderDetail.qrcode}" alt="QR Code">
+
+    <table>
+      <tr>
+        <th>Home Team</th>
+        <th>Away Team</th>
+        <th>Day</th>
+        <th>Hour</th>
+        <th>Price</th>
+        <th>Area</th>
+      </tr>
+      <tr th:each="ticket : ${orderDetail.listTicket}">
+        <td th:text="${ticket.name_home}"></td>
+        <td th:text="${ticket.name_away}"></td>
+        <td th:text="${ticket.day}"></td>
+        <td th:text="${ticket.hour}"></td>
+        <td th:text="${ticket.price}"></td>
+        <td th:text="${ticket.area}"></td>
+      </tr>
+    </table>
+  </div>
+<!--</div>-->
+<!--<div th:unless="${listOrderRespond != null and not #lists.isEmpty(listOrderRespond)}">
+  <p>Not Order</p>
+</div>-->
+</body>
+</html>
