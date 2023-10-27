@@ -1612,6 +1612,7 @@ input[type=text] {
   border-radius: 10px;
   overflow-y: auto;
   color: #bdc1c6;
+  border-radius: 10px;
 }
 
 .close {
