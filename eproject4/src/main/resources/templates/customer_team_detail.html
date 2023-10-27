@@ -56,7 +56,7 @@
                                     <div class="mr-4 ml-4">
                                     <span class="vs">
                                         <span style="font-size: 35px; border-radius: 12px; padding: 0 10px;">
-                                            5 - 3
+                                            0 - 4
                                         </span>
                                     </span>
                                     </div>
@@ -70,19 +70,15 @@
                                 <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
                                     <div class="team-1 text-center mt-2" style="width: 160px">
                                         <div class="mt-2">
-                                            <p><i class="icon-futbol-o mr-1"></i> Cristiano Ronaldo</p>
-                                            <p><i class="icon-futbol-o mr-1"></i> Cristiano Ronaldo</p>
-                                            <p><i class="icon-futbol-o mr-1"></i> Cristiano Ronaldo</p>
-                                            <p><i class="icon-futbol-o mr-1"></i> Cristiano Ronaldo</p>
-                                            <p><i class="icon-futbol-o mr-1"></i> Cristiano Ronaldo</p>
                                         </div>
                                     </div>
                                     <div class="mr-5 ml-5"></div>
                                     <div class="team-2 text-center mt-2" style="width: 160px">
                                         <div>
-                                            <p><i class="icon-futbol-o mr-1"></i> Cristiano Ronaldo</p>
-                                            <p><i class="icon-futbol-o mr-1"></i> Cristiano Ronaldo</p>
-                                            <p><i class="icon-futbol-o mr-1"></i> Cristiano Ronaldo</p>
+                                            <p><i class="icon-futbol-o mr-1"></i> Bruno Fernandes</p>
+                                            <p><i class="icon-futbol-o mr-1"></i> Bruno Fernandes</p>
+                                            <p><i class="icon-futbol-o mr-1"></i> Mason Mount    </p>
+                                            <p><i class="icon-futbol-o mr-1"></i> Bruno Fernandes</p>
                                         </div>
                                     </div>
                                 </div>
@@ -106,7 +102,7 @@
                         </div>
                         <hr style="border-top: 1px solid #666666;">
                         <div class="row">
-                            <div class="col-md-3 player-team" th:each="player : ${players}" th:if="${player.position == 'Goalkeepers'}">
+                            <div style="padding: 10px" class="col-md-3 player-team" th:each="player : ${players}" th:if="${player.position == 'Goalkeepers'}">
                                 <a href="">
                                     <img th:src="@{${player.avatar_img}}" alt="Image 1" class="img-fluid player-img">
                                     <div class="player-info">
@@ -124,7 +120,7 @@
                         </div>
                         <hr style="border-top: 1px solid #666666;">
                         <div class="row">
-                            <div class="col-md-3 player-team" th:each="player : ${players}" th:if="${player.position == 'Defenders'}">
+                            <div style="padding: 10px" class="col-md-3 player-team" th:each="player : ${players}" th:if="${player.position == 'Defenders'}">
                                 <a href="">
                                     <img th:src="@{${player.avatar_img}}" alt="Image 1" class="img-fluid player-img">
                                     <div class="player-info">
@@ -142,7 +138,7 @@
                         </div>
                         <hr style="border-top: 1px solid #666666;">
                         <div class="row">
-                            <div class="col-md-3 player-team" th:each="player : ${players}" th:if="${player.position == 'Quarterbacks'}">
+                            <div style="padding: 10px" class="col-md-3 player-team" th:each="player : ${players}" th:if="${player.position == 'Quarterbacks'}">
                                 <a href="">
                                     <img th:src="@{${player.avatar_img}}" alt="Image 1" class="img-fluid player-img">
                                     <div class="player-info">
@@ -160,7 +156,7 @@
                         </div>
                         <hr style="border-top: 1px solid #666666;">
                         <div class="row">
-                            <div class="col-md-3 player-team" th:each="player : ${players}" th:if="${player.position == 'Strikers'}">
+                            <div style="padding: 10px" class="col-md-3 player-team" th:each="player : ${players}" th:if="${player.position == 'Strikers'}">
                                 <a href="">
                                     <img th:src="@{${player.avatar_img}}" alt="Image 1" class="img-fluid player-img">
                                     <div class="player-info">
