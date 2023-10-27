@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order Success</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+
+    <style>
+        body {
+            min-height: 100vh;
+            background-size: cover;
+            font-family: Poppins-Regular, sans-serif;
+            color: rgba(116, 116, 116, 0.667);
+            background-color: #0c0613;
+            color: #0b0b0b;
+        }
+
+        .container-fluid {
+            margin-top: 200px;
+        }
+
+        p {
+            font-size: 14px;
+            margin-bottom: 7px;
+
+        }
+
+        .card-1 {
+            box-shadow: 1px 1px 10px 1px rgb(238 30 70 / 67%);
+        }
+
+        hr {
+            background-color: rgba(248, 248, 248, 0.667);
+        }
+
+
+        .bold {
+            font-weight: 500;
+        }
+
+        .change-color {
+            color: #ee1e46 !important;
+        }
+
+        .card-2 {
+            box-shadow: 1px 1px 3px 0px rgb(112, 115, 139);
+
+        }
+
+        .invoice {
+            position: relative;
+        }
+
+        .Glasses {
+            position: relative;
+            top: -12px !important;
+        }
+
+        .card-footer {
+            background-color: #ee1e46;
+            color: #fff;
+        }
+
+        h2 {
+            color: white;
+            letter-spacing: 2px !important;
+        }
+
+        .display-3 {
+            font-weight: 500 !important;
+        }
+
+        @media (max-width: 479px) {
+            .invoice {
+                position: relative;
+                top: 7px;
+            }
+
+            .border-line {
+                border-right: 0px solid rgb(226, 206, 226) !important;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            h2 {
+                color: white;
+                font-size: 17px;
+            }
+
+            .display-3 {
+                font-size: 28px;
+                font-weight: 500 !important;
+            }
+        }
+
+        .card-footer small {
+            letter-spacing: 7px !important;
+            font-size: 12px;
+        }
+
+        .border-line {
+            border-right: 1px solid rgb(226, 206, 226)
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .fs-16 {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid my-5  d-flex  justify-content-center">
+    <div class="card card-1">
+        <div class="card-header bg-white">
+            <div class="media flex-sm-row flex-column-reverse justify-content-between  ">
+                <div class="col my-auto">
+                    <h3 class="mb-0 bold">Thanks for your order, <span class="change-color">Anjali</span>!</h3>
+                </div>
+                <div class="col-auto text-center  my-auto pl-0 pt-sm-4">
+                    <img class="img-fluid my-auto align-items-center mb-0 pt-3"
+                         th:src="@{/user/images/logo_order_success.png}"
+                         width="150" height="100">
+                    <p class="mb-4 pt-0 Glasses">
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row" th:each="item : ${list}">
+                <div class="col">
+                    <div class="card card-2">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="sq align-self-center ">
+                                    <img class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0"
+                                         th:src="${qrcode}" width="135" height="135"></div>
+                                <div class="media-body my-auto text-right">
+                                    <div class="row  my-auto flex-column flex-md-row">
+                                        <div class="col-auto my-auto">
+                                            <h6 class="mb-3 bold text-center">Matches</h6>
+                                            <h6 class="mb-0" th:text="${item.name_home + ' - ' + item.name_away}"></h6>
+                                        </div>
+                                        <div class="col-auto auto text-center">
+                                            <h6 class="mb-3 bold">Stadium</h6>
+                                            <h6 class="mb-0" th:text="${item.stadium}"></h6>
+                                        </div>
+                                        <div class="col-auto my-auto text-center">
+                                            <h6 class="mb-3 bold">Date Time</h6>
+                                            <h6 class="mb-0" th:text="${item.hour + ' ' + item.hour}"></h6>
+                                        </div>
+                                        <div class="col my-auto text-center">
+                                            <h6 class="mb-3 bold">Area</h6>
+                                            <h6 class="mb-0" th:text="${item.area}"></h6>
+                                        </div>
+                                        <div class="col my-auto text-center">
+                                            <h6 class="mb-3 bold">Qty</h6>
+                                            <h6 class="mb-0">1</h6>
+                                        </div>
+                                        <div class="col my-auto text-center">
+                                            <h6 class="mb-3 bold">Price</h6>
+                                            <h6 class="mb-0" th:text="${item.price}">150.0$</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4" style="width: 50%; float: right; margin-top: 70px">
+                <div class="col">
+                    <div class="row justify-content-between">
+                        <div class="flex-sm-col text-right col">
+                            <h5 class="mb-2"><b class="mr-3">Shipping</b> free</h5>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between">
+                        <div class="flex-sm-col text-right col">
+                            <h5 class="mb-2"><b style="margin-right: 35px">Discount</b> 0</h5>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between">
+                        <div class="flex-sm-col text-right col">
+                            <h5 class="mb-1"><b style="margin-right: 35px">Tax (VAT)</b> 0</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row invoice mt-4" style="width: 50%">
+                <div class="col">
+                    <h3 class="mb-1 bold text-dark"><b>Order information</b></h3>
+                    <p class="mb-1 fs-16 mt-2">Name: Nguyễn Xuân Thảo</p>
+                    <p class="mb-1 fs-16">Phone: 0365.600.678</p>
+                    <p class="mb-1 fs-16">Email: nxuanthao03@gmail.com</p>
+                    <p class="mb-1 fs-16">Address: Quỳnh Lưu, Nghệ An</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="jumbotron-fluid">
+                <div class="row justify-content-between ">
+                    <div class="col-sm-auto col-auto my-auto">
+                        <img class="img-fluid my-auto align-self-center"
+                             th:src="@{/user/images/logo2.png}" width="200" height="100"></div>
+                    <div class="col-auto my-auto"></div>
+                    <div class="col-auto my-auto ml-auto">
+                        <h2 class="mb-0 font-weight-bold">TOTAL PAID</h2>
+                        <hr>
+                        <h3 class="display-3 bold">528$</h3>
+                    </div>
+                </div>
+                <div class="row mb-3 mt-3 mt-md-0">
+                    <div class="col-auto border-line"><small class="text-white">PAN:AA02hDW7E</small></div>
+                    <div class="col-auto border-line"><small class="text-white">CIN:UMMC20PTC </small></div>
+                    <div class="col-auto "><small class="text-white">GSTN:268FD07EXX </small></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

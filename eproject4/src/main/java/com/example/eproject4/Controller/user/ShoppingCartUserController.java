@@ -11,7 +11,7 @@ public class ShoppingCartUserController {
     public String shopping_cart_view(Model model) {
         model.addAttribute("overlay_title", "ShoppingCart");
         model.addAttribute("title", "ShoppingCart");
-        model.addAttribute("description", "Matches have and will take place");
+        model.addAttribute("description", "Where to store your favorite products.");
 
         return "shopping_cart";
     }

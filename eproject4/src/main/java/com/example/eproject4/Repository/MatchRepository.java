@@ -36,10 +36,10 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
 
 
     //Ticket List
-    @Query("SELECT m FROM Match m WHERE m.match_time >= :timeThreshold AND m.status = 1")
-    List<Match> findMatchesAfterTimeThreshold(@Param("timeThreshold") LocalDateTime timeThreshold);
-    @Query("SELECT m FROM Match m WHERE m.match_time < :timeThreshold AND m.status = 1")
-    List<Match> findMatchesBeforeTimeThreshold(@Param("timeThreshold") LocalDateTime timeThreshold);
+    @Query("SELECT m FROM Match m WHERE m.match_time >= :saleTime AND m.match_time < :openingTime AND m.status = 1")
+    List<Match> findMatchesAfterTimeThreshold(@Param("saleTime") LocalDateTime saleTime, @Param("openingTime") LocalDateTime openingTime);
+    @Query("SELECT m FROM Match m WHERE m.match_time < :saleTime AND m.status = 1")
+    List<Match> findMatchesBeforeTimeThreshold(@Param("saleTime") LocalDateTime saleTime);
 
     // tim 3 tran vua ket thuc
     @Query("SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE md.match_end = 1 AND m.status = 1")
