@@ -73,9 +73,9 @@ public class UserService implements UserDetailsService {
 		existingUser.setEmail(user.getEmail());
 		existingUser.setUsername(user.getUsername());
 		existingUser.setFullName(user.getFullName());
+		existingUser.setAddress(user.getAddress());
 		existingUser.setPhone(user.getPhone());
 		existingUser.setDateOfBirth(user.getDateOfBirth());
-		existingUser.setAddress(user.getAddress());
 		existingUser.setStatus(user.getStatus());
 		existingUser.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
 
