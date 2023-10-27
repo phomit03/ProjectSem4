@@ -61,7 +61,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasRole("ADMIN")  // dung cho admin
                 .antMatchers("/logged/**",
                              "/shopping_cart/**",
-                             "/account/**").hasRole("USER") // dung cho nguoi dung muon dat hang
+                             "/account/**").hasAnyRole("USER","ADMIN") // dung cho nguoi dung muon dat hang
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
