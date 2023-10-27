@@ -1523,7 +1523,7 @@ input[type=text] {
 }
 
 .player-number {
-  top: 50%;
+  top: 55%;
   border-bottom: 2px solid #ee1e46;
   max-width: 24px;
   font-size: 25px;
@@ -1533,7 +1533,7 @@ input[type=text] {
 }
 
 .player-name {
-  top: 67%;
+  top: 70%;
   max-width: 200px;
   font-size: 40px;
   line-height: 1;
@@ -1541,7 +1541,7 @@ input[type=text] {
 
 .player-img {
   width: 100%;
-  height: 300px;
+  height: 22rem;
   border-radius: 0.25rem;
   filter: brightness(70%);
   padding-top: 20px;
@@ -1552,6 +1552,7 @@ input[type=text] {
   padding-left: 20px;
   position: relative;
   transition: transform 0.3s;
+  cursor: pointer;
 }
 
 .player-team:hover {
@@ -1572,4 +1573,75 @@ input[type=text] {
 
 .team-club-text2 {
   color: white;
+}
+
+.match-detail {
+  float: right;
+  padding: 1rem 1rem 0 1rem;
+  /*border: 1px solid #0d0f13;*/
+  color: white;
+  text-decoration: underline;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/*pop-up match detail*/
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup-content {
+  background-color: #060309f7;
+  padding: 20px;
+  /*border: 1px solid #888*/
+  width: 100%;
+  max-width: 600px;
+  max-height: 80vh;
+  position: relative;
+  border-radius: 10px;
+  overflow-y: auto;
+  color: #bdc1c6;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+}
+.close:not(:disabled):not(.disabled):hover, .close:not(:disabled):not(.disabled):focus {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+}
+
+.team img {
+  max-width: 50px;
+  margin-right: 10px;
+}
+
+.goal-scorers ul, .stats p {
+  list-style: none;
+  padding: 0;
+}
+
+.text-matches-detail {
+  width: 70%;
+  text-align: center;
 }

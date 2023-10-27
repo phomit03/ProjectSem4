@@ -3,6 +3,49 @@
 
 <head th:replace="customer_fragments::head-fragment"></head>
 
+<style>
+    .popup-container {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .popup-content {
+        background-color: rgba(6, 3, 9, 0.98);
+        margin: 5% auto;
+        padding: 20px;
+        /*border: 1px dashed #ff7e7e;*/
+        max-width: 40rem;
+        width: 100%;
+        border-radius: 7px;
+        box-shadow: 1px 1px 10px 0 rgb(238 30 70 / 50%);
+    }
+
+    .popup-close-btn {
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .popup-body {
+        padding-top: 20px;
+    }
+
+    .popup-body p {
+        font-size: 16px;
+        line-height: 1.7;
+        color: #dee2e6;
+        border-bottom: 1px solid #666666;
+        padding: 10px;
+    }
+
+</style>
+
 <body>
 <div class="site-wrap">
     <div th:replace="customer_fragments::top-fragment"></div>
@@ -16,9 +59,9 @@
                 </div>
 
                 <div class="container">
-                    <div class="d-flex justify-content-center align-items-center" style="background: #18131f; border-radius: 7px; padding: 30px 0px;">
+                    <div class="d-flex justify-content-center align-items-center" style="background: #18131f; border-radius: 7px; padding: 50px 0px;">
                         <div class="col-lg-5" style="padding: 0 5em;">
-                            <img class="img-fluid" th:src="@{${teamDetail.logo_img}}" style="width: 310px; height: 310px;">
+                            <img class="img-fluid" th:src="@{${teamDetail.logo_img}}" style="width: 310px; height: 320px;">
                         </div>
                         <div class="col-lg-7">
                             <div class="p-4 rounded" style="font-size: 15rem;">
@@ -43,7 +86,7 @@
                     <h2 class="heading">Recent Matches</h2>
                 </div>
                 <div class="col-lg-6 mb-4" th:each="recentMatchesbyTeam : ${recentMatches}">
-                    <div class="bg-light p-4 rounded" style="height: 100%">
+                    <div class="bg-light p-4 rounded">
                         <div>
                             <div class="widget-vs">
                                 <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
@@ -55,7 +98,9 @@
                                     </div>
                                     <div class="mr-4 ml-4">
                                     <span class="vs">
-                                        <span style="font-size: 35px; border-radius: 12px; padding: 0 10px;" th:class="'match-over-score-' + ${recentMatchesbyTeam.id}"></span>
+                                        <span style="font-size: 35px; border-radius: 12px; padding: 0 10px;">
+                                            0 - 4
+                                        </span>
                                     </span>
                                     </div>
                                     <div class="team-2 text-center" style="width: 160px">
@@ -97,13 +142,18 @@
                         <hr style="border-top: 1px solid #666666; margin-bottom: 0">
                         <div class="row">
                             <div style="padding: 10px" class="col-md-3 player-team" th:each="player : ${players}" th:if="${player.position == 'Goalkeepers'}">
-                                <a href="">
-                                    <img th:src="@{${player.avatar_img}}" alt="Image 1" class="img-fluid player-img">
-                                    <div class="player-info">
-                                        <p class="position-absolute player-text player-number" th:text="${player.number}"></p>
-                                        <p class="position-absolute player-text player-name" th:text="${player.name}"></p>
-                                    </div>
-                                </a>
+                                <img th:src="@{${player.avatar_img}}" alt="Image 1" class="img-fluid player-img">
+                                <div class="player-info">
+                                    <p class="position-absolute player-text player-number" th:text="${player.number}"></p>
+                                    <p class="position-absolute player-text player-name" th:text="${player.name}"></p>
+                                    <input class="player-date_of_birth" th:value="${player.date_of_birth}" hidden="hidden">
+                                    <input class="player-national" th:value="${player.national}" hidden="hidden">
+                                    <input class="player-position" th:value="${player.position}" hidden="hidden">
+                                    <input class="player-weight" th:value="${player.weight}" hidden="hidden">
+                                    <input class="player-height" th:value="${player.height}" hidden="hidden">
+                                    <input class="player-achievement" th:value="${player.achievement}" hidden="hidden">
+                                    <input class="player-team" th:value="${player.team.name}" hidden="hidden">
+                                </div>
                             </div>
                         </div>
 
@@ -115,13 +165,18 @@
                         <hr style="border-top: 1px solid #666666;">
                         <div class="row">
                             <div style="padding: 10px" class="col-md-3 player-team" th:each="player : ${players}" th:if="${player.position == 'Defenders'}">
-                                <a href="">
-                                    <img th:src="@{${player.avatar_img}}" alt="Image 1" class="img-fluid player-img">
-                                    <div class="player-info">
-                                        <p class="position-absolute player-text player-number" th:text="${player.number}"></p>
-                                        <p class="position-absolute player-text player-name" th:text="${player.name}"></p>
-                                    </div>
-                                </a>
+                                <img th:src="@{${player.avatar_img}}" alt="Image 1" class="img-fluid player-img">
+                                <div class="player-info">
+                                    <p class="position-absolute player-text player-number" th:text="${player.number}"></p>
+                                    <p class="position-absolute player-text player-name" th:text="${player.name}"></p>
+                                    <input class="player-date_of_birth" th:value="${player.date_of_birth}" hidden="hidden">
+                                    <input class="player-national" th:value="${player.national}" hidden="hidden">
+                                    <input class="player-position" th:value="${player.position}" hidden="hidden">
+                                    <input class="player-weight" th:value="${player.weight}" hidden="hidden">
+                                    <input class="player-height" th:value="${player.height}" hidden="hidden">
+                                    <input class="player-achievement" th:value="${player.achievement}" hidden="hidden">
+                                    <input class="player-team" th:value="${player.team.name}" hidden="hidden">
+                                </div>
                             </div>
                         </div>
 
@@ -133,13 +188,18 @@
                         <hr style="border-top: 1px solid #666666;">
                         <div class="row">
                             <div style="padding: 10px" class="col-md-3 player-team" th:each="player : ${players}" th:if="${player.position == 'Quarterbacks'}">
-                                <a href="">
-                                    <img th:src="@{${player.avatar_img}}" alt="Image 1" class="img-fluid player-img">
-                                    <div class="player-info">
-                                        <p class="position-absolute player-text player-number" th:text="${player.number}"></p>
-                                        <p class="position-absolute player-text player-name" th:text="${player.name}"></p>
-                                    </div>
-                                </a>
+                                <img th:src="@{${player.avatar_img}}" alt="Image 1" class="img-fluid player-img">
+                                <div class="player-info">
+                                    <p class="position-absolute player-text player-number" th:text="${player.number}"></p>
+                                    <p class="position-absolute player-text player-name" th:text="${player.name}"></p>
+                                    <input class="player-date_of_birth" th:value="${player.date_of_birth}" hidden="hidden">
+                                    <input class="player-national" th:value="${player.national}" hidden="hidden">
+                                    <input class="player-position" th:value="${player.position}" hidden="hidden">
+                                    <input class="player-weight" th:value="${player.weight}" hidden="hidden">
+                                    <input class="player-height" th:value="${player.height}" hidden="hidden">
+                                    <input class="player-achievement" th:value="${player.achievement}" hidden="hidden">
+                                    <input class="player-team" th:value="${player.team.name}" hidden="hidden">
+                                </div>
                             </div>
                         </div>
 
@@ -151,13 +211,18 @@
                         <hr style="border-top: 1px solid #666666;">
                         <div class="row">
                             <div style="padding: 10px" class="col-md-3 player-team" th:each="player : ${players}" th:if="${player.position == 'Strikers'}">
-                                <a href="">
-                                    <img th:src="@{${player.avatar_img}}" alt="Image 1" class="img-fluid player-img">
-                                    <div class="player-info">
-                                        <p class="position-absolute player-text player-number" th:text="${player.number}"></p>
-                                        <p class="position-absolute player-text player-name" th:text="${player.name}"></p>
-                                    </div>
-                                </a>
+                                <img th:src="@{${player.avatar_img}}" alt="Image 1" class="img-fluid player-img">
+                                <div class="player-info">
+                                    <p class="position-absolute player-text player-number" th:text="${player.number}"></p>
+                                    <p class="position-absolute player-text player-name" th:text="${player.name}"></p>
+                                    <input class="player-date_of_birth" th:value="${player.date_of_birth}" hidden="hidden">
+                                    <input class="player-national" th:value="${player.national}" hidden="hidden">
+                                    <input class="player-position" th:value="${player.position}" hidden="hidden">
+                                    <input class="player-weight" th:value="${player.weight}" hidden="hidden">
+                                    <input class="player-height" th:value="${player.height}" hidden="hidden">
+                                    <input class="player-achievement" th:value="${player.achievement}" hidden="hidden">
+                                    <input class="player-team" th:value="${player.team.name}" hidden="hidden">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -170,6 +235,58 @@
 </div>
 
 <div th:replace="customer_fragments::script-fragment"></div>
+
+
+<!--pop up-->
+<div class="popup-container" id="playerDetailPopup" onclick="closePopup()">
+    <div class="popup-content">
+        <div class="modal-header" style="padding: 0.5rem 0; border-bottom: 1px solid #dee2e6;">
+            <h2 class="font-weight-bold" style="color: #ee1e46;" id="popupPlayerName"></h2>
+            <span class="popup-close-btn" onclick="closePopup()">×</span>
+        </div>
+        <div class="popup-body" id="popupPlayerInfo"></div>
+    </div>
+</div>
+<script>
+    function openPopup(playerInfo, playerName) {
+        document.getElementById("popupPlayerInfo").innerHTML = playerInfo;
+        document.getElementById("popupPlayerName").innerText = playerName;
+        document.getElementById("playerDetailPopup").style.display = "block";
+    }
+
+    document.querySelectorAll(".player-team").forEach(function(player) {
+        player.addEventListener("click", function() {
+            var playerName = player.querySelector(".player-name").textContent;
+            var playerNumber = player.querySelector(".player-number").textContent;
+            var playerDateOfBirth = player.querySelector(".player-date_of_birth").value;
+            var playerNationality = player.querySelector(".player-national").value;
+            var playerPosition = player.querySelector(".player-position").value;
+            var playerWeight = player.querySelector(".player-weight").value;
+            var playerHeight = player.querySelector(".player-height").value;
+            var playerAchievements = player.querySelector(".player-achievement").value;
+            var playerTeam = player.querySelector(".player-team").value;
+
+
+            var playerInfo = `
+            <p>Number: ${playerNumber}</p>
+            <p>Date of Birth: ${playerDateOfBirth}</p>
+            <p>Nationality: ${playerNationality}</p>
+            <p>Position: ${playerPosition}</p>
+            <p>Weight: ${playerWeight} (kg)</p>
+            <p>Height: ${playerHeight} (cm)</p>
+            <p>Achievements: ${playerAchievements}</p>
+            <p>Team: ${playerTeam}</p>
+        `;
+            openPopup(playerInfo, playerName);
+        });
+    });
+
+    function closePopup() {
+        document.getElementById("playerDetailPopup").style.display = "none";
+    }
+
+</script>
+
 
 <script th:if="${recentMatches} and ${#lists.size(recentMatches) > 0}" th:each="match : ${recentMatches}">
     var matchId = [[${match.id}]];
