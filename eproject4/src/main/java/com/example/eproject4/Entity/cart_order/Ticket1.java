@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Ticket1 {
     @JsonProperty("ticket_id")
-    private int ticketId;
+    private Long ticketId;
     @JsonProperty("quantity")
     private int quantity;
     @JsonProperty("name")

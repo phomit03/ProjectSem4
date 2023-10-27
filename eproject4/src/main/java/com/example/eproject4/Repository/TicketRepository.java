@@ -17,7 +17,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long>{
     List<Ticket> findByMatchId(@Param("matchIdValue") Optional<Match> matchId);
 
     @Query("SELECT t FROM Ticket t WHERE t.id = :id AND t.status = 1")
-    List<Ticket> findIdTicket(@Param("id") Integer id);
+    List<Ticket> findIdTicket(@Param("id") Long id);
 
     @Query("SELECT t FROM Ticket t WHERE t.match_id = :matchId AND t.status = 1")
     List<Ticket> findByMatch_id (@Param("matchId") Long matchId);
