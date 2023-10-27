@@ -64,7 +64,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="item : ${tickets}">
+                                    <tr th:each="item : ${ticketsbyMatch}">
                                         <td th:text="${item.area.area_name}"></td>
                                         <td th:text="${item.price}"></td>
                                         <td th:text="${item.quantity}"></td>
