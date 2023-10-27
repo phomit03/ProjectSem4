@@ -123,10 +123,10 @@ public class TicketService {
         }
     }
 
-    //Retrieve matches that have not yet taken place or took place 15 minutes before
+    //Retrieve matches that have not yet taken place or took place 15 minutes before && previous matches 7 days
     public List<Match> getUpcomingMatches() {
-        LocalDateTime saleTime = LocalDateTime.now().minusMinutes(15);
-        LocalDateTime openingTime = LocalDateTime.now().plusDays(7);
+        LocalDateTime saleTime = LocalDateTime.now().minusMinutes(15);  //unexpired time
+        LocalDateTime openingTime = LocalDateTime.now().plusDays(7);    //opening time
 
         return matchRepository.findMatchesAfterTimeThreshold(saleTime, openingTime);
     }
