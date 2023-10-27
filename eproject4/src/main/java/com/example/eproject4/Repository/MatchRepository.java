@@ -50,7 +50,7 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     List<Match> findLatestFinishedMatches(Pageable pageable);
 
     // 4 tran gan nhat da end cua 1 clb
-    @Query("SELECT m FROM Match m  WHERE (m.home_team_id.id = :teamId OR m.away_team_id.id = :teamId) AND m.match_time < CURRENT_TIMESTAMP ORDER BY m.match_time DESC")
+    @Query("SELECT m FROM Match m INNER JOIN MatchDetail md ON m.id = md.match.id WHERE (m.home_team.id = :teamId OR m.away_team.id = :teamId) AND m.match_time < CURRENT_TIMESTAMP AND md.match_end = 1 ORDER BY m.match_time DESC")
     List<Match> findRecentMatchesByTeamId(@Param("teamId") Long id, Pageable pageable);
 
     //Next Match (Random)
