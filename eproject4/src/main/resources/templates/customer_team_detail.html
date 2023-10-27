@@ -43,7 +43,7 @@
                     <h2 class="heading">Recent Matches</h2>
                 </div>
                 <div class="col-lg-6 mb-4" th:each="recentMatchesbyTeam : ${recentMatches}">
-                    <div class="bg-light p-4 rounded">
+                    <div class="bg-light p-4 rounded" style="height: 100%">
                         <div>
                             <div class="widget-vs">
                                 <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
@@ -55,9 +55,7 @@
                                     </div>
                                     <div class="mr-4 ml-4">
                                     <span class="vs">
-                                        <span style="font-size: 35px; border-radius: 12px; padding: 0 10px;">
-                                            0 - 4
-                                        </span>
+                                        <span style="font-size: 35px; border-radius: 12px; padding: 0 10px;" th:class="'match-over-score-' + ${recentMatchesbyTeam.id}"></span>
                                     </span>
                                     </div>
                                     <div class="team-2 text-center" style="width: 160px">
@@ -69,16 +67,12 @@
                                 </div>
                                 <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
                                     <div class="team-1 text-center mt-2" style="width: 160px">
-                                        <div class="mt-2">
+                                        <div th:class="'mt-2 home-match-team-event-' + ${recentMatchesbyTeam.id}">
                                         </div>
                                     </div>
                                     <div class="mr-5 ml-5"></div>
                                     <div class="team-2 text-center mt-2" style="width: 160px">
-                                        <div>
-                                            <p><i class="icon-futbol-o mr-1"></i> Bruno Fernandes</p>
-                                            <p><i class="icon-futbol-o mr-1"></i> Bruno Fernandes</p>
-                                            <p><i class="icon-futbol-o mr-1"></i> Mason Mount    </p>
-                                            <p><i class="icon-futbol-o mr-1"></i> Bruno Fernandes</p>
+                                        <div th:class="'away-match-team-event-' + ${recentMatchesbyTeam.id}">
                                         </div>
                                     </div>
                                 </div>
@@ -176,6 +170,65 @@
 </div>
 
 <div th:replace="customer_fragments::script-fragment"></div>
+
+<script th:if="${recentMatches} and ${#lists.size(recentMatches) > 0}" th:each="match : ${recentMatches}">
+    var matchId = [[${match.id}]];
+    var homeTeamId = [[${match.home_team_id.id}]];
+    var awayTeamId = [[${match.away_team_id.id}]];
+
+    var dataToSend = {
+        homeTeamId: homeTeamId,
+        awayTeamId: awayTeamId,
+        matchId: matchId
+    };
+
+    if (!dataToSend.matchId.isEmpty) {
+        $.ajax({
+            type: 'POST',
+            url: '/api/getTeamEvent',
+            contentType: 'application/json',
+            data: JSON.stringify(dataToSend),
+            success: function (res) {
+                var homeTeamEventsUl = $('.home-match-team-event-' + res.matchId);
+                homeTeamEventsUl.empty();
+                $.each(res.homeTeamEventGoal, function (index, event) {
+                    getPlayerById(event.player_id, function (player) {
+                        var timeParts = event.time.split(':');
+                        var minutes = timeParts[0];
+                        var li = $('<li>').html('<p>' + player.name + ' (' + minutes + '\')</p>');
+                        homeTeamEventsUl.append(li);
+                    });
+                });
+
+                var awayTeamEventsUl = $('.away-match-team-event-' + res.matchId);
+                awayTeamEventsUl.empty();
+                $.each(res.awayTeamEventGoal, function (index, event) {
+                    getPlayerById(event.player_id, function (player) {
+                        var timeParts = event.time.split(':');
+                        var minutes = timeParts[0];
+                        var li = $('<li>').html('<p>' + player.name + ' (' + minutes + '\')</p>');
+                        awayTeamEventsUl.append(li);
+                    });
+                });
+
+                $('.match-over-score-' + res.matchId).html(res.homeTeamScore + ' - ' + res.awayTeamScore);
+            }
+        });
+
+    }
+
+    function getPlayerById(id, callback) {
+        $.ajax({
+            type: 'POST',
+            url: '/api/getPlayerById',
+            contentType: 'application/json',
+            data: JSON.stringify({id: id}),
+            success: function (res) {
+                callback(res);
+            }
+        });
+    }
+</script>
 </body>
 
 </html>

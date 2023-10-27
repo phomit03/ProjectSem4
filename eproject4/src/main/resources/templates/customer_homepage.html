@@ -493,14 +493,15 @@
             stompClient.subscribe('/topic/score', function (scoreUpdate) {
                 var scoreUpdateObj = JSON.parse(scoreUpdate.body);
 
-                console.log(scoreUpdateObj)
                 updateScoreOnPage(scoreUpdateObj.homeTeamScore, scoreUpdateObj.awayTeamScore, scoreUpdateObj.match_id);
 
                 var homeTeamEventsUl = $('.home-team-event-' + scoreUpdateObj.match_id);
                 homeTeamEventsUl.empty();
                 $.each(scoreUpdateObj.homeTeamEventGoal, function (index, event) {
                     getPlayerById(event.player_id, function (player) {
-                        var li = $('<li>').text(player.name + ' (' + event.time + ')');
+                        var timeParts = event.time.split(':');
+                        var minutes = timeParts[0];
+                        var li = $('<li>').html('<i class="icon-futbol-o mr-1"></i> ' + player.name + ' (' + minutes + '\'' + ')');
                         homeTeamEventsUl.append(li);
                     });
                 });
@@ -509,13 +510,16 @@
                 awayTeamEventsUl.empty();
                 $.each(scoreUpdateObj.awayTeamEventGoal, function (index, event) {
                     getPlayerById(event.player_id, function (player) {
-                        var li = $('<li>').text(player.name + ' (' + event.time + ')');
+                        var timeParts = event.time.split(':');
+                        var minutes = timeParts[0];
+                        var li = $('<li>').html('<i class="icon-futbol-o mr-1"></i> ' + player.name + ' (' + minutes + '\'' + ')');
                         awayTeamEventsUl.append(li);
                     });
                 });
             });
         });
     });
+
 
     function updateScoreOnPage(homeScore, awayScore, matchId) {
         $('.live-score-' + matchId).html(homeScore + '-' + awayScore);
@@ -546,7 +550,7 @@
         matchId: matchId
     };
 
-    if (!dataToSend.matchId.isEmpty) {
+    if (dataToSend.matchId) {
         $.ajax({
             type: 'POST',
             url: '/api/getTeamEvent',
@@ -557,7 +561,9 @@
                 homeTeamEventsUl.empty();
                 $.each(res.homeTeamEventGoal, function (index, event) {
                     getPlayerById(event.player_id, function (player) {
-                        var li = $('<li>').text(player.name + ' (' + event.time + ')');
+                        var timeParts = event.time.split(':');
+                        var minutes = timeParts[0];
+                        var li = $('<li>').html('<i class="icon-futbol-o mr-1"></i> ' + player.name + ' (' + minutes + '\')');
                         homeTeamEventsUl.append(li);
                     });
                 });
@@ -566,7 +572,9 @@
                 awayTeamEventsUl.empty();
                 $.each(res.awayTeamEventGoal, function (index, event) {
                     getPlayerById(event.player_id, function (player) {
-                        var li = $('<li>').text(player.name + ' (' + event.time + ')');
+                        var timeParts = event.time.split(':');
+                        var minutes = timeParts[0];
+                        var li = $('<li>').html('<i class="icon-futbol-o mr-1"></i> ' + player.name + ' (' + minutes + '\')');
                         awayTeamEventsUl.append(li);
                     });
                 });
@@ -575,6 +583,7 @@
             }
         });
     }
+
 
     function getPlayerById(id, callback) {
         $.ajax({
