@@ -27,6 +27,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -170,7 +171,7 @@ public class DetailTicketPrintController {
             // lấy giỏ hàng
             List<Cart> carts = cartRepository.findByOrder(id);
             List<TicketDetailInfo> list = new ArrayList<>();
-
+            int total = 0;
             for (Cart cart : carts) {
                 // thông tin vé
                 Ticket ticket = cart.getTicket();
@@ -199,6 +200,10 @@ public class DetailTicketPrintController {
                 }
             }
             // thông tin hiển thị
+            model.addAttribute("list", list);
+
+            Optional<Order> order = orderRepository.findById(id);
+            model.addAttribute("total", order.get().getTotalPrice());
             model.addAttribute("list", list);
             return "customer_order_success";
         } catch (Exception e) {
