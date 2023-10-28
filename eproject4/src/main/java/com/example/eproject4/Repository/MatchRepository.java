@@ -66,5 +66,12 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     @Query(value = "SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE m.match_time < CURRENT_TIMESTAMP AND m.status = 1 AND md.match_end = 1")
     List<Match> findTheMatchesWasOver();
 
+    @Query("SELECT m FROM Match m WHERE "
+            + "(m.home_team_id.id = :teamId OR m.away_team_id.id = :teamId) "
+            + "AND m.match_time BETWEEN :startTime AND :endTime")
+    List<Match> findMatchesWithin24Hours(@Param("teamId") Long teamId, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
 
+    @Query("SELECT m FROM Match m WHERE m.stadium_id.id = :stadiumId "
+            + "AND m.match_time BETWEEN :startTime AND :endTime")
+    List<Match> findMatchesWithin3Hours(@Param("stadiumId") Long stadiumId, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
 }
