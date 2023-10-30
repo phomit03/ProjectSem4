@@ -280,10 +280,10 @@ public class MatchController {
 
     @GetMapping("/matches")
     public String getAllMatches(Model model,
-                             @RequestParam(name = "match_time") LocalDateTime matchTime,
-                             @RequestParam(name = "home_team_id") String homeTeam,
-                             @RequestParam(name = "away_team_id") String awayTeam,
-                             @RequestParam(name = "status") Integer status
+                             @RequestParam(name = "match_time",required = false) LocalDateTime matchTime,
+                             @RequestParam(name = "home_team_id",required = false) String homeTeam,
+                             @RequestParam(name = "away_team_id",required = false) String awayTeam,
+                             @RequestParam(name = "status",required = false) Integer status
     ) {
         model.addAttribute("title", "Matches");
         return findPaginated(1, model, matchTime,homeTeam,awayTeam, status);
@@ -291,10 +291,10 @@ public class MatchController {
     @GetMapping("/matches/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
                                      Model model,
-                                     @RequestParam(name = "match_time") LocalDateTime matchTime,
-                                     @RequestParam(name = "home_team_id") String homeTeam,
-                                     @RequestParam(name = "away_team_id") String awayTeam,
-                                     @RequestParam(name = "status") Integer status
+                                     @RequestParam(name = "match_time",required = false) LocalDateTime matchTime,
+                                     @RequestParam(name = "home_team_id",required = false) String homeTeam,
+                                     @RequestParam(name = "away_team_id",required = false) String awayTeam,
+                                     @RequestParam(name = "status",required = false) Integer status
     ) {
         int pageSize = 6;
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
