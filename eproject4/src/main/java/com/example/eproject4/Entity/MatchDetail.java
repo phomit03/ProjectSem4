@@ -27,35 +27,35 @@ public class MatchDetail {
 
     @Column(name = "shot")
     @MapToDTO
-    private Integer shot;
+    private String shot;
 
     @Column(name = "shot_on_target")
     @MapToDTO
-    private Integer shotOnTarget;
+    private String shotOnTarget;
 
     @Column(name = "possesion")
     @MapToDTO
-    private Integer possession;
+    private String possession;
 
     @Column(name = "foul")
     @MapToDTO
-    private Integer foul;
+    private String foul;
 
     @Column(name = "passes")
     @MapToDTO
-    private Integer passes;
+    private String passes;
 
     @Column(name = "pass_accuracy")
     @MapToDTO
-    private Integer passAccuracy;
+    private String passAccuracy;
 
     @Column(name = "off_side")
     @MapToDTO
-    private Integer offSide;
+    private String offSide;
 
     @Column(name = "corner")
     @MapToDTO
-    private Integer corner;
+    private String corner;
 
     @Column(name = "match_end", columnDefinition = "INT DEFAULT 0")
     @MapToDTO
