@@ -38,14 +38,19 @@
                     <div class="col-6">
                         <div class="input-group">
                             <form th:action="@{/admin/matches}" method="get">
-                                <label>Match Time: <input class="form-control" type="datetime-local" name="match_time" th:value="${match_time}" /></label>
-                                <label>Home Team: <input class="form-control" type="text" name="home_team_id" th:value="${home_team_id}" /></label>
-                                <label>Away Team: <input class="form-control" type="text" name="away_team_id" th:value="${away_team_id}" /></label>
-                                <label>Status: <input class="form-control" type="text" name="status" th:value="${status}" /></label>
+                                <label><input placeholder="Match Time" class="form-control" type="date" name="match_time" th:value="${match_time}" /></label>
+                                <label><input placeholder="Home Team" class="form-control" type="text" name="home_team_id" th:value="${home_team_id}" /></label>
+                                <label><input placeholder="Away Team" class="form-control" type="text" name="away_team_id" th:value="${away_team_id}" /></label>
+                                <label>
+                                    <select class="form-control" name="status">
+                                        <option value="" selected>Choose Status</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+                                </label>
                                 <button class="btn btn-primary" type="submit">Search</button>
                             </form>
                         </div>
-
                     </div>
                     <div class="col-6 text-end">
                         <a th:href="@{/admin/match/new}">

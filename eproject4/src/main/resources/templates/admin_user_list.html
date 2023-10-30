@@ -27,10 +27,16 @@
                     <div class="col-6">
                         <div class="input-group">
                             <form th:action="@{/admin/user}" method="get">
-                                <label>Username: <input class="form-control" type="text" name="username" th:value="${username}" /></label>
-                                <label>Email: <input class="form-control" type="text" name="email" th:value="${email}" /></label>
-                                <label>Phone: <input class="form-control" type="text" name="phone" th:value="${phone}" /></label>
-                                <label>Status: <input class="form-control" type="number" name="status" th:value="${status}" /></label>
+                                <label><input placeholder="Username" class="form-control" type="text" name="username" th:value="${username}" /></label>
+                                <label><input placeholder="Email" class="form-control" type="text" name="email" th:value="${email}" /></label>
+                                <label><input placeholder="Phone" class="form-control" type="text" name="phone" th:value="${phone}" /></label>
+                                <label>
+                                    <select class="form-control" name="status">
+                                        <option value="" selected>Choose Status</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+                                </label>
                                 <button class="btn btn-primary" type="submit">Search</button>
                             </form>
                         </div>

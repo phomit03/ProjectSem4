@@ -30,9 +30,15 @@
           <div class="col-6">
             <div class="input-group">
               <form th:action="@{/admin/area}" method="get">
-                <label>Area Name: <input class="form-control" type="text" name="area_name" th:value="${area_name}" /></label>
-                <label>Stadium: <input class="form-control" type="text" name="name_stadium" th:value="${name_stadium}" /></label>
-                <label>Status: <input class="form-control" type="number" name="status" th:value="${status}" /></label>
+                <label><input placeholder="Area Name" class="form-control" type="text" name="area_name" th:value="${area_name}" /></label>
+                <label><input placeholder="Stadium" class="form-control" type="text" name="name_stadium" th:value="${name_stadium}" /></label>
+                <label>
+                  <select class="form-control" name="status">
+                    <option value="" selected>Choose Status</option>
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                  </select>
+                </label>
                 <button class="btn btn-primary" type="submit">Search</button>
               </form>
             </div>
