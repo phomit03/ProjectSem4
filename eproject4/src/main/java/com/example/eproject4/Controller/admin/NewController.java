@@ -3,8 +3,12 @@ package com.example.eproject4.Controller.admin;
 import com.example.eproject4.DTO.Response.NewDTO;
 import com.example.eproject4.Entity.New;
 import com.example.eproject4.Entity.User;
+import com.example.eproject4.Repository.NewRepository;
 import com.example.eproject4.Service.NewService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,17 +24,13 @@ import java.util.List;
 @RequestMapping("/admin")
 public class NewController {
     private final NewService newService;
+    private final NewRepository newRepository;
 
-    public NewController(NewService newService) {
+    public NewController(NewService newService,NewRepository newRepository) {
         this.newService = newService;
+        this.newRepository = newRepository;
     }
 
-    @GetMapping("/new")
-    public String getAllNews(Model model){
-        model.addAttribute("title", "News");
-        return findPaginated(1, model);
-
-    }
     @GetMapping("/new/create")
     public String showCreateForm(Model model) {
         model.addAttribute("newDTO", new NewDTO());
@@ -83,17 +83,36 @@ public class NewController {
         }
     }
 
-    // phan trang
+    //phan trang
+    @GetMapping("/new")
+    public String getAllNews(Model model,
+                             @RequestParam(name = "title", required = false) String title,
+                             @RequestParam(name = "status", required = false) Integer status
+    ) {
+        model.addAttribute("title", "News");
+        return findPaginated(1, model, title, status);
+    }
+
     @GetMapping("/new/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
-                                Model model) {
+                                Model model,
+                                @RequestParam(name = "title", required = false) String title,
+                                @RequestParam(name = "status", required = false) Integer status
+    ) {
         int pageSize = 6;
-        Page<New> page = newService.findPaginated(pageNo, pageSize);
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        List<New> result = newRepository.searchNews(title, status, pageable);
+        Page<New> page = new PageImpl<>(result, pageable,newRepository.searchNews1(title, status).size());
         List<New> news = page.getContent();
+
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("news", news);
+        model.addAttribute("title", title);
+//        model.addAttribute("title", "News");
+        model.addAttribute("status", status);
         return "admin_new";
     }
 }

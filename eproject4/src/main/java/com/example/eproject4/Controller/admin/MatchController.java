@@ -4,9 +4,14 @@ import com.example.eproject4.DTO.Request.MatchRequest;
 import com.example.eproject4.DTO.Response.*;
 import com.example.eproject4.Entity.Area;
 import com.example.eproject4.Entity.Match;
+import com.example.eproject4.Entity.New;
+import com.example.eproject4.Repository.MatchRepository;
 import com.example.eproject4.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -26,6 +31,8 @@ import java.util.Objects;
 public class MatchController {
     @Autowired
     private final MatchService matchService;
+    @Autowired
+    private MatchRepository matchRepository;
     @Autowired
     private final AreaService areaService;
     @Autowired
@@ -61,11 +68,11 @@ public class MatchController {
         this.messagingTemplate = messagingTemplate;
     }
 
-    @RequestMapping("/matches")
-    public String matches(Model model) {
-        model.addAttribute("title", "Matches");
-        return findPaginated(1, model);
-    }
+//    @RequestMapping("/matches")
+//    public String matches(Model model) {
+//        model.addAttribute("title", "Matches");
+//        return findPaginated(1, model);
+//    }
 
     @GetMapping("/match/new")
     public String create(Model model) {
@@ -271,20 +278,40 @@ public class MatchController {
         }
     }
 
-
-    //phan trang
+    @GetMapping("/matches")
+    public String getAllMatches(Model model,
+                             @RequestParam(name = "match_time") LocalDateTime matchTime,
+                             @RequestParam(name = "home_team_id") String homeTeam,
+                             @RequestParam(name = "away_team_id") String awayTeam,
+                             @RequestParam(name = "status") Integer status
+    ) {
+        model.addAttribute("title", "Matches");
+        return findPaginated(1, model, matchTime,homeTeam,awayTeam, status);
+    }
     @GetMapping("/matches/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
-                                Model model) {
+                                     Model model,
+                                     @RequestParam(name = "match_time") LocalDateTime matchTime,
+                                     @RequestParam(name = "home_team_id") String homeTeam,
+                                     @RequestParam(name = "away_team_id") String awayTeam,
+                                     @RequestParam(name = "status") Integer status
+    ) {
         int pageSize = 6;
-        Page<Match> page = matchService.findPaginated(pageNo, pageSize);
-        List<Match> match = page.getContent();
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        List<Match> result = matchRepository.searchMatches(matchTime, homeTeam, awayTeam, status, pageable);
+        Page<Match> page = new PageImpl<>(result, pageable,matchRepository.searchMatches1(matchTime, homeTeam, awayTeam, status).size());
+        List<Match> matches = page.getContent();
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("matches", match);
+        model.addAttribute("matches", matches);
+        model.addAttribute("match_time", matchTime);
+        model.addAttribute("home_team_id", homeTeam);
+        model.addAttribute("away_team_id", awayTeam);
+        model.addAttribute("status", status);
         return "admin_match";
     }
+
 
 
 }

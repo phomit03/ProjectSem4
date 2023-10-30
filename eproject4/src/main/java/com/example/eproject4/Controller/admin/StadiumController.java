@@ -2,10 +2,15 @@ package com.example.eproject4.Controller.admin;
 
 import com.example.eproject4.DTO.Request.StadiumRequest;
 import com.example.eproject4.DTO.Response.StadiumDTO;
+import com.example.eproject4.Entity.New;
 import com.example.eproject4.Entity.Stadium;
+import com.example.eproject4.Repository.StadiumRepository;
 import com.example.eproject4.Service.StadiumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,18 +28,15 @@ import java.util.List;
 @RequestMapping("/admin")
 public class StadiumController {
     private final StadiumService stadiumService;
+    private  StadiumRepository stadiumRepository;
 
     @Autowired
-    public StadiumController(StadiumService stadiumService) {
+    public StadiumController(StadiumService stadiumService,StadiumRepository stadiumRepository) {
         this.stadiumService = stadiumService;
+        this.stadiumRepository = stadiumRepository;
     }
 
-    @RequestMapping("/stadiums")
-    public String stadiums(Model model) {
-        model.addAttribute("title", "Stadiums");
-        return findPaginated(1, model);
 
-    }
 
     @GetMapping("/stadium/new")
     public String create(Model model) {
@@ -97,18 +99,38 @@ public class StadiumController {
         }
     }
 
+
     //phan trang
+    @GetMapping("/stadiums")
+    public String getAllNews(Model model,
+                             @RequestParam(name = "name", required = false) String name,
+                             @RequestParam(name = "status", required = false) Integer status
+    ) {
+        model.addAttribute("title", "Stadiums");
+        return findPaginated(1, model, name, status);
+    }
+
     @GetMapping("/stadiums/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
-                                Model model) {
+                                Model model,
+                                @RequestParam(name = "name", required = false) String name,
+                                @RequestParam(name = "status", required = false) Integer status
+    ) {
         int pageSize = 6;
-        Page<Stadium> page = stadiumService.findPaginated(pageNo, pageSize);
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        List<Stadium> result = stadiumRepository.searchStadiums(name, status, pageable);
+        Page<Stadium> page = new PageImpl<>(result, pageable,stadiumRepository.searchStadiums1(name, status).size());
         List<Stadium> stadiums = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("stadiums", stadiums);
+        model.addAttribute("name", name);
+        model.addAttribute("status", status);
         return "admin_stadium";
     }
+
+
 }
