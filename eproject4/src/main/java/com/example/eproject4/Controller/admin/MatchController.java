@@ -98,7 +98,7 @@ public class MatchController {
 
             if (matchService.checkMatchExist(matchRequest)) {
                 String check = matchService.checkMatchCreate(matchRequest);
-                if (check.isEmpty()) {
+                if (check == null) {
                     MatchDTO matchCreated = matchService.createMatch(matchRequest);
                     if (matchCreated != null) {
                         List<AreaDTO> areaDTOS = areaService.getAreaByStadiumId(matchCreated.getStadium_id().getId());

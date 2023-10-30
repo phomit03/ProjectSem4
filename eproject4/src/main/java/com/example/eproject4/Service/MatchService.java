@@ -130,7 +130,7 @@ public class MatchService {
 
     public String checkMatchCreate (MatchRequest matchRequest) {
         LocalDateTime matchTime = LocalDateTime.parse(matchRequest.getMatch_time());
-        LocalDateTime startTime24HoursAgo = matchTime.minusHours(24);
+        LocalDateTime startTime24HoursAgo = matchTime.minusHours(48);
         LocalDateTime startTime3HoursAgo = matchTime.minusHours(3);
 
         List<Match> homeTeam = matchRepository.findMatchesWithin24Hours(matchRequest.getHome_team_id().getId(), startTime24HoursAgo, matchTime);
@@ -138,9 +138,9 @@ public class MatchService {
         List<Match> matchesWithin3Hours = matchRepository.findMatchesWithin3Hours(matchRequest.getStadium_id().getId(), startTime3HoursAgo, matchTime);
 
         if (!homeTeam.isEmpty()) {
-            return "The home team had a match 24 hours earlier";
+            return "The home team had a match 48 hours earlier";
         } else if (!awayTeam.isEmpty()) {
-            return "The away team had a match 24 hours earlier";
+            return "The away team had a match 48 hours earlier";
         } else if (!matchesWithin3Hours.isEmpty()) {
             return "The stadium had a match 3 hours earlier";
         }
