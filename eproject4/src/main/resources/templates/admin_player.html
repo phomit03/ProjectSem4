@@ -29,8 +29,13 @@
                 <div class="row g-4 align-items-center">
                     <div class="col-6">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <button class="btn btn-primary" type="submit">Search</button>
+                            <form th:action="@{/admin/player}" method="get">
+                                <label>Name: <input class="form-control" type="text" name="name" th:value="${name}" /></label>
+                                <label>Team: <input class="form-control" type="text" name="team" th:value="${team}" /></label>
+                                <label>National: <input class="form-control" type="text" name="national" th:value="${national}" /></label>
+                                <label>Position: <input class="form-control" type="text" name="position" th:value="${position}" /></label>
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </form>
                         </div>
                     </div>
                     <div class="col-6 text-end">
@@ -114,7 +119,8 @@
                                     <!--danh sach cac trang-->
                                     <div class="col-sm-10">
                                       <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-                                          <a th:if="${currentPage != i}" th:href="@{'/admin/player/' + ${i}}" style="color: #666666">[[${i}]]</a>
+<!--                                          <a th:if="${currentPage != i}" th:href="@{'/admin/player/' + ${i}}" style="color: #666666">[[${i}]]</a>-->
+                                          <a th:if="${currentPage != i}" th:href="@{'/admin/player/' + ${i}(name=${name}, team=${team}, national=${national}, position=${position})}" style="color: #666666">[[${i}]]</a>
                                           <span th:unless="${currentPage != i}" style="color: #ca0f33">[[${i}]]</span>  &nbsp;
                                       </span>
                                     </div>

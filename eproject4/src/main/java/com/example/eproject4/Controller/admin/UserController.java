@@ -1,9 +1,14 @@
 package com.example.eproject4.Controller.admin;
 
+import com.example.eproject4.Entity.New;
 import com.example.eproject4.Entity.User;
+import com.example.eproject4.Repository.UserRepository;
 import com.example.eproject4.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,17 +24,12 @@ import java.util.List;
 public class UserController {
 
 	private UserService userService;
+	private UserRepository userRepository;
 	@Autowired
-	public UserController(UserService userService) {
+	public UserController(UserService userService,UserRepository userRepository) {
 		this.userService = userService;
+		this.userRepository = userRepository;
 	}
-
-	@GetMapping
-	public String getAllUsers(Model model) {
-		model.addAttribute("title", "Users");
-		return findPaginated(1, model);
-	}
-
 
 	@GetMapping("/{id}/edit")
 	public String showEditUserForm(@PathVariable Long id, Model model) {
@@ -62,17 +62,41 @@ public class UserController {
 		}
 	}
 
-	// phan trang
+	//phan trang
+	@GetMapping()
+	public String getAllNews(Model model,
+							 @RequestParam(name = "username", required = false) String username,
+							 @RequestParam(name = "phone", required = false) String phone,
+							 @RequestParam(name = "email", required = false) String email,
+							 @RequestParam(name = "status", required = false) Integer status
+	) {
+		model.addAttribute("title", "Users");
+		return findPaginated(1, model, username, phone,email,status);
+	}
+
 	@GetMapping("/{pageNo}")
 	public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
-								Model model) {
+								Model model,
+								@RequestParam(name = "username", required = false) String username,
+								@RequestParam(name = "phone", required = false) String phone,
+								@RequestParam(name = "email", required = false) String email,
+								@RequestParam(name = "status", required = false) Integer status
+	) {
 		int pageSize = 6;
-		Page<User> page = userService.findPaginated(pageNo, pageSize);
+
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+		List<User> result = userRepository.searchUsers(username, status,phone,email, pageable);
+		Page<User> page = new PageImpl<>(result, pageable,userRepository.searchUsers1(username,status,phone,email).size());
 		List<User> users = page.getContent();
+
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("totalItems", page.getTotalElements());
 		model.addAttribute("users", users);
+		model.addAttribute("username", username);
+		model.addAttribute("status", status);
+		model.addAttribute("phone", phone);
+		model.addAttribute("email", email);
 		return "admin_user_list";
 	}
 

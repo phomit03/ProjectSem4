@@ -3,9 +3,17 @@ package com.example.eproject4.Controller.admin;
 import com.example.eproject4.DTO.Response.PlayerDTO;
 import com.example.eproject4.DTO.Response.TeamDTO;
 import com.example.eproject4.Entity.Player;
+import com.example.eproject4.Entity.Team;
+import com.example.eproject4.Entity.User;
+import com.example.eproject4.Repository.PlayerRepository;
+import com.example.eproject4.Repository.TeamRepository;
 import com.example.eproject4.Service.PlayerService;
 import com.example.eproject4.Service.TeamService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
@@ -23,21 +31,24 @@ import java.util.List;
 public class PlayerController {
     private final PlayerService playerService;
     private final TeamService teamService;
+    private final PlayerRepository playerRepository;
 
-    public PlayerController(PlayerService playerService, TeamService teamService) {
+    @Autowired
+    public PlayerController(PlayerService playerService, TeamService teamService, PlayerRepository playerRepository) {
         this.playerService = playerService;
         this.teamService = teamService;
+        this.playerRepository = playerRepository;
     }
 
-    @GetMapping("/player")
-    public String player(Model model) {
-        List<PlayerDTO> playerDTOList = playerService.getAllPlayers();
-
-        model.addAttribute("players", playerDTOList);
-        model.addAttribute("title", "Players");
-        return findPaginated(1, model);
-
-    }
+//    @GetMapping("/player")
+//    public String player(Model model) {
+//        List<PlayerDTO> playerDTOList = playerService.getAllPlayers();
+//
+//        model.addAttribute("players", playerDTOList);
+//        model.addAttribute("title", "Players");
+//        return findPaginated(1, model);
+//
+//    }
 
     @GetMapping("/player/create")
     public String showCreateForm(Model model) {
@@ -97,17 +108,44 @@ public class PlayerController {
     }
 
     //phan trang
+    @GetMapping("/player")
+    public String getAllPlayers(Model model,
+                             @RequestParam(name = "name", required = false) String name,
+                             @RequestParam(name = "team", required = false) String team,
+                             @RequestParam(name = "national", required = false) String national,
+                             @RequestParam(name = "position", required = false) String  position
+    ) {
+        List<PlayerDTO> playerDTOList = playerService.getAllPlayers();
+
+        model.addAttribute("players", playerDTOList);
+        model.addAttribute("title", "Players");
+        return findPaginated(1, model, name, team,national,position);
+    }
+
     @GetMapping("/player/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
-                                Model model) {
-        int pageSize = 8;
-        Page<Player> page = playerService.findPaginated(pageNo, pageSize);
+                                Model model,
+                                @RequestParam(name = "name", required = false) String name,
+                                @RequestParam(name = "team", required = false) String team,
+                                @RequestParam(name = "national", required = false) String national,
+                                @RequestParam(name = "position", required = false) String  position
+    ) {
+        int pageSize = 11;
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        List<Player> result = playerRepository.searchPlayers(name,team,national,position, pageable);
+        Page<Player> page = new PageImpl<>(result, pageable,playerRepository.searchPlayers1(name,team,national,position).size());
         List<Player> players = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("players", players);
+        model.addAttribute("name", name);
+        model.addAttribute("team", team);
+        model.addAttribute("national", national);
+        model.addAttribute("position", position);
         return "admin_player";
     }
+
 }

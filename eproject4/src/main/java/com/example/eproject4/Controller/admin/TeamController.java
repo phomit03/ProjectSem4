@@ -2,11 +2,15 @@ package com.example.eproject4.Controller.admin;
 
 import com.example.eproject4.DTO.Response.TeamDTO;
 import com.example.eproject4.Entity.Team;
+import com.example.eproject4.Entity.User;
 import com.example.eproject4.Repository.TeamRepository;
 import com.example.eproject4.Service.TeamConclusionService;
 import com.example.eproject4.Service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,17 +26,14 @@ import java.util.List;
 @RequestMapping("/admin")
 public class TeamController {
     private final TeamService teamService;
-    @Autowired
+    private final TeamRepository teamRepository;
     private TeamConclusionService teamConclusionService;
 
-    public TeamController(TeamService teamService) {
+    @Autowired
+    public TeamController(TeamService teamService,TeamRepository teamRepository,TeamConclusionService teamConclusionService) {
         this.teamService = teamService;
-    }
-
-    @RequestMapping("/team")
-    public String teams(Model model, @RequestParam(defaultValue = "1") int page) {
-        model.addAttribute("title", "Teams");
-        return findPaginated(1, model);
+        this.teamRepository = teamRepository;
+        this.teamConclusionService = teamConclusionService;
     }
 
     @GetMapping("/team/create")
@@ -88,18 +89,42 @@ public class TeamController {
         }
     }
 
+
     //phan trang
+    @GetMapping("/team")
+    public String getAllTeams(Model model,
+                             @RequestParam(name = "name", required = false) String name,
+                             @RequestParam(name = "coach", required = false) String coach,
+                             @RequestParam(name = "home_stadium", required = false) String home_stadium,
+                             @RequestParam(name = "status", required = false) Integer status
+    ) {
+        model.addAttribute("title", "Teams");
+        return findPaginated(1, model, name, coach,home_stadium,status);
+    }
+
     @GetMapping("/team/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
-                                Model model) {
+                                Model model,
+                                @RequestParam(name = "name", required = false) String name,
+                                @RequestParam(name = "coach", required = false) String coach,
+                                @RequestParam(name = "home_stadium", required = false) String home_stadium,
+                                @RequestParam(name = "status", required = false) Integer status
+    ) {
         int pageSize = 6;
-        Page<Team> page = teamService.findPaginated(pageNo, pageSize);
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        List<Team> result = teamRepository.searchTeams(name, coach,home_stadium,status, pageable);
+        Page<Team> page = new PageImpl<>(result, pageable,teamRepository.searchTeams1(name, coach,home_stadium,status).size());
         List<Team> teams = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("teams", teams);
+        model.addAttribute("name", name);
+        model.addAttribute("status", status);
+        model.addAttribute("coach", coach);
+        model.addAttribute("home_stadium", home_stadium);
         return "admin_team";
     }
 }
