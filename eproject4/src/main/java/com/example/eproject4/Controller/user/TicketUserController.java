@@ -131,7 +131,7 @@ public class TicketUserController {
             }
             //boolean isPaySucccess = true;
             // xử lý thanh toán ở đây
-            int orderTotal = total;
+            int orderTotal = total*24500;
             String orderInfo = "Thanh toan don hang: 123";
             String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
             String vnpayUrl = vnPayService.createOrder(orderTotal, orderInfo, baseUrl);
@@ -166,7 +166,7 @@ public class TicketUserController {
                 });
                 // luu order
                 Order order = new Order();
-                order.setTotalPrice(Integer.parseInt(totalPrice));
+                order.setTotalPrice(Long.parseLong(totalPrice)/24500);
                 order.setUserId(loggedInUser.getId().intValue());
                 //order.setUserId(15);
                 order.setStatus(true);
