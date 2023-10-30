@@ -142,7 +142,7 @@
                             <input type="hidden" class="away-team-id" th:value="${match.away_team.id}">
                             <ul th:class="'list-unstyled away-team-event-' + ${match.id}">
                             </ul>
-                            <div class="match-detail" onclick="openMatchPopup()">
+                            <div class="match-detail" onclick="openMatchPopup()" th:if="${match.type_match} == 0">
                                 <i class="icon-info_outline mr-1"></i> Match details
                             </div>
                         </div>
