@@ -1545,6 +1545,7 @@ input[type=text] {
   border-radius: 0.25rem;
   filter: brightness(70%);
   padding-top: 20px;
+  object-fit: cover;
 }
 
 .player-team {

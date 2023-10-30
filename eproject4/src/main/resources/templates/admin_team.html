@@ -30,10 +30,16 @@
                     <div class="col-6">
                         <div class="input-group">
                             <form th:action="@{/admin/team}" method="get">
-                                <label>Name Club: <input class="form-control" type="text" name="name" th:value="${name}" /></label>
-                                <label>Coach: <input class="form-control" type="text" name="coach" th:value="${coach}" /></label>
-                                <label>Home Stadium: <input class="form-control" type="text" name="home_stadium" th:value="${home_stadium}" /></label>
-                                <label>Status: <input class="form-control" type="number" name="status" th:value="${status}" /></label>
+                                <label><input placeholder="Name Club" class="form-control" type="text" name="name" th:value="${name}" /></label>
+                                <label><input placeholder="Coach" class="form-control" type="text" name="coach" th:value="${coach}" /></label>
+                                <label><input placeholder="Home Stadium" class="form-control" type="text" name="home_stadium" th:value="${home_stadium}" /></label>
+                                <label>
+                                    <select class="form-control" name="status">
+                                        <option value="" selected>Choose Status</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+                                </label>
                                 <button class="btn btn-primary" type="submit">Search</button>
                             </form>
                         </div>
