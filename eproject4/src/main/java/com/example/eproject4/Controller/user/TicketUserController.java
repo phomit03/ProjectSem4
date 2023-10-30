@@ -192,10 +192,12 @@ public class TicketUserController {
                         ticketRepository.save(ticketToUpdate);
                     }
                 }
+                return "redirect:/success_order/" + ordersucss.getId();
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
-            return "customer_order_success";
+            //return "customer_order_success";
+
         }
         return "error_notfound";
     }

@@ -97,14 +97,20 @@ public class MatchController {
             }
 
             if (matchService.checkMatchExist(matchRequest)) {
-                MatchDTO matchCreated = matchService.createMatch(matchRequest);
-                if (matchCreated != null) {
-                    List<AreaDTO> areaDTOS = areaService.getAreaByStadiumId(matchCreated.getStadium_id().getId());
-                    for (AreaDTO area : areaDTOS) {
-                        ticketService.create(matchCreated.getId(), area);
+                String check = matchService.checkMatchCreate(matchRequest);
+                if (check.isEmpty()) {
+                    MatchDTO matchCreated = matchService.createMatch(matchRequest);
+                    if (matchCreated != null) {
+                        List<AreaDTO> areaDTOS = areaService.getAreaByStadiumId(matchCreated.getStadium_id().getId());
+                        for (AreaDTO area : areaDTOS) {
+                            ticketService.create(matchCreated.getId(), area);
+                        }
                     }
+                    redirectAttributes.addFlashAttribute("success", "Create successfully!");
+                } else {
+                    redirectAttributes.addFlashAttribute("error", check);
+                    return "redirect:/admin/match/new";
                 }
-                redirectAttributes.addFlashAttribute("success", "Create successfully!");
             } else  {
                 redirectAttributes.addFlashAttribute("error", "Creating a match failed because the time and field were the same or the time and team were the same! ");
                 return "redirect:/admin/match/new";
