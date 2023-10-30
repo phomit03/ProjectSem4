@@ -5,10 +5,16 @@ import com.example.eproject4.DTO.Request.TicketRequest;
 import com.example.eproject4.DTO.Response.*;
 import com.example.eproject4.Entity.Match;
 import com.example.eproject4.Entity.Ticket;
+import com.example.eproject4.Repository.MatchRepository;
+import com.example.eproject4.Repository.TicketRepository;
 import com.example.eproject4.Service.MatchService;
 import com.example.eproject4.Service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,28 +36,12 @@ import java.util.Map;
 public class TicketController {
     private final TicketService ticketService;
     private final MatchService matchService;
+    private final MatchRepository matchRepository;
     @Autowired
-    public TicketController(TicketService ticketService, MatchService matchService) {
+    public TicketController(TicketService ticketService, MatchService matchService,MatchRepository matchRepository) {
         this.ticketService = ticketService;
         this.matchService = matchService;
-    }
-
-    @RequestMapping("/tickets")
-    public String tickets(Model model) {
-        model.addAttribute("title", "Tickets");
-        return findPaginated(1, model);
-    }
-    @GetMapping("/tickets/{pageNo}")
-    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
-                                Model model) {
-        int pageSize = 6;
-        Page<Match> page = matchService.findPaginated(pageNo, pageSize);
-        List<Match> match = page.getContent();
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("matches", match);
-        return "admin_ticket";
+        this.matchRepository = matchRepository;
     }
 
     @GetMapping("/ticket/edit/{id}")
@@ -85,6 +76,40 @@ public class TicketController {
             attributes.addFlashAttribute("error", "Failed to update!");
         }
         return "redirect:/admin/ticket";
+    }
+
+    @GetMapping("/tickets")
+    public String getAllMatches(Model model,
+                                @RequestParam(name = "match_time", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate matchTime,
+                                @RequestParam(name = "home_team_id",required = false) String homeTeam,
+                                @RequestParam(name = "away_team_id",required = false) String awayTeam,
+                                @RequestParam(name = "status",required = false) Integer status
+    ) {
+        model.addAttribute("title", "Tickets");
+        return findPaginated1(1, model, matchTime,homeTeam,awayTeam, status);
+    }
+    @GetMapping("/tickets/{pageNo}")
+    public String findPaginated1(@PathVariable(value = "pageNo") int pageNo,
+                                Model model,
+                                 @RequestParam(name = "match_time", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate matchTime,
+                                @RequestParam(name = "home_team_id",required = false) String homeTeam,
+                                @RequestParam(name = "away_team_id",required = false) String awayTeam,
+                                @RequestParam(name = "status",required = false) Integer status
+    ) {
+        int pageSize = 6;
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        List<Match> result = matchRepository.searchMatches(matchTime, homeTeam, awayTeam, status, pageable);
+        Page<Match> page = new PageImpl<>(result, pageable,matchRepository.searchMatches1(matchTime, homeTeam, awayTeam, status).size());
+        List<Match> matches = page.getContent();
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("matches", matches);
+        model.addAttribute("match_time", matchTime);
+        model.addAttribute("home_team_id", homeTeam);
+        model.addAttribute("away_team_id", awayTeam);
+        model.addAttribute("status", status);
+        return "admin_ticket";
     }
 
 

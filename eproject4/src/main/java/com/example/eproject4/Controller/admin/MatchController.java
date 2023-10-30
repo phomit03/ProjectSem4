@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -280,7 +282,7 @@ public class MatchController {
 
     @GetMapping("/matches")
     public String getAllMatches(Model model,
-                             @RequestParam(name = "match_time",required = false) LocalDateTime matchTime,
+                                @RequestParam(name = "match_time", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate matchTime,
                              @RequestParam(name = "home_team_id",required = false) String homeTeam,
                              @RequestParam(name = "away_team_id",required = false) String awayTeam,
                              @RequestParam(name = "status",required = false) Integer status
@@ -291,7 +293,7 @@ public class MatchController {
     @GetMapping("/matches/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
                                      Model model,
-                                     @RequestParam(name = "match_time",required = false) LocalDateTime matchTime,
+                                @RequestParam(name = "match_time", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate matchTime,
                                      @RequestParam(name = "home_team_id",required = false) String homeTeam,
                                      @RequestParam(name = "away_team_id",required = false) String awayTeam,
                                      @RequestParam(name = "status",required = false) Integer status

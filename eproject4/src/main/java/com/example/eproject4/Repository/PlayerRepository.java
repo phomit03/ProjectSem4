@@ -21,8 +21,7 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
             "WHERE (:name is null or p.name like CONCAT('%', :name, '%')) " +
             "AND (:team is null or t.name like CONCAT('%', :team, '%')) " +
             "AND (:national is null or p.national like CONCAT('%', :national, '%')) " +
-            "AND (:position is null or p.position like CONCAT('%', :position, '%'))",
-            nativeQuery = true)
+            "AND (:position is null or p.position like CONCAT('%', :position, '%'))", nativeQuery = true)
     List<Player> searchPlayers(@Param("name") String name, @Param("team") String team,
                                @Param("national") String national, @Param("position") String position, Pageable pageable);
 

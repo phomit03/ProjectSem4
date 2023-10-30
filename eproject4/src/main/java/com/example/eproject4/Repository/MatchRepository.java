@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -78,22 +79,26 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     List<User> searchUsers(@Param("username") String username, @Param("status") Integer status,
                            @Param("phone") String phone, @Param("email") String email, Pageable pageable);
     // search
-    @Query(value = "SELECT * FROM matches " +
-            "WHERE (:match_time is null or match_time = :match_time) " +
-            "AND (:home_team_id is null or home_team_id = :home_team_id) " +
-            "AND (:away_team_id is null or away_team_id = :away_team_id) " +
-            "AND (:status is null or status = :status)", nativeQuery = true)
-    List<Match> searchMatches(@Param("match_time") LocalDateTime matchTime,
+    @Query(value = "SELECT m.* FROM matches m " +
+            "LEFT JOIN team t ON m.home_team_id = t.id " +
+            "LEFT JOIN team x ON m.away_team_id = x.id " +
+            "WHERE (:match_time is null or m.match_time like CONCAT('%',:match_time,'%')) " +
+            "AND (:home_team_id is null or t.name like CONCAT('%',:home_team_id,'%')) " +
+            "AND (:away_team_id is null or x.name like CONCAT('%',:away_team_id,'%')) " +
+            "AND (:status is null or m.status like CONCAT('%',:status,'%')) ", nativeQuery = true)
+    List<Match> searchMatches(@Param("match_time") LocalDate matchTime,
                               @Param("home_team_id") String homeTeam,
                               @Param("away_team_id") String awayTeam,
                               @Param("status") Integer status, Pageable pageable);
 
-    @Query(value = "SELECT * FROM matches " +
-            "WHERE (:match_time is null or match_time = :match_time) " +
-            "AND (:home_team_id is null or home_team_id = :home_team_id) " +
-            "AND (:away_team_id is null or away_team_id = :away_team_id) " +
-            "AND (:status is null or status = :status)", nativeQuery = true)
-    List<Match> searchMatches1(@Param("match_time") LocalDateTime matchTime,
+    @Query(value = "SELECT m.* FROM matches m " +
+            "LEFT JOIN team t ON m.home_team_id = t.id " +
+            "LEFT JOIN team x ON m.away_team_id = x.id " +
+            "WHERE (:match_time is null or m.match_time like CONCAT('%',:match_time,'%')) " +
+            "AND (:home_team_id is null or t.name like CONCAT('%',:home_team_id,'%')) " +
+            "AND (:away_team_id is null or x.name like CONCAT('%',:away_team_id,'%')) " +
+            "AND (:status is null or m.status like CONCAT('%',:status,'%')) ", nativeQuery = true)
+    List<Match> searchMatches1(@Param("match_time") LocalDate  matchTime,
                               @Param("home_team_id") String homeTeam,
                               @Param("away_team_id") String awayTeam,
                               @Param("status") Integer status);
