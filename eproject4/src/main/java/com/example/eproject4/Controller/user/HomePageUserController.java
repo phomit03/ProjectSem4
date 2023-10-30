@@ -34,8 +34,8 @@ public class HomePageUserController {
     @RequestMapping("/")
     public String home(Model model) {
         model.addAttribute("title", "Home Page");
-        model.addAttribute("overlay_title", "World Cup Event");
-        model.addAttribute("description", "Welcome to the most exciting tournament on the planet");
+        model.addAttribute("overlay_title", "Premier League 2023");
+        model.addAttribute("description", "Welcome to the most exciting tournament on the planet !");
 
         List<MatchDTO> nextMatchesOrLiveMatches = matchService.getNextMatchesOrLiveMatches(3);
         model.addAttribute("nextMatchesOrLiveMatches", nextMatchesOrLiveMatches);
@@ -52,6 +52,7 @@ public class HomePageUserController {
         List<TeamConclusionDTO> teamConclusionDTOS = teamConclusionService.findAllOrderByPointDesc();
         List<TeamConclusionDTO> limitedTeamConclusionDTOS = teamConclusionDTOS.subList(0, Math.min(teamConclusionDTOS.size(), 8));
         model.addAttribute("teamConclusionDTOS", limitedTeamConclusionDTOS);
+
         return "customer_homepage";
     }
 
@@ -71,10 +72,6 @@ public class HomePageUserController {
         //next match
         List<Match> findNextMatch = matchService.getFindNextMatch();
         model.addAttribute("findNextMatch", findNextMatch);
-
-        //upcoming (6matches)
-        /*List<Match> find6UpComingMatches = matchService.getUpComingHomePage();
-        model.addAttribute("find6UpComingMatches", find6UpComingMatches);*/
 
         //Leader board
         List<TeamConclusionDTO> teamConclusionDTOS = teamConclusionService.findAllOrderByPointDesc();

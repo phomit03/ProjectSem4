@@ -42,6 +42,7 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     @Query("SELECT m FROM Match m WHERE m.match_time < :saleTime AND m.status = 1")
     List<Match> findMatchesBeforeTimeThreshold(@Param("saleTime") LocalDateTime saleTime);
 
+
     // tim 3 tran vua ket thuc
     @Query("SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE md.match_end = 1 AND m.status = 1")
     List<Match> findAllFinishedMatches();
@@ -66,6 +67,10 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     @Query(value = "SELECT m FROM Match m JOIN MatchDetail md ON m.id = md.match_id WHERE m.match_time < CURRENT_TIMESTAMP AND m.status = 1 AND md.match_end = 1")
     List<Match> findTheMatchesWasOver();
 
+    @Query("SELECT m FROM Match m WHERE "
+            + "(m.home_team_id.id = :teamId OR m.away_team_id.id = :teamId) "
+            + "AND m.match_time BETWEEN :startTime AND :endTime")
+    List<Match> findMatchesWithin24Hours(@Param("teamId") Long teamId, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
     @Query(value = "SELECT * FROM `user` WHERE (:username is null or username like CONCAT('%',:username,'%')) "+
             " AND (:status is null or status like CONCAT('%',:status,'%')) " +
             " AND (:phone is null or phone like CONCAT('%',:phone,'%')) " +
@@ -93,4 +98,7 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
                               @Param("away_team_id") String awayTeam,
                               @Param("status") Integer status);
 
+    @Query("SELECT m FROM Match m WHERE m.stadium_id.id = :stadiumId "
+            + "AND m.match_time BETWEEN :startTime AND :endTime")
+    List<Match> findMatchesWithin3Hours(@Param("stadiumId") Long stadiumId, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
 }

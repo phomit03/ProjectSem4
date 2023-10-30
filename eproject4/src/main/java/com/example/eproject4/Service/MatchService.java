@@ -8,6 +8,7 @@ import com.example.eproject4.Repository.MatchDetailRepository;
 import com.example.eproject4.Repository.MatchRepository;
 import com.example.eproject4.Utils.Helper;
 import com.example.eproject4.Utils.ModelToDtoConverter;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -125,6 +126,25 @@ public class MatchService {
         }
 
         return true;
+    }
+
+    public String checkMatchCreate (MatchRequest matchRequest) {
+        LocalDateTime matchTime = LocalDateTime.parse(matchRequest.getMatch_time());
+        LocalDateTime startTime24HoursAgo = matchTime.minusHours(24);
+        LocalDateTime startTime3HoursAgo = matchTime.minusHours(3);
+
+        List<Match> homeTeam = matchRepository.findMatchesWithin24Hours(matchRequest.getHome_team_id().getId(), startTime24HoursAgo, matchTime);
+        List<Match> awayTeam = matchRepository.findMatchesWithin24Hours(matchRequest.getAway_team_id().getId(), startTime24HoursAgo, matchTime);
+        List<Match> matchesWithin3Hours = matchRepository.findMatchesWithin3Hours(matchRequest.getStadium_id().getId(), startTime3HoursAgo, matchTime);
+
+        if (!homeTeam.isEmpty()) {
+            return "The home team had a match 24 hours earlier";
+        } else if (!awayTeam.isEmpty()) {
+            return "The away team had a match 24 hours earlier";
+        } else if (!matchesWithin3Hours.isEmpty()) {
+            return "The stadium had a match 3 hours earlier";
+        }
+        return null;
     }
 
     public List<MatchDTO> getNextMatchesOrLiveMatches(int limit) {
