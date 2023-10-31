@@ -62,7 +62,7 @@ public class TicketUserController {
         model.addAttribute("overlay_title", "Tickets");
         model.addAttribute("title", "Tickets");
         model.addAttribute("description",
-                "Tickets are on sale, please book your tickets.");
+                "Choose to buy tickets for upcoming matches.");
 
         //Matches that have not yet taken place or are taking place 15 minutes before
         List<Match> upcomingMatches = ticketService.getUpcomingMatches();
@@ -107,12 +107,10 @@ public class TicketUserController {
 
         model.addAttribute("overlay_title", "Ticket Detail");
         model.addAttribute("title", "Ticket Detail");
-        model.addAttribute("description", "Day la chi tiet ve tran dau");
+        model.addAttribute("description", match.getHome_team().getName() + " vs " + match.getAway_team().getName());
         model.addAttribute("cartItemRequest", cart);
         return "customer_ticket_detail";
     }
-
-
 
 
     @PostMapping("/ticket/detail/ok")

@@ -98,7 +98,7 @@ public class AreaController {
     @GetMapping("/delete/{id}")
     public ResponseEntity<String> softDelete(@PathVariable Long id) {
         try {
-            areaService.deleteArea(id);
+            areaService.softDelete(id);
             return ResponseEntity.ok("Delete area successfully.");
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Entity not found.");

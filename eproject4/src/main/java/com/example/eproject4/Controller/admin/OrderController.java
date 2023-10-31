@@ -75,7 +75,7 @@ public class OrderController {
                 Float price = ticket.getPrice();
                 String area = ticket.getArea().getArea_name();
                 // thêm thông tin vé
-                TicketDetailInfo info = new TicketDetailInfo(name_a, image_a, name_b, image_b, date, hour, price, area, stadium);
+                TicketDetailInfo info = new TicketDetailInfo(name_a, image_a, name_b, image_b, date, hour, price, area, stadium, time);
                 for (int i = 0; i < cart.getQuantity(); i++) {
                     list.add(info);
                 }

@@ -3,6 +3,7 @@ package com.example.eproject4.Service;
 import com.example.eproject4.DTO.Request.AreaRequest;
 import com.example.eproject4.DTO.Response.AreaDTO;
 import com.example.eproject4.Entity.Area;
+import com.example.eproject4.Entity.VideoHighlight;
 import com.example.eproject4.Repository.AreaRepository;
 import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -74,8 +76,15 @@ public class AreaService {
         }
     }
 
-    public void deleteArea(Long id) {
-        areaRepository.deleteById(id);
+    public void softDelete(Long id) {
+        Optional<Area> optionalEntity = areaRepository.findById(id);
+        if (optionalEntity.isPresent()) {
+            Area area = optionalEntity.get();
+            area.setStatus(0);
+            areaRepository.save(area);
+        } else {
+            throw new EntityNotFoundException("Entity with id " + id + " not found.");
+        }
     }
 
 

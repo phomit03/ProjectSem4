@@ -121,7 +121,9 @@
         <div class="card-header bg-white">
             <div class="media flex-sm-row flex-column-reverse justify-content-between  ">
                 <div class="col my-auto">
-                    <h3 class="mb-0 bold">Thanks for your order, <span class="change-color" th:text="${session.loggedInUser.fullName}">Anjali</span>!</h3>
+                    <h3 class="mb-0 bold">Thanks for your order,
+                        <span class="change-color" th:text="${session.loggedInUser.fullName} + '!'"></span>
+                    </h3>
                 </div>
                 <div class="col-auto text-center  my-auto pl-0 pt-sm-4">
                     <img class="img-fluid my-auto align-items-center mb-0 pt-3"
@@ -212,7 +214,7 @@
                     <div class="col-auto my-auto ml-auto">
                         <h2 class="mb-0 font-weight-bold">TOTAL PAID</h2>
                         <hr>
-                        <h3 class="display-3 bold" th:text="${total}">528$</h3>
+                        <h3 class="display-3 bold" th:text="${total} + '$'"></h3>
                     </div>
                 </div>
                 <div class="row mb-3 mt-3 mt-md-0">

@@ -23,25 +23,32 @@
                 <div class="col-sm-12 col-xl-10">
                     <div class="bg-secondary rounded h-100 p-4">
                         <div class="mb-4">
-                            <span style="font-weight: bold">CREATE AREA</span>
-                            <a class="mb-4" style="float: right;" th:href="@{/admin/area}">
+                            <span style="font-weight: bold">CREATE VIDEO HIGHLIGHT</span>
+                            <a class="mb-4" style="float: right;" th:href="@{/admin/video_highlights}">
                                 <i class="fas fa-arrow-left"></i>
                             </a>
                         </div>
-                        <form th:action="@{/admin/area/create/save}" th:object="${areas}" method="post">
+                        <form th:action="@{/admin/video_highlight/create/save}" th:object="${videoHighlightRequest}"
+                              method="post" enctype="multipart/form-data">
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label">Area Name</label>
+                                <label class="col-sm-2 col-form-label">Title</label>
                                 <div class="col-sm-10">
-                                    <input class="form-control" type="text" id="area_name" name="area_name" required>
+                                    <input type="text" class="form-control" id="title" placeholder="Title Video Highlight"
+                                           required name="title" th:field="*{title}">
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-3 col-form-label">Stadium Takes Place</label>
-                                <div class="col-sm-9">
-                                    <select class="form-select" th:field="*{stadium}" aria-label="Stadium" required>
-                                        <option value="" selected>-- Choose option --</option>
-                                        <option th:each="stadium : ${stadiums}" th:value="${stadium.id}" th:text="${stadium.name}"></option>
-                                    </select>
+                                <label class="col-sm-2 col-form-label">Image</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="file" id="image"
+                                           required name="image_highlight">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Video Link</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="video_link" placeholder="Video Link"
+                                           required name="video_link" th:field="*{video_link}">
                                 </div>
                             </div>
 
@@ -65,28 +72,6 @@
 
 <div th:replace="admin_fragments::script"></div>
 
-<!--CKEDITOR-->
-<script>
-    ClassicEditor
-        .create(document.querySelector('#content'), {
-
-        })
-        .catch(error => {
-            console.error(error);
-        });
-</script>
-<script>
-    var editor = CKEDITOR.replace('content', {
-        //toolbar: "Full",
-        filebrowserImageBrowseUrl : 'https://unica.vn/kcfinder_old/browse.php?opener=ckeditor&type=fund_info',
-        toolbar:
-            [
-                ['Bold', 'Italic', 'Underline', 'Strike'],
-                ['FontSize', 'Image'],
-                ['NumberedList', 'BulletedList'],
-            ]
-    });
-</script>
 </body>
 
 </html>
