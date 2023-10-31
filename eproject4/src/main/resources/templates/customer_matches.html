@@ -34,8 +34,9 @@
                                 <input type="hidden" class="away-team-id" th:value="${match.away_team.id}">
                                 <ul th:class="'list-unstyled away-team-event-' + ${match.id}">
                                 </ul>
-                                <div class="match-detail" onclick="openMatchPopup()">
-                                    <i class="icon-info_outline mr-1"></i> Match details
+                                <div th:class="'match-detail'" onclick="openMatchPopup()" th:data-match-id="${match.id}"
+                                     th:data-home-id="${match.home_team.id}" th:data-away-id="${match.away_team.id}" style="float: right">
+                                    <i class="icon-info_outline mr-1"></i> Match details (click here)
                                 </div>
                             </div>
                         </div>
@@ -127,8 +128,10 @@
 
                     <div class="text-center widget-vs-contents mb-4">
                         <p class="mb-3 mt-4">
-                            <span class="d-block" th:text="${#temporals.format(upComingMatches.match_time, 'MMM dd, yyyy')}"></span>
-                            <span class="d-block" th:text="${#temporals.format(upComingMatches.match_time, 'HH:mm') + ' (GMT+0)'}"></span>
+                            <span class="d-block"
+                                  th:text="${#temporals.format(upComingMatches.match_time, 'MMM dd, yyyy')}"></span>
+                            <span class="d-block"
+                                  th:text="${#temporals.format(upComingMatches.match_time, 'HH:mm') + ' (GMT+0)'}"></span>
                             <strong class="text-primary" th:text="${upComingMatches.stadium_id.name}"></strong>
                         </p>
                     </div>
@@ -170,9 +173,12 @@
                                 </div>
                                 <div class="mr-4 ml-4" style="text-align: center;">
                                     <span class="vs">
-                                        <span style="font-size: 35px; border-radius: 12px; padding: 0 10px;" th:class="'match-over-score-' + ${match.id}"></span>
-                                        <div class="match-detail" onclick="openMatchPopup()" style="float: none; width: 160px">
-                                            <i class="icon-info_outline mr-1"></i> Match details
+                                        <span style="font-size: 35px; border-radius: 12px; padding: 0 10px;"
+                                              th:class="'match-over-score-' + ${match.id}"></span>
+                                        <div th:class="'match-detail'" onclick="openMatchPopup()"
+                                             th:data-match-id="${match.id}" th:data-home-id="${match.home_team.id}"
+                                             th:data-away-id="${match.away_team.id}">
+                                            <i class="icon-info_outline mr-1"></i> Match details (click here)
                                         </div>
                                     </span>
                                 </div>
@@ -258,42 +264,34 @@
         <div class="rounded">
             <div>
                 <div class="widget-vs">
-                    <p class="mb-4" style="color: #ee1e46">
-                        <span style="font-weight: bold">Premier League • </span><span>Tue, Oct 24</span>
+                    <p class="mb-4 match-detail-date" style="color: #ee1e46">
+
                     </p>
                     <div class="d-flex align-items-center justify-content-around justify-content-between w-100">
-                        <div class="team-1 text-center" style="width: 150px">
-                            <img src="https://res.cloudinary.com/dpbbb3imz/image/upload/v1696864355/cpstvpdp9phyduc9dcli.png" alt="Image" style="height: 80px; width: 80px">
+                        <div class="team-1 text-center match-detail-home" style="width: 150px">
+                            <img src="https://res.cloudinary.com/dpbbb3imz/image/upload/v1696864355/cpstvpdp9phyduc9dcli.png"
+                                 alt="Image" style="height: 80px; width: 80px">
                             <h3 class="mt-3" style="height: 40px;">Chelsea</h3>
                         </div>
-                        <div class="mr-4 ml-4" style="font-size: 35px; color: #bdc1c6">
-                            <span>5</span>
-                            <span style="padding: 0 50px">-</span>
-                            <span>3</span>
+                        <div class="mr-4 ml-4 match-detail-score" style="font-size: 35px; color: #bdc1c6">
+
                         </div>
-                        <div class="team-2 text-center" style="width: 150px">
-                            <img src="https://res.cloudinary.com/dpbbb3imz/image/upload/v1696868850/nb4j9nxyycetrhzaoki8.png" alt="Image" style="height: 80px; width: 80px">
+                        <div class="team-2 text-center match-detail-away" style="width: 150px">
+                            <img src="https://res.cloudinary.com/dpbbb3imz/image/upload/v1696868850/nb4j9nxyycetrhzaoki8.png"
+                                 alt="Image" style="height: 80px; width: 80px">
                             <h3 class="mt-3" style="height: 40px;">Manchester United</h3>
                         </div>
                     </div>
                     <div class="d-flex align-items-center justify-content-around justify-content-between w-100 mt-2">
                         <div class="team-1 text-center mt-2" style="width: 160px">
-                            <div class="mt-2" style="color: #bdc1c6;">
-                                <p style="color: #bdc1c6;">Cristiano Ronaldo 5p'</p>
-                                <p style="color: #bdc1c6;">Cristiano Ronaldo 5p'</p>
-                                <p style="color: #bdc1c6;">Cristiano Ronaldo 5p'</p>
-                                <p style="color: #bdc1c6;">Cristiano Ronaldo 5p'</p>
-                                <p style="color: #bdc1c6;">Cristiano Ronaldo 5p'</p>
+                            <div class="mt-2 match-detail-home-event" style="color: #bdc1c6;">
                             </div>
                         </div>
                         <div class="mr-5 ml-5">
                             <i class="icon-futbol-o mr-1" style="font-size: x-large"></i>
                         </div>
                         <div class="team-2 text-center mt-2" style="width: 160px">
-                            <div>
-                                <p style="color: #bdc1c6;">Cristiano Ronaldo 5p'</p>
-                                <p style="color: #bdc1c6;">Cristiano Ronaldo 5p'</p>
-                                <p style="color: #bdc1c6;">Cristiano Ronaldo 5p'</p>
+                            <div class="match-detail-away-event" style="color: #bdc1c6;">
                             </div>
                         </div>
                     </div>
@@ -303,101 +301,103 @@
                     <table class="table">
                         <tbody>
                         <tr>
-                            <th>
-                                <img src="https://res.cloudinary.com/dpbbb3imz/image/upload/v1696864355/cpstvpdp9phyduc9dcli.png" alt="Image" style="height: 30px; width: 30px">
+                            <th class="match-detail-home">
+                                <img src="https://res.cloudinary.com/dpbbb3imz/image/upload/v1696864355/cpstvpdp9phyduc9dcli.png"
+                                     alt="Image" style="height: 30px; width: 30px">
                             </th>
                             <th class="text-matches-detail">TEAM STATS</th>
-                            <th>
-                                <img src="https://res.cloudinary.com/dpbbb3imz/image/upload/v1696868850/nb4j9nxyycetrhzaoki8.png" alt="Image" style="height: 30px; width: 30px">
+                            <th class="match-detail-away">
+                                <img src="https://res.cloudinary.com/dpbbb3imz/image/upload/v1696868850/nb4j9nxyycetrhzaoki8.png"
+                                     alt="Image" style="height: 30px; width: 30px">
                             </th>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="match-detail-home-shot">
                                 15
                             </td>
                             <th class="text-matches-detail">Shots</th>
-                            <td>
+                            <td class="match-detail-away-shot">
                                 10
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="match-detail-home-shotOnTarget">
                                 5
                             </td>
                             <th class="text-matches-detail">Shots on target</th>
-                            <td>
+                            <td class="match-detail-away-shotOnTarget">
                                 3
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="match-detail-home-possession">
                                 56%
                             </td>
                             <th class="text-matches-detail">Possession</th>
-                            <td>
+                            <td class="match-detail-away-possession">
                                 44%
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="match-detail-home-passes">
                                 593
                             </td>
                             <th class="text-matches-detail">Passes</th>
-                            <td>
+                            <td class="match-detail-away-passes">
                                 463
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="match-detail-home-passAccuracy">
                                 87%
                             </td>
                             <th class="text-matches-detail">Pass accuracy</th>
-                            <td>
+                            <td class="match-detail-away-passAccuracy">
                                 84%
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="match-detail-home-foul">
                                 10
                             </td>
                             <th class="text-matches-detail">Fouls</th>
-                            <td>
+                            <td class="match-detail-away-foul">
                                 14
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="match-detail-home-yellow-cards">
                                 2
                             </td>
                             <th class="text-matches-detail">Yellow cards</th>
-                            <td>
+                            <td class="match-detail-away-yellow-cards">
                                 0
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="match-detail-home-red-cards">
                                 0
                             </td>
                             <th class="text-matches-detail">Red cards</th>
-                            <td>
+                            <td class="match-detail-away-red-cards">
                                 0
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="match-detail-home-offSide">
                                 4
                             </td>
                             <th class="text-matches-detail">Offsides</th>
-                            <td>
+                            <td class="match-detail-away-offSide">
                                 6
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td class="match-detail-home-corner">
                                 3
                             </td>
                             <th class="text-matches-detail">Corners</th>
-                            <td>
+                            <td class="match-detail-away-corner">
                                 5
                             </td>
                         </tr>
@@ -479,7 +479,7 @@
 </script>
 
 <script>
-    var siteCountDown = function() {
+    var siteCountDown = function () {
         let timeString = $('input[name=countdown-next-match]').val();
         let time = new Date(timeString);
 
@@ -490,7 +490,7 @@
             ('0' + time.getMinutes()).slice(-2) + ':' +
             ('0' + time.getSeconds()).slice(-2);
 
-        $('#date-countdown2').countdown(formattedTime, function(event) {
+        $('#date-countdown2').countdown(formattedTime, function (event) {
             var $this = $(this).html(event.strftime(''
                 + '<span class="countdown-block"><span class="label">%w</span> weeks </span>'
                 + '<span class="countdown-block"><span class="label">%d</span> days </span>'
@@ -559,6 +559,118 @@
                 callback(res);
             }
         });
+    }
+</script>
+
+<!--match detail-->
+<script>
+    $('.match-detail').on('click', function () {
+        var matchId = $(this).attr('data-match-id');
+        var homeTeamId = $(this).attr('data-home-id');
+        var awayTeamId = $(this).attr('data-away-id');
+
+
+        var dataToSend = {
+            matchId: matchId,
+            homeTeamId: homeTeamId,
+            awayTeamId: awayTeamId
+        };
+        //call api match
+        $.ajax({
+            type: 'POST',
+            url: '/api/match/detail',
+            contentType: 'application/json',
+            data: JSON.stringify(dataToSend),
+            success: function (res) {
+                console.log(res)
+                const formattedTime = formatMatchTime(res.matchDetailDTO.match.match_time);
+                $('.match-detail-date').html('<span style="font-weight: bold">Premier League • </span><span>' + formattedTime + '</span>');
+
+                $('.match-detail-home').find('img').attr('src', res.matchDetailDTO.match.home_team_id.logo_img);
+                $('.match-detail-away').find('img').attr('src', res.matchDetailDTO.match.away_team_id.logo_img);
+                $('.match-detail-home').find('h3').attr('src', res.matchDetailDTO.match.home_team_id.name);
+                $('.match-detail-away').find('h3').attr('src', res.matchDetailDTO.match.away_team_id.name);
+
+                $('.match-detail-score').html(`<span>${res.homeTeamScore}</span>
+                            <span style="padding: 0 50px">-</span>
+                            <span>${res.awayTeamScore}</span>`);
+
+                var homeTeamEventsUl = $('.match-detail-home-event');
+                homeTeamEventsUl.empty();
+                $.each(res.homeTeamEventGoal, function (index, event) {
+                    getPlayerById(event.player_id, function (player) {
+                        var timeParts = event.time.split(':');
+                        var minutes = timeParts[0];
+                        var li = $('<li>').html(`<p style="color: #bdc1c6;">${player.name} (${minutes}')</p>`);
+                        homeTeamEventsUl.append(li);
+                    });
+                });
+                var awayTeamEventsUl = $('.match-detail-away-event');
+                awayTeamEventsUl.empty();
+                $.each(res.awayTeamEventGoal, function (index, event) {
+                    getPlayerById(event.player_id, function (player) {
+                        var timeParts = event.time.split(':');
+                        var minutes = timeParts[0];
+                        var li = $('<li>').html(`<p style="color: #bdc1c6;">${player.name} (${minutes}')</p>`);
+                        awayTeamEventsUl.append(li);
+                    });
+                });
+
+                const shotData = res.matchDetailDTO.shot;
+                updateDataAndType(shotData, "shot")
+                const shotOnTargetData = res.matchDetailDTO.shotOnTarget;
+                updateDataAndType(shotOnTargetData, "shotOnTarget")
+                const possessionData = res.matchDetailDTO.possession;
+                updateDataAndType(possessionData, "possession")
+                const passes = res.matchDetailDTO.passes;
+                updateDataAndType(passes, "passes")
+                const passAccuracyData = res.matchDetailDTO.passAccuracy;
+                updateDataAndType(passAccuracyData, "passAccuracy")
+                const foulsData = res.matchDetailDTO.foul;
+                updateDataAndType(foulsData, "foul")
+                const offSidesData = res.matchDetailDTO.offSide;
+                updateDataAndType(offSidesData, "offSide")
+                const cornersData = res.matchDetailDTO.corner;
+                updateDataAndType(cornersData, "corner")
+            }
+        });
+        //call api match event
+
+        //call api match detail
+    })
+
+    function formatMatchTime(matchTime) {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        const date = new Date(matchTime);
+        const day = date.getDate();
+        const month = months[date.getMonth()];
+
+        return `${getDayName(date)}, ${month} ${day}`;
+    }
+
+    function getDayName(date) {
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        return days[date.getDay()];
+    }
+
+    function getPlayerById(id, callback) {
+        $.ajax({
+            type: 'POST',
+            url: '/api/getPlayerById',
+            contentType: 'application/json',
+            data: JSON.stringify({id: id}),
+            success: function (res) {
+                callback(res);
+            }
+        });
+    }
+
+    function updateDataAndType(matchDetailString, typeString) {
+        const [homeData, awayData] = matchDetailString.split(':');
+
+        $('.match-detail-home-' + typeString).empty().text(homeData);
+        $('.match-detail-away-' + typeString).empty().text(awayData);
     }
 </script>
 

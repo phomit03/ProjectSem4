@@ -5,11 +5,16 @@ import com.example.eproject4.DTO.Response.NewDTO;
 import com.example.eproject4.DTO.Response.StadiumDTO;
 import com.example.eproject4.DTO.Response.TeamDTO;
 import com.example.eproject4.Entity.Area;
+import com.example.eproject4.Entity.Feedback;
 import com.example.eproject4.Entity.New;
+import com.example.eproject4.Repository.AreaRepository;
 import com.example.eproject4.Service.AreaService;
 import com.example.eproject4.Service.StadiumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,18 +32,20 @@ public class AreaController {
     private AreaService areaService;
 
     private StadiumService stadiumService;
+    private AreaRepository areaRepository;
 
     @Autowired
-    public AreaController(AreaService areaService, StadiumService stadiumService) {
+    public AreaController(AreaService areaService, StadiumService stadiumService, AreaRepository areaRepository) {
         this.areaService = areaService;
         this.stadiumService = stadiumService;
+        this.areaRepository = areaRepository;
     }
 
-    @GetMapping
-    public String getAllAreas(Model model){
-        model.addAttribute("title", "Areas");
-        return findPaginated(1, model);
-    }
+//    @GetMapping
+//    public String getAllAreas(Model model){
+//        model.addAttribute("title", "Areas");
+//        return findPaginated(1, model);
+//    }
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
@@ -101,16 +108,37 @@ public class AreaController {
     }
 
     //phan trang
+    @GetMapping()
+    public String getAllNews(Model model,
+                             @RequestParam(name = "area_name", required = false) String area_name,
+                             @RequestParam(name = "name_stadium", required = false) String name_stadium,
+                             @RequestParam(name = "status", required = false) Integer status
+    ) {
+        model.addAttribute("title", "Areas");
+        return findPaginated(1, model, area_name, name_stadium, status);
+    }
+
     @GetMapping("/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
-                                Model model) {
-        int pageSize = 8;
-        Page<Area> page = areaService.findPaginated(pageNo, pageSize);
+                                Model model,
+                                @RequestParam(name = "area_name", required = false) String area_name,
+                                @RequestParam(name = "name_stadium", required = false) String name_stadium,
+                                @RequestParam(name = "status", required = false) Integer status
+    ) {
+        int pageSize = 6;
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        List<Area> result = areaRepository.searchAreas(area_name, name_stadium, status, pageable);
+        Page<Area> page = new PageImpl<>(result, pageable,areaRepository.searchAreas1(area_name, name_stadium, status).size());
         List<Area> areas = page.getContent();
+
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("areas", areas);
+        model.addAttribute("area_name", area_name);
+        model.addAttribute("name_stadium", name_stadium);
+        model.addAttribute("status", status);
         return "admin_area";
     }
 

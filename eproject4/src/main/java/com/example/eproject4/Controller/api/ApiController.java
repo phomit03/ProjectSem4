@@ -1,5 +1,6 @@
 package com.example.eproject4.Controller.api;
 
+import com.example.eproject4.DTO.Response.MatchDetailDTO;
 import com.example.eproject4.DTO.Response.MatchDetailEventDTO;
 import com.example.eproject4.DTO.Response.PlayerDTO;
 import com.example.eproject4.Entity.Player;
@@ -47,6 +48,30 @@ public class ApiController {
         response.put("awayTeamScore", awayTeamScore);
         response.put("homeTeamEventGoal", homeTeamEventGoal);
         response.put("awayTeamEventGoal", awayTeamEventGoal);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/match/detail")
+    public ResponseEntity<Map<String, Object>> getMatchDetail(@RequestBody Map<String, Object> requestBody, RedirectAttributes attributes) {
+        Long homeTeamId = Long.parseLong(requestBody.get("homeTeamId").toString());
+        Long awayTeamId = Long.parseLong(requestBody.get("awayTeamId").toString());
+        Long matchId = Long.parseLong(requestBody.get("matchId").toString());
+
+        Long homeTeamScore = matchDetailEventService.countEvent(homeTeamId, matchId, 1);
+        Long awayTeamScore = matchDetailEventService.countEvent(awayTeamId, matchId, 1);
+
+        List<MatchDetailEventDTO> homeTeamEventGoal = matchDetailEventService.getEventsByTeamIdAndMatchIdAndType(homeTeamId, matchId, 1);
+        List<MatchDetailEventDTO> awayTeamEventGoal = matchDetailEventService.getEventsByTeamIdAndMatchIdAndType(awayTeamId, matchId, 1);
+        MatchDetailDTO matchDetailDTO = matchDetailService.getMatchDetailByMatchId(matchId);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("matchId", matchId);
+        response.put("homeTeamScore", homeTeamScore);
+        response.put("awayTeamScore", awayTeamScore);
+        response.put("homeTeamEventGoal", homeTeamEventGoal);
+        response.put("awayTeamEventGoal", awayTeamEventGoal);
+        response.put("matchDetailDTO", matchDetailDTO);
 
         return ResponseEntity.ok(response);
     }

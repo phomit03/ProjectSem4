@@ -1,20 +1,23 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Order Details</title>
 </head>
 <body>
-<h1>Order Details</h1>
+<h1>Thông tin chi tiết các hóa đơn của user đó</h1>
 
-<!--<div th:if="${listOrderRespond != null and not #lists.isEmpty(listOrderRespond)}">-->
+&lt;!&ndash;<div th:if="${listOrderRespond != null and not #lists.isEmpty(listOrderRespond)}">&ndash;&gt;
   <div th:each="orderDetail : ${listOrderRespond}">
-    <h2>Total Price: <span th:text="${orderDetail.totalPrice}"></span></h2>
+    <h1>Danh sách 1 hóa đơn</h1>
+    <h3>Total Price: <span th:text="${orderDetail.totalPrice}"></span></h3>
     <img th:src="${orderDetail.qrcode}" alt="QR Code">
 
     <table>
       <tr>
         <th>Home Team</th>
+        <th>Ảnh team nhà</th>
         <th>Away Team</th>
+        <th>Ảnh team khách</th>
         <th>Day</th>
         <th>Hour</th>
         <th>Price</th>
@@ -22,7 +25,9 @@
       </tr>
       <tr th:each="ticket : ${orderDetail.listTicket}">
         <td th:text="${ticket.name_home}"></td>
+        <td th:text="${ticket.image_home}"></td>
         <td th:text="${ticket.name_away}"></td>
+        <td th:text="${ticket.image_away}"></td>
         <td th:text="${ticket.day}"></td>
         <td th:text="${ticket.hour}"></td>
         <td th:text="${ticket.price}"></td>
@@ -30,9 +35,148 @@
       </tr>
     </table>
   </div>
-<!--</div>-->
-<!--<div th:unless="${listOrderRespond != null and not #lists.isEmpty(listOrderRespond)}">
+</div>
+<div th:unless="${listOrderRespond != null and not #lists.isEmpty(listOrderRespond)}">
   <p>Not Order</p>
-</div>-->
+</div>
 </body>
+</html>-->
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="customer_fragments::head-fragment"></head>
+
+<body>
+<div class="site-wrap">
+    <div th:replace="customer_fragments::top-fragment"></div>
+
+    <!--/CONTENT HERE/-->
+    <div class="site-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 mx-auto">
+                    <div class="card" style="background-color: #0c0614 !important;">
+                        <div class="card-header">
+                            <h3 class="font-weight-bold">My Ticket</h3>
+                            <p class="color-red mt-2" style="font-size: 16px">Note: Tickets will expire 15 minutes after kickoff</p>
+                        </div>
+
+                        <hr style="border: 1px solid #fff; margin: 0">
+
+                        <div class="container" style="padding: 3em 0 7em 0;"
+                             th:if="${listOrderRespond != null and not #lists.isEmpty(listOrderRespond)}">
+                            <div th:each="orderDetail, iterStat : ${listOrderRespond}">
+                                <div class="row">
+                                    <div class="col-6 title-section">
+                                        <h2 class="heading" style="color: #ee1e46"
+                                            th:text="${'Order ' + (iterStat.index + 1)
+                                            +
+                                            ' - '
+                                            +
+                                            'Total Price: ' + orderDetail.totalPrice}"></h2>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4 col-xs-12 mb-5" th:each="ticket : ${orderDetail.listTicket}">
+                                        <div class="custom-media d-block text-center"
+                                             style="border-radius: 0.25rem; border: 1px solid #4e535a; padding: 1rem">
+                                            <div class="img mb-4">
+                                                <img th:src="@{${ticket.image_home}}" alt="Image" class="img-fluid"
+                                                     style="height: 70px; width: 70px;">
+                                                <span style="margin: 0 20px"> vs </span>
+                                                <img th:src="@{${ticket.image_away}}" alt="Image" class="img-fluid"
+                                                     style="height: 70px; width: 70px;">
+                                            </div>
+                                            <div class="text">
+                                                <h3 class="mb-2" style="height: 43px;"
+                                                    th:text="${ticket.name_home + ' - ' + ticket.name_away}"></h3>
+                                                <p class="text-white">
+                                                    <i style="color: #ca0f33; font-size: large"
+                                                       class="icon-calendar mr-1"></i>
+                                                    <span th:text="${ticket.day}"
+                                                          style="font-size: 14px"></span>
+                                                    <i style="color: #ca0f33; font-size: large"
+                                                       class="icon-timer ml-2 mr-1"></i>
+                                                    <span th:text="${ticket.hour}"
+                                                          style="font-size: 14px"></span>
+                                                </p>
+                                                <p class="text-white">
+                                                    <i style="color: #ca0f33; font-size: large"
+                                                       class="icon-area-chart mr-1"></i>
+                                                    Area: <span th:text="${ticket.area}" style="font-size: 16px"></span>
+
+                                                    <i style="color: #ca0f33; font-size: large"
+                                                       class="icon-dollar ml-3 mr-1"></i>
+                                                    Price: <span th:text="${ticket.price}"
+                                                                 style="font-size: 16px"></span>
+                                                </p>
+                                                <div class="text-white text-center mt-4 view-qr">
+                                                    <img th:src="${orderDetail.qrcode}" alt="QR Code"
+                                                         style="width: 150px; height: 150px">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="position-absolute top-0">
+                                            <p th:if="${ticket.time.plusMinutes(15).isAfter(T(java.time.LocalDateTime).now())}"
+                                                  class="bg-success text-white p-2"
+                                                  style="border-radius: 0.25rem 0 0.25rem 0">
+                                                Ticket Unexpired
+                                            </p>
+                                            <p th:unless="${ticket.time.plusMinutes(15).isAfter(T(java.time.LocalDateTime).now())}"
+                                                  class="bg-danger text-white p-2"
+                                                  style="border-radius: 0.25rem 0 0.25rem 0">
+                                                Ticket Expired
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container text-center" style="padding: 7em 0 7em 0;"
+                             th:unless="${listOrderRespond != null and not #lists.isEmpty(listOrderRespond)}">
+                            <p style="padding: 5rem; border: 1px solid #4e535a; font-size: 35px">You have no orders</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/END CONTENT HERE/-->
+
+    <div th:replace="customer_fragments::bot-fragment"></div>
+</div>
+
+<div th:replace="customer_fragments::script-fragment"></div>
+
+<div class="message" th:if="${error}" th:data="${error}" style="display: none"></div>
+
+<script th:if="${error}">
+    $(document).ready(function () {
+        var message = $('.message').attr('data');
+        Swal.fire(
+            'Error',
+            message,
+            'error'
+        )
+    });
+</script>
+
+<div class="message" th:if="${success}" th:data="${success}" style="display: none"></div>
+
+<script th:if="${success}">
+    $(document).ready(function () {
+        var message = $('.message').attr('data');
+        Swal.fire(
+            'Success',
+            message,
+            'success'
+        )
+    });
+</script>
+
+</body>
+
 </html>

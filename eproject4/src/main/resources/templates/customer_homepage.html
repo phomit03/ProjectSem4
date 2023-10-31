@@ -74,7 +74,7 @@
                                                th:href="@{/account/info/{id} (id=${session.loggedInUser.id})}">
                                                 <i class="icon-user mr-2 color-red"></i> Info Account
                                             </a>
-                                            <a class="dropdown-item dropdown-fix color-grey" href="#">
+                                            <a class="dropdown-item dropdown-fix color-grey" th:href="@{/logged/myticket}">
                                                 <i class="icon-ticket mr-2 color-red"></i> My ticket
                                             </a>
                                             <div class="dropdown-divider"></div>
@@ -142,8 +142,8 @@
                             <input type="hidden" class="away-team-id" th:value="${match.away_team.id}">
                             <ul th:class="'list-unstyled away-team-event-' + ${match.id}">
                             </ul>
-                            <div class="match-detail" onclick="openMatchPopup()">
-                                <i class="icon-info_outline mr-1"></i> Match details
+                            <div class="match-detail" onclick="openMatchPopup()" th:if="${match.type_match} == 0">
+                                <i class="icon-info_outline mr-1"></i> Match details (click here)
                             </div>
                         </div>
                     </div>

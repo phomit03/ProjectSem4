@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -61,7 +62,7 @@ public class TicketUserController {
         model.addAttribute("overlay_title", "Tickets");
         model.addAttribute("title", "Tickets");
         model.addAttribute("description",
-                "Tickets are on sale, please book your tickets.");
+                "Choose to buy tickets for upcoming matches.");
 
         //Matches that have not yet taken place or are taking place 15 minutes before
         List<Match> upcomingMatches = ticketService.getUpcomingMatches();
@@ -106,12 +107,10 @@ public class TicketUserController {
 
         model.addAttribute("overlay_title", "Ticket Detail");
         model.addAttribute("title", "Ticket Detail");
-        model.addAttribute("description", "Day la chi tiet ve tran dau");
+        model.addAttribute("description", match.getHome_team().getName() + " vs " + match.getAway_team().getName());
         model.addAttribute("cartItemRequest", cart);
         return "customer_ticket_detail";
     }
-
-
 
 
     @PostMapping("/ticket/detail/ok")
@@ -131,7 +130,7 @@ public class TicketUserController {
             }
             //boolean isPaySucccess = true;
             // xử lý thanh toán ở đây
-            int orderTotal = total;
+            int orderTotal = total*24000*100;
             String orderInfo = "Thanh toan don hang: 123";
             String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
             String vnpayUrl = vnPayService.createOrder(orderTotal, orderInfo, baseUrl);
@@ -166,10 +165,11 @@ public class TicketUserController {
                 });
                 // luu order
                 Order order = new Order();
-                order.setTotalPrice(Integer.parseInt(totalPrice));
+                order.setTotalPrice(Long.parseLong(totalPrice)/2400000);
                 order.setUserId(loggedInUser.getId().intValue());
                 //order.setUserId(15);
                 order.setStatus(true);
+                order.setCreatedAt(new Timestamp(System.currentTimeMillis()));
                 Order ordersucss = orderRepository.save(order);
 
                 // lưu cart vào db
@@ -181,7 +181,7 @@ public class TicketUserController {
                     cart.setUserId(loggedInUser.getId().intValue());
                     //cart.setUserId(15);
                     cart.setTicket((ticketRepository.findIdTicket(ticket1.getTicketId()).get(0)));
-                    cart.setOrderid(ordersucss.getUserId());
+                    cart.setOrderid(ordersucss.getId());
                     cartList.add(cart);
                 }
                 cartService.saveCarts(cartList);
@@ -192,10 +192,12 @@ public class TicketUserController {
                         ticketRepository.save(ticketToUpdate);
                     }
                 }
+                return "redirect:/success_order/" + ordersucss.getId();
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
-            return "customer_order_success";
+            //return "customer_order_success";
+
         }
         return "error_notfound";
     }

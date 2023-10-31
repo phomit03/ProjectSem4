@@ -26,8 +26,11 @@
                 <div class="row g-4 align-items-center">
                     <div class="col-6">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <button class="btn btn-primary" type="submit">Search</button>
+                            <form th:action="@{/admin/feedbacks}" method="get">
+                                <label><input placeholder="Name" class="form-control" type="text" name="name" th:value="${name}" /></label>
+                                <label><input placeholder="Email" class="form-control" type="text" name="email" th:value="${email}" /></label>
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -62,6 +65,24 @@
                                 </tr>
                                 </tbody>
                             </table>
+
+                            <div th:if="${totalPages > 1}">
+                                <div class="row col-sm-12">
+                                    <div class="col-sm-2">
+                                        Total Rows: [[${totalItems}]]
+                                    </div>
+                                    <!--danh sach cac trang-->
+                                    <div class="col-sm-10">
+                                      <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+<!--                                          <a th:if="${currentPage != i}" th:href="@{'/admin/stadium/' + ${i}}" style="color: #666666">[[${i}]]</a>-->
+                                          <a th:if="${currentPage != i}" th:href="@{'/admin/feedbacks/' + ${i}(name=${name}, email=${email})}" style="color: #666666">[[${i}]]</a>
+
+                                          <span th:unless="${currentPage != i}" style="color: #ca0f33">[[${i}]]</span>  &nbsp;
+                                      </span>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>

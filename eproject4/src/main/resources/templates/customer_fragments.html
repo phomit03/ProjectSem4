@@ -96,7 +96,7 @@
                                            th:href="@{/account/info/{id} (id=${session.loggedInUser.id})}">
                                             <i class="icon-user mr-2 color-red"></i> Info Account
                                         </a>
-                                        <a class="dropdown-item dropdown-fix color-grey" href="#">
+                                        <a class="dropdown-item dropdown-fix color-grey" th:href="@{/logged/myticket}">
                                             <i class="icon-ticket mr-2 color-red"></i> My ticket
                                         </a>
                                         <div class="dropdown-divider"></div>
