@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -131,7 +132,7 @@ public class TicketUserController {
             }
             //boolean isPaySucccess = true;
             // xử lý thanh toán ở đây
-            int orderTotal = total*24500;
+            int orderTotal = total*24000*100;
             String orderInfo = "Thanh toan don hang: 123";
             String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
             String vnpayUrl = vnPayService.createOrder(orderTotal, orderInfo, baseUrl);
@@ -166,10 +167,11 @@ public class TicketUserController {
                 });
                 // luu order
                 Order order = new Order();
-                order.setTotalPrice(Long.parseLong(totalPrice)/24500);
+                order.setTotalPrice(Long.parseLong(totalPrice)/2400000);
                 order.setUserId(loggedInUser.getId().intValue());
                 //order.setUserId(15);
                 order.setStatus(true);
+                order.setCreatedAt(new Timestamp(System.currentTimeMillis()));
                 Order ordersucss = orderRepository.save(order);
 
                 // lưu cart vào db
@@ -181,7 +183,7 @@ public class TicketUserController {
                     cart.setUserId(loggedInUser.getId().intValue());
                     //cart.setUserId(15);
                     cart.setTicket((ticketRepository.findIdTicket(ticket1.getTicketId()).get(0)));
-                    cart.setOrderid(ordersucss.getUserId());
+                    cart.setOrderid(ordersucss.getId());
                     cartList.add(cart);
                 }
                 cartService.saveCarts(cartList);
