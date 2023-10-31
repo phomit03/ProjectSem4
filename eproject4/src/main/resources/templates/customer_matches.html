@@ -631,6 +631,10 @@
                 updateDataAndType(offSidesData, "offSide")
                 const cornersData = res.matchDetailDTO.corner;
                 updateDataAndType(cornersData, "corner")
+                const yellow = res.matchDetailDTO.yellow_card;
+                updateDataAndType(yellow, "yellow-cards")
+                const red = res.matchDetailDTO.red_card;
+                updateDataAndType(red, "red-cards")
             }
         });
         //call api match event

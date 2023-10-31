@@ -32,6 +32,8 @@ public class MatchDetailService {
             matchDetail.setShotOnTarget(matchDetailDTO.getShotOnTarget());
             matchDetail.setPossession(matchDetailDTO.getPossession());
             matchDetail.setFoul(matchDetailDTO.getFoul());
+            matchDetail.setYellow_card(matchDetailDTO.getYellow_card());
+            matchDetail.setRed_card(matchDetailDTO.getRed_card());
             matchDetail.setPasses(matchDetailDTO.getPasses());
             matchDetail.setPassAccuracy(matchDetailDTO.getPassAccuracy());
             matchDetail.setOffSide(matchDetailDTO.getOffSide());

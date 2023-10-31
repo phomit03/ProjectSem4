@@ -251,7 +251,7 @@ public class MatchController {
     @PostMapping("/match/detail/update/{id}")
     public String updateMatchDetail(@PathVariable Long id, @ModelAttribute("matchDetailDTO") MatchDetailDTO matchDetailDTO, @RequestParam(value = "update_team_ranking", required = false) Integer update_team_ranking , RedirectAttributes attributes) {
         try {
-            MatchDTO match = matchService.getMatchById(id);
+            MatchDTO match = matchService.getMatchById(matchDetailDTO.getMatch_id());
             if (match.getMatch_time().isAfter(LocalDateTime.now())) {
                 attributes.addFlashAttribute("error", "The match that has not started cannot be edited");
                 return "redirect:/admin/match/edit/" + matchDetailDTO.getMatch_id();

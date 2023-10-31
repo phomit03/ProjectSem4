@@ -57,6 +57,14 @@ public class MatchDetail {
     @MapToDTO
     private String corner;
 
+    @Column(name = "yellow_card")
+    @MapToDTO
+    private String yellow_card;
+
+    @Column(name = "red_card")
+    @MapToDTO
+    private String red_card;
+
     @Column(name = "match_end", columnDefinition = "INT DEFAULT 0")
     @MapToDTO
     private Integer match_end;

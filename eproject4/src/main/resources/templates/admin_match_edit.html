@@ -98,7 +98,7 @@
                             <div class="row mb-3">
                                 <label class="col-sm-3 mb-3 col-form-label">Match Time</label>
                                 <div class="col-sm-9">
-                                    <input type="datetime-local" class="form-control" th:attr="value=${matchDTO.formattedMatchTime}" name="match_time">
+                                    <input type="datetime-local" class="form-control" th:attr="value=${matchDTO.match_time}" name="match_time">
                                 </div>
                             </div>
 
@@ -289,6 +289,18 @@
                                     <div class="form-group">
                                         <label for="detail-corner" class="mb-1">Corner</label>
                                         <input th:field="*{corner}" type="text" name="corner" class="form-control" id="detail-corner">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 mb-3">
+                                    <div class="form-group">
+                                        <label for="detail-corner" class="mb-1">Yellow card</label>
+                                        <input th:field="*{yellow_card}" type="text" name="yellow_card" class="form-control" id="detail-yellow_card">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 mb-3">
+                                    <div class="form-group">
+                                        <label for="detail-corner" class="mb-1">Red card</label>
+                                        <input th:field="*{red_card}" type="text" name="red_card" class="form-control" id="detail-red_card">
                                     </div>
                                 </div>
                                 <div class="col-sm-3 mb-3">
