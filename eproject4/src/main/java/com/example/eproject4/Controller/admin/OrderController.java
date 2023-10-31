@@ -1,19 +1,20 @@
 package com.example.eproject4.Controller.admin;
 
-import com.example.eproject4.Entity.Match;
-import com.example.eproject4.Entity.Team;
-import com.example.eproject4.Entity.Ticket;
-import com.example.eproject4.Entity.User;
+import com.example.eproject4.Entity.*;
 import com.example.eproject4.Entity.cart_order.*;
 import com.example.eproject4.Repository.UserRepository;
 import com.example.eproject4.Repository.cart_order.CartRepository;
 import com.example.eproject4.Repository.cart_order.OrderRepository;
+import com.example.eproject4.Service.OrderService;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
@@ -27,12 +28,39 @@ import java.util.*;
 public class OrderController {
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
+    private final OrderService orderService;
     private final UserRepository userRepository;
 
-    public OrderController(CartRepository cartRepository, OrderRepository orderRepository, UserRepository userRepository) {
+    public OrderController(CartRepository cartRepository,OrderService orderService, OrderRepository orderRepository, UserRepository userRepository) {
         this.cartRepository = cartRepository;
+        this.orderService = orderService;
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
+    }
+    @GetMapping("/admin/order")
+    public String getAllRoles(Model model) {
+        List<Order> orders = orderRepository.findAll();
+        List<User> users = userRepository.findAll();
+        model.addAttribute("title", "Orders");
+        model.addAttribute("orders", orders);
+        model.addAttribute("users", users);
+        return "admin_order";
+    }
+
+    @GetMapping("/admin/order/update/{id}")
+    public String showUpdateForm(@PathVariable("id") int id, Model model) {
+        Order order = orderService.getOrderById(id);
+        model.addAttribute("order", order); // Thay đổi tên attribute thành "order"
+        return "admin_order_update";
+    }
+
+    @PostMapping("/admin/order/update/{id}")
+    public String updateStatus(@PathVariable("id") int id,
+                               @ModelAttribute("order") Order order) {
+        // Trong trường hợp bạn muốn chỉ cập nhật trạng thái (status), bạn không cần lấy thông tin đơn hàng từ giao diện.
+        // Sử dụng tham số id để cập nhật trạng thái
+        orderService.updateOrderStatus(id, order.getStatus());
+        return "redirect:/admin/order";
     }
 
     @GetMapping("/admin/listorder")
@@ -84,6 +112,9 @@ public class OrderController {
             User user = userRepository.findById((long) order.getUserId()).orElse(null);
             listOrderRespond.add(new OrderDetailInfo1(order.getId(),user,order.getTotalPrice(),qrcode,list));
         }
+        List<Order> orders = orderRepository.findAll();
+
+        model.addAttribute("orders", orders);
         model.addAttribute("listOrderRespond", listOrderRespond);
         return "admin_list_order";
     }

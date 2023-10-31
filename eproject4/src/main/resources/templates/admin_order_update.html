@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin_fragments::head"></head>
+
+<style>
+    .table-responsive tbody tr td {
+        vertical-align: middle;
+    }
+</style>
+
+<body>
+<div class="container-fluid position-relative d-flex p-0">
+    <!-- Sidebar Start -->
+    <div th:replace="admin_fragments::sidebar"></div>
+    <!-- Sidebar End -->
+
+
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav th:replace="admin_fragments::navbar"></nav>
+        <!-- Navbar End -->
+
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4" style="display: flex; justify-content: center;">
+                <div class="col-sm-12 col-xl-10">
+                    <div class="bg-secondary rounded h-100 p-4">
+                        <div class="mb-4">
+                            <span style="font-weight: bold">UPDATE ORDER</span>
+                            <a class="mb-4" style="float: right;" th:href="@{/admin/order}">
+                                <i class="fas fa-arrow-left"></i>
+                            </a>
+                        </div>
+                        <form th:action="@{/admin/order/update/{id} (id=${order.id})}"  th:object="${order}" method="post" enctype="multipart/form-data">
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Status</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" id="status" name="status" aria-label="status"
+                                            th:field="*{status}" required>
+                                        <option value="" selected>-- choose option --</option>
+                                        <option value="false" th:selected="${order.status == false}">Inactive</option>
+                                        <option value="true" th:selected="${order.status == true}">Active</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-4" style="float: right">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Back to Top -->
+    <div th:replace="admin_fragments::back-to-top"></div>
+</div>
+
+<div th:replace="admin_fragments::script"></div>
+</body>
+
+</html>
