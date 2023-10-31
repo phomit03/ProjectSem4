@@ -24,10 +24,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Controller
@@ -100,20 +97,33 @@ public class DetailTicketPrintController {
         }
     }
 
-    @GetMapping("/myticket/duy")
+    @GetMapping("/logged/myticket")
     public String myOrder(Model model, HttpSession session) {
         // lấy thông tin người dùng
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         model.addAttribute("loggedInUser", loggedInUser);
         //List<Order> listOrder = orderRepository.findAll();
-        //List<Order> listOrder = orderRepository.findListByUserId(Math.toIntExact(loggedInUser.getId()));
-        List<Order> listOrder = orderRepository.findListByUserId(15);
+        List<Order> listOrder = orderRepository.findListByUserId(Math.toIntExact(loggedInUser.getId()));
+        //List<Order> listOrder = orderRepository.findListByUserId(15);
+
+        //sắp xếp giỏ hàng
+        Collections.sort(listOrder, new Comparator<Order>() {
+            @Override
+            public int compare(Order order1, Order order2) {
+                // So sánh theo thuộc tính timestampField
+                return order1.getCreatedAt().compareTo(order2.getCreatedAt());
+            }
+        });
+
+        // Đảo ngược danh sách (từ lớn đến bé)
+        Collections.reverse(listOrder);
 
         List<OrderDetailInfo> listOrderRespond = new ArrayList<>();
         // lấy giỏ hàng
         for(Order order:listOrder){
             List<Cart> carts = cartRepository.findByOrder(order.getId());
             List<TicketDetailInfo> list = new ArrayList<>();
+
             for (Cart cart : carts) {
                 // thông tin vé
                 Ticket ticket = cart.getTicket();
@@ -171,7 +181,7 @@ public class DetailTicketPrintController {
             // lấy giỏ hàng
             List<Cart> carts = cartRepository.findByOrder(id);
             List<TicketDetailInfo> list = new ArrayList<>();
-            int total = 0;
+            //int total = 0;
             for (Cart cart : carts) {
                 // thông tin vé
                 Ticket ticket = cart.getTicket();
