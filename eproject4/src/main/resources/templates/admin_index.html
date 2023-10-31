@@ -31,10 +31,10 @@
             <div class="row g-4">
                 <div class="col-sm-6 col-xl-3">
                     <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                        <i class="fa fa-chart-line fa-3x text-primary"></i>
+                        <i class="fa fa-chart-area fa-3x text-primary"></i>
                         <div class="ms-3">
-                            <p class="mb-2">Today Sale</p>
-                            <h6 class="mb-0">$1234</h6>
+                            <p class="mb-2">Today Revenue</p>
+                            <h6 class="mb-0" th:text="'$' + ${totalAmountOfToday}"></h6>
                         </div>
                     </div>
                 </div>
@@ -42,17 +42,17 @@
                     <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
                         <i class="fa fa-chart-bar fa-3x text-primary"></i>
                         <div class="ms-3">
-                            <p class="mb-2">Total Sale</p>
-                            <h6 class="mb-0">$1234</h6>
+                            <p class="mb-2">Revenue</p>
+                            <h6 class="mb-0" th:text="'$' + ${totalAmount}"></h6>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-xl-3">
                     <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                        <i class="fa fa-chart-area fa-3x text-primary"></i>
+                        <i class="fa fa-chart-line fa-3x text-primary"></i>
                         <div class="ms-3">
-                            <p class="mb-2">Today Revenue</p>
-                            <h6 class="mb-0">$1234</h6>
+                            <p class="mb-2">Today Order</p>
+                            <h6 class="mb-0" th:text="${orderTodayCount}"></h6>
                         </div>
                     </div>
                 </div>
@@ -60,8 +60,8 @@
                     <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
                         <i class="fa fa-chart-pie fa-3x text-primary"></i>
                         <div class="ms-3">
-                            <p class="mb-2">Total Revenue</p>
-                            <h6 class="mb-0">$1234</h6>
+                            <p class="mb-2">Number of orders</p>
+                            <h6 class="mb-0" th:text="${totalOrderCount}"></h6>
                         </div>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                 <div class="col-sm-12 col-xl-6">
                     <div class="bg-secondary text-center rounded p-4">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0">Worldwide Sales</h6>
+                            <h6 class="mb-0">Order Revenue</h6>
                             <a href="">Show All</a>
                         </div>
                         <canvas id="worldwide-sales"></canvas>
@@ -85,7 +85,7 @@
                 <div class="col-sm-12 col-xl-6">
                     <div class="bg-secondary text-center rounded p-4">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0">Salse & Revenue</h6>
+                            <h6 class="mb-0">Number of orders</h6>
                             <a href="">Show All</a>
                         </div>
                         <canvas id="salse-revenue"></canvas>
@@ -125,25 +125,18 @@
     });
     $.ajax({
         type: 'GET',
-        url: '/api/orders/last7days',
+        url: '/api/orders/total-amount-last7days-by-day',
         success: function (res) {
-            console.log(res);
-            const orderDTOS = res.orderDTOS;
-            const labels = orderDTOS.map(order => {
-                const isoDate = new Date(order.createdAt);
+            const labels = res.map(item => {
+                const isoDate = new Date(item[0]);
                 const day = isoDate.getDate();
                 const month = isoDate.getMonth() + 1;
                 return day + '/' + month;
             });
-            const orderData = orderDTOS.map(order => order.totalPrice);
+            const totalAmounts = res.map(item => item[1]);
             myChart1.data.labels = labels;
-            myChart1.data.datasets[0].data = orderData;
+            myChart1.data.datasets[0].data = totalAmounts;
             myChart1.update();
-
-
-            myChart2.data.labels = labels;
-            myChart2.data.datasets[0].data = orderData;
-            myChart2.update();
         }
     });
 
@@ -161,6 +154,22 @@
         },
         options: {
             responsive: true
+        }
+    });
+    $.ajax({
+        type: 'GET',
+        url: '/api/orders/count-last7days-by-day',
+        success: function (data) {
+            const labels = data.map(item => {
+                const isoDate = new Date(item[0]);
+                const day = isoDate.getDate();
+                const month = isoDate.getMonth() + 1;
+                return day + '/' + month;
+            });
+            const orderCounts = data.map(item => item[1]);
+            myChart2.data.labels = labels;
+            myChart2.data.datasets[0].data = orderCounts;
+            myChart2.update();
         }
     });
 </script>

@@ -88,4 +88,16 @@ public class ApiController {
         response.put("orderDTOS", orderDTOS);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/orders/count-last7days-by-day")
+    public ResponseEntity<List<Object[]>> getCountOfOrdersInLast7DaysByDay() {
+        List<Object[]> orderCounts = orderService.countOrdersInLast7DaysByDay();
+        return ResponseEntity.ok(orderCounts);
+    }
+
+    @GetMapping("/orders/total-amount-last7days-by-day")
+    public ResponseEntity<List<Object[]>> getTotalAmountByDayInLast7Days() {
+        List<Object[]> totalAmountsByDay = orderService.getTotalAmountByDayInLast7Days();
+        return ResponseEntity.ok(totalAmountsByDay);
+    }
 }
