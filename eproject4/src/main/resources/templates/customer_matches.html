@@ -671,9 +671,13 @@
 
     function updateDataAndType(matchDetailString, typeString) {
         const [homeData, awayData] = matchDetailString.split(':');
-
-        $('.match-detail-home-' + typeString).empty().text(homeData);
-        $('.match-detail-away-' + typeString).empty().text(awayData);
+        if (typeString === "passAccuracy" || typeString === "possession") {
+            $('.match-detail-home-' + typeString).empty().text(homeData + '%');
+            $('.match-detail-away-' + typeString).empty().text(awayData + '%');
+        } else {
+            $('.match-detail-home-' + typeString).empty().text(homeData);
+            $('.match-detail-away-' + typeString).empty().text(awayData);
+        }
     }
 </script>
 
