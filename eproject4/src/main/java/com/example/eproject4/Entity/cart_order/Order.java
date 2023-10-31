@@ -17,17 +17,20 @@ import java.sql.Timestamp;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @MapToDTO
     private int id;
 
     @Column(name = "user_id")
+    @MapToDTO
     private int userId;
+    @MapToDTO
     private float totalPrice;
 
     private Boolean status;
-
+    @MapToDTO
     @Column(name = "created_at")
     private Timestamp createdAt;
-
+    @MapToDTO
     @Column(name = "updated_at")
     private Timestamp updatedAt;
 

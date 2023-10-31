@@ -7,11 +7,6 @@
   .table-responsive tbody tr td {
     vertical-align: middle;
   }
-
-  .flex-items {
-    display: flex;
-    justify-content: space-between;
-  }
 </style>
 
 <body>
@@ -34,70 +29,60 @@
         <div class="row g-4 align-items-center">
           <div class="col-6">
             <div class="input-group">
-              <form th:action="@{/admin/area}" method="get">
-                <label><input placeholder="Area Name" class="form-control" type="text" name="area_name" th:value="${area_name}" /></label>
-                <label><input placeholder="Stadium" class="form-control" type="text" name="name_stadium" th:value="${name_stadium}" /></label>
-                <label>
-                  <select class="form-control" name="status">
-                    <option value="" selected>Choose Status</option>
-                    <option value="1">Active</option>
-                    <option value="0">Inactive</option>
-                  </select>
-                </label>
-                <button class="btn btn-primary" type="submit">Search</button>
-              </form>
+              <input type="text" class="form-control" placeholder="Search...">
+              <button class="btn btn-primary" type="submit">Search</button>
             </div>
           </div>
-
+          <div class="col-6 text-end">
+            <a th:href="@{/admin/video_highlight/create}">
+              <button type="button" class="btn btn-primary m-2" style="float: right">
+                + Video Highlight
+              </button>
+            </a>
+          </div>
         </div>
 
         <div class="col-12">
           <div class="bg-secondary rounded h-100 p-4">
-            <div class="flex-items">
-              <h6 class="mb-4">LIST AREA</h6>
-              <div class="col-6 text-end">
-                <a th:href="@{/admin/area/create}">
-                  <button type="button" class="btn btn-primary m-2" style="float: right">
-                    + Area
-                  </button>
-                </a>
-              </div>
-            </div>
-
+            <h6 class="mb-4">LIST VIDEO HIGHLIGHT</h6>
             <div class="table-responsive">
               <table class="table">
                 <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Area Name</th>
-                  <th scope="col">Stadium</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Video Link</th>
                   <th scope="col">Status</th>
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
-                <tbody th:if="${areas != null and #lists.size(areas) > 0}">
-                <tr th:each="area, iterStat : ${areas}" th:class="'area-' + ${area.id}">
+                <tbody th:if="${videoHighlights != null and #lists.size(videoHighlights) > 0}">
+                <tr th:each="videoHighlight, iterStat : ${videoHighlights}" th:class="'videoHighlight-' + ${videoHighlight.id}">
                   <td th:text="${iterStat.index + 1}"></td>
-                  <td th:text="${area.area_name}"></td>
-                  <td th:text="${area.stadium.name}"></td>
+                  <td th:text="${videoHighlight.title}"></td>
                   <td>
-                    <th:block th:if="${area.status == 1}">
+                    <img style="width: 70px; max-height: 100px" th:src="@{${videoHighlight.image}}">
+                  </td>
+                  <td><a th:href="${videoHighlight.video_link}" th:text="${videoHighlight.video_link}"></a></td>
+                  <td>
+                    <th:block th:if="${videoHighlight.status == 1}">
                       Active
                     </th:block>
                     <span style="color: #EB1616">
-                      <th:block th:if="${area.status == 0}">
+                      <th:block th:if="${videoHighlight.status == 0}">
                         Inactive
                       </th:block>
                     </span>
                   </td>
                   <td>
                     <button class="btn">
-                      <a th:href="@{/admin/area/update/{id} (id=${area.id})}">
+                      <a th:href="@{/admin/video_highlight/update/{id} (id=${videoHighlight.id})}">
                         <i class="fas fa-pencil-alt"></i>
                       </a>
                     </button>
                     <button class="btn">
-                      <a th:data-id="${area.id}"
+                      <a th:data-id="${videoHighlight.id}"
                          class="delete-btn">
                         <i class="fas fa-trash"></i>
                       </a>
@@ -105,7 +90,7 @@
                   </td>
                 </tr>
                 </tbody>
-                <tbody th:if="${areas == null or #lists.size(areas) == 0}">
+                <tbody th:if="${videoHighlights == null or #lists.size(videoHighlights) == 0}">
                 <tr>
                   <td colspan="8" style="text-align: center; padding: 10px 0px;">No data</td>
                 </tr>
@@ -113,16 +98,14 @@
               </table>
 
               <div th:if = "${totalPages > 1}">
-                <div class="row col-sm-12">
-                  <div class="col-sm-2">
+                <div class = "row col-sm-12">
+                  <div class = "col-sm-2">
                     Total Rows: [[${totalItems}]]
                   </div>
                   <!--danh sach cac trang-->
-                  <div class = "col-sm-10">
+                  <div class = "col-sm-1">
                       <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-<!--                        <a th:if="${currentPage != i}" th:href="@{'/admin/area/' + ${i}}" style="color: #666666">[[${i}]]</a>-->
-                        <a th:if="${currentPage != i}" th:href="@{'/admin/area/' + ${i}(area_name=${area_name},name_stadium=${name_stadium}, status=${status})}" style="color: #666666">[[${i}]]</a>
-
+                          <a th:if="${currentPage != i}" th:href="@{'/admin/video_highlights/' + ${i}}" style="color: #666666">[[${i}]]</a>
                           <span th:unless="${currentPage != i}" style="color: #ca0f33">[[${i}]]</span> &nbsp;
                       </span>
                   </div>
@@ -148,7 +131,7 @@
 <script>
   $('.delete-btn').click(function () {
     var id = $(this).attr('data-id');
-    var newRow = $('.area-' + id);
+    var videoHighlightRow = $('.videoHighlightRow-' + id);
     Swal.fire({
       title: 'Are you sure you want to delete this item?',
       text: "You won't be able to revert this!",
@@ -160,9 +143,9 @@
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({
-          url: "/admin/area/delete/" + id,
+          url: "/admin/video_highlight/delete/" + id,
           success: function () {
-            newRow.remove();
+            videoHighlightRow.remove();
             Swal.fire(
                     'Success',
                     'Delete success',

@@ -29,11 +29,7 @@ import java.util.stream.Collectors;
 @Service
 public class MatchService {
     @Autowired
-    private Helper helper;
-    @Autowired
     private final MatchRepository matchRepository;
-    @Autowired
-    private MatchDetailService matchDetailService;
     @Autowired
     private MatchDetailRepository matchDetailRepository;
     @Autowired

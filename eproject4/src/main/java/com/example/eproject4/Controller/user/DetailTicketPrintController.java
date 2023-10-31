@@ -83,7 +83,7 @@ public class DetailTicketPrintController {
                 Float price = ticket.getPrice();
                 String area = ticket.getArea().getArea_name();
                 // thêm thông tin vé
-                TicketDetailInfo info = new TicketDetailInfo(name_a, image_a, name_b, image_b, date, hour, price, area, stadium);
+                TicketDetailInfo info = new TicketDetailInfo(name_a, image_a, name_b, image_b, date, hour, price, area, stadium, time);
                 for (int i = 0; i < cart.getQuantity(); i++) {
                     list.add(info);
                 }
@@ -99,6 +99,11 @@ public class DetailTicketPrintController {
 
     @GetMapping("/logged/myticket")
     public String myOrder(Model model, HttpSession session) {
+        model.addAttribute("overlay_title", "My Ticket");
+        model.addAttribute("title", "My Ticket");
+        model.addAttribute("description", "Your ticket orders are stored here");
+
+
         // lấy thông tin người dùng
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         model.addAttribute("loggedInUser", loggedInUser);
@@ -145,7 +150,7 @@ public class DetailTicketPrintController {
                 Float price = ticket.getPrice();
                 String area = ticket.getArea().getArea_name();
                 // thêm thông tin vé
-                TicketDetailInfo info = new TicketDetailInfo(name_a, image_a, name_b, image_b, date, hour, price, area, stadium);
+                TicketDetailInfo info = new TicketDetailInfo(name_a, image_a, name_b, image_b, date, hour, price, area, stadium, time);
                 for (int i = 0; i < cart.getQuantity(); i++) {
                     list.add(info);
                 }
@@ -204,7 +209,7 @@ public class DetailTicketPrintController {
                 String area = ticket.getArea().getArea_name();
                 // thêm thông tin vé
                 TicketDetailInfo info = new TicketDetailInfo(name_a, image_a, name_b, image_b, date, hour, price,
-                        area, stadium);
+                        area, stadium, time);
                 for (int i = 0; i < cart.getQuantity(); i++) {
                     list.add(info);
                 }

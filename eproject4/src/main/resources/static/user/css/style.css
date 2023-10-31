@@ -1577,7 +1577,6 @@ input[type=text] {
 }
 
 .match-detail {
-  float: right;
   padding: 1rem 1rem 0 1rem;
   /*border: 1px solid #0d0f13;*/
   color: white;
@@ -1585,6 +1584,7 @@ input[type=text] {
   border-radius: 10px;
   font-size: 14px;
   cursor: pointer;
+  width: 160px;
 }
 
 /*pop-up match detail*/

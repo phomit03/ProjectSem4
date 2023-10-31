@@ -100,7 +100,7 @@
                                     <span class="vs">
                                         <span style="font-size: 35px; border-radius: 12px; padding: 0 10px;" th:class="'match-over-score-' + ${recentMatchesbyTeam.id}"></span>
                                         <div th:class="'match-detail'" onclick="openMatchPopup()" th:data-match-id="${recentMatchesbyTeam.id}" th:data-home-id="${recentMatchesbyTeam.home_team.id}" th:data-away-id="${recentMatchesbyTeam.away_team.id}">
-                                    <i class="icon-info_outline mr-1"></i> Match details
+                                    <i class="icon-info_outline mr-1"></i> Match details (click here)
                                 </div>
                                     </span>
                                     </div>
@@ -390,6 +390,8 @@
         </div>
     </div>
 </div>
+
+<!--pop up matches-->
 <script>
     function openMatchPopup() {
         document.getElementById("matchPopup").style.display = "flex";
@@ -400,7 +402,7 @@
     }
 </script>
 
-<!--pop up-->
+<!--pop up player-->
 <div class="popup-container" id="playerDetailPopup" onclick="closePlayerPopup()">
     <div class="popup-content">
         <div class="modal-header" style="padding: 0.5rem 0; border-bottom: 1px solid #dee2e6;">

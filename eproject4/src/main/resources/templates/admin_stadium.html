@@ -4,6 +4,12 @@
 <head th:replace="admin_fragments::head"></head>
 
 <body>
+<style>
+    .flex-items {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
 <div class="container-fluid position-relative d-flex p-0">
     <!-- Spinner Start -->
     <!--        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">-->
@@ -45,18 +51,22 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-6 text-end">
-                        <a th:href="@{/admin/stadium/new}">
-                            <button type="button" class="btn btn-primary m-2">
-                                + Stadium
-                            </button>
-                        </a>
-                    </div>
+
                 </div>
 
                 <div class="col-12">
                     <div class="bg-secondary rounded h-100 p-4">
-                        <h6 class="mb-4">LIST STADIUM</h6>
+                        <div class="flex-items">
+                            <h6 class="mb-4">LIST STADIUM</h6>
+                            <div class="col-6 text-end">
+                                <a th:href="@{/admin/stadium/new}">
+                                    <button type="button" class="btn btn-primary m-2">
+                                        + Stadium
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>

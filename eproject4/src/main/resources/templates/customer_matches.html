@@ -35,8 +35,8 @@
                                 <ul th:class="'list-unstyled away-team-event-' + ${match.id}">
                                 </ul>
                                 <div th:class="'match-detail'" onclick="openMatchPopup()" th:data-match-id="${match.id}"
-                                     th:data-home-id="${match.home_team.id}" th:data-away-id="${match.away_team.id}">
-                                    <i class="icon-info_outline mr-1"></i> Match details
+                                     th:data-home-id="${match.home_team.id}" th:data-away-id="${match.away_team.id}" style="float: right">
+                                    <i class="icon-info_outline mr-1"></i> Match details (click here)
                                 </div>
                             </div>
                         </div>
@@ -176,7 +176,7 @@
                                         <div th:class="'match-detail'" onclick="openMatchPopup()"
                                              th:data-match-id="${match.id}" th:data-home-id="${match.home_team.id}"
                                              th:data-away-id="${match.away_team.id}">
-                                            <i class="icon-info_outline mr-1"></i> Match details
+                                            <i class="icon-info_outline mr-1"></i> Match details (click here)
                                         </div>
                                     </span>
                                 </div>

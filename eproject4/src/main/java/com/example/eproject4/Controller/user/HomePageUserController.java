@@ -4,6 +4,7 @@ import com.example.eproject4.DTO.Response.MatchDTO;
 import com.example.eproject4.DTO.Response.TeamConclusionDTO;
 import com.example.eproject4.Entity.Match;
 import com.example.eproject4.Entity.New;
+import com.example.eproject4.Entity.VideoHighlight;
 import com.example.eproject4.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,8 @@ public class HomePageUserController {
     private MatchDetailEventService matchDetailEventService;
     @Autowired
     private NewService newService;
+    @Autowired
+    private VideoHighlightService videoHighlightService;
 
     @RequestMapping("/")
     public String home(Model model) {
@@ -52,6 +55,10 @@ public class HomePageUserController {
         List<TeamConclusionDTO> teamConclusionDTOS = teamConclusionService.findAllOrderByPointDesc();
         List<TeamConclusionDTO> limitedTeamConclusionDTOS = teamConclusionDTOS.subList(0, Math.min(teamConclusionDTOS.size(), 8));
         model.addAttribute("teamConclusionDTOS", limitedTeamConclusionDTOS);
+
+        //video-highlight
+        List<VideoHighlight> lastedVideoHighlights = videoHighlightService.getLatestVideoHighlight();
+        model.addAttribute("lastedVideoHighlights", lastedVideoHighlights);
 
         return "customer_homepage";
     }
@@ -77,6 +84,10 @@ public class HomePageUserController {
         List<TeamConclusionDTO> teamConclusionDTOS = teamConclusionService.findAllOrderByPointDesc();
         List<TeamConclusionDTO> limitedTeamConclusionDTOS = teamConclusionDTOS.subList(0, Math.min(teamConclusionDTOS.size(), 8));
         model.addAttribute("teamConclusionDTOS", limitedTeamConclusionDTOS);
+
+        //video-highlight
+        List<VideoHighlight> lastedVideoHighlights = videoHighlightService.getLatestVideoHighlight();
+        model.addAttribute("lastedVideoHighlights", lastedVideoHighlights);
 
         return "customer_homepage";
     }

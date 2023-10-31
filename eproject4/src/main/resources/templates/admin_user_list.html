@@ -7,6 +7,11 @@
     .table-responsive tbody tr td {
         vertical-align: middle;
     }
+
+    .flex-items {
+        display: flex;
+        justify-content: space-between;
+    }
 </style>
 
 <body>
@@ -41,18 +46,22 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-6 text-end">
-                        <a>
-                            <button type="button" class="btn btn-primary m-2" style="float: right">
-                                User
-                            </button>
-                        </a>
-                    </div>
+
                 </div>
 
                 <div class="col-12">
                     <div class="bg-secondary rounded h-100 p-4">
-                        <h6 class="mb-4">LIST USER</h6>
+                        <div class="flex-items">
+                            <h6 class="mb-4">LIST USER</h6>
+                            <div class="col-6 text-end">
+                                <a>
+                                    <button type="button" class="btn btn-primary m-2" style="float: right">
+                                        User
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
