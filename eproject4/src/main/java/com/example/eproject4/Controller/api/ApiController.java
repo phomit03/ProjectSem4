@@ -2,18 +2,14 @@ package com.example.eproject4.Controller.api;
 
 import com.example.eproject4.DTO.Response.MatchDetailDTO;
 import com.example.eproject4.DTO.Response.MatchDetailEventDTO;
+import com.example.eproject4.DTO.Response.OrderDTO;
 import com.example.eproject4.DTO.Response.PlayerDTO;
 import com.example.eproject4.Entity.Player;
-import com.example.eproject4.Service.MatchDetailEventService;
-import com.example.eproject4.Service.MatchDetailService;
-import com.example.eproject4.Service.MatchService;
-import com.example.eproject4.Service.PlayerService;
+import com.example.eproject4.Entity.cart_order.Order;
+import com.example.eproject4.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
@@ -29,6 +25,8 @@ public class ApiController {
     private MatchService matchService;
     @Autowired
     private PlayerService playerService;
+    @Autowired
+    private OrderService orderService;
 
     @PostMapping("/getTeamEvent")
     public ResponseEntity<Map<String, Object>> getTeamEvent(@RequestBody Map<String, Object> requestBody, RedirectAttributes attributes) {
@@ -81,5 +79,13 @@ public class ApiController {
         Long playerId = Long.parseLong(requestBody.get("id").toString());
         PlayerDTO playerDTO = playerService.getPlayerById(playerId);
         return ResponseEntity.ok(playerDTO);
+    }
+
+    @GetMapping("/orders/last7days")
+    public ResponseEntity<Map<String, Object>> getOrdersForLast7Days() {
+        List<OrderDTO> orderDTOS = orderService.getOrdersForLast7Days();
+        Map<String, Object> response = new HashMap<>();
+        response.put("orderDTOS", orderDTOS);
+        return ResponseEntity.ok(response);
     }
 }

@@ -16,4 +16,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     //lấy giỏ hàng qua order
     @Query("SELECT c FROM Order c WHERE c.userId = :userId ")
     List<Order> findListByUserId(@Param("userId") int orderId);
+
+    List<Order> findTop7ByOrderByCreatedAtAsc();
 }
