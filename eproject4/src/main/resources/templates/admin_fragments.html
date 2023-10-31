@@ -78,6 +78,9 @@
             <a th:href="@{/admin/new}" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/admin/new') ? 'active' : ''}">
                 <i class="fa fa-th me-2"></i>News
             </a>
+            <a th:href="@{/admin/video_highlights}" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/admin/video_highlights') ? 'active' : ''}">
+                <i class="fa fa-th me-2"></i>Video Highlights
+            </a>
             <a th:href="@{/admin/matches}" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/admin/match') ? 'active' : ''}">
                 <i class="fa fa-th me-2"></i>Matches
             </a>
