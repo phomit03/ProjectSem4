@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin_fragments::head"></head>
+
+<style>
+    .table-responsive tbody tr td {
+        vertical-align: middle;
+    }
+</style>
+
+<body>
+<div class="container-fluid position-relative d-flex p-0">
+    <!-- Sidebar Start -->
+    <div th:replace="admin_fragments::sidebar"></div>
+    <!-- Sidebar End -->
+
+
+    <!-- Content Start -->
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav th:replace="admin_fragments::navbar"></nav>
+        <!-- Navbar End -->
+
+
+        <!--CONTENT HERE-->
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4">
+
+                <div class="col-12">
+                    <div class="bg-secondary rounded h-100 p-4">
+                        <div class="flex-items">
+                            <h6 class="mb-4">LIST ORDER</h6>
+                        </div>
+                        <div class="table-responsive">
+                            <div>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Total Price</th>
+                                        <th scope="col">Tên người dùng</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="order,iterStat : ${orders}">
+
+                                        <td th:text="${iterStat.index + 1}"></td>
+                                        <td th:text="${order.totalPrice}"></td>
+                                        <td th:text="${order.users.fullName}"></td>
+                                        <td>
+                                            <th:block th:if="${order.status == true}">
+                                                Active
+                                            </th:block>
+                                            <span style="color: #EB1616">
+                                          <th:block th:if="${order.status == false}">
+                                            Inactive
+                                          </th:block>
+                                        </span>
+                                        </td>
+                                        <td>
+                                            <button class="btn">
+                                                <a th:href="@{/admin/order/update/{id} (id=${order.id})}">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div th:unless="${orders != null and not #lists.isEmpty(orders)}">
+                                <p>Not Order</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        </div>
+    </div>
+    <!--/END CONTENT-->
+</div>
+<!-- Content End -->
+
+
+<!-- Back to Top -->
+<div th:replace="admin_fragments::back-to-top"></div>
+</div>
+
+<div th:replace="admin_fragments::script"></div>
+
+<script>
+    $('.delete-btn').click(function () {
+        var id = $(this).attr('data-id');
+        var newRow = $('.area-' + id);
+        Swal.fire({
+            title: 'Are you sure you want to delete this item?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "/admin/area/delete/" + id,
+                    success: function () {
+                        newRow.remove();
+                        Swal.fire(
+                            'Success',
+                            'Delete success',
+                            'success'
+                        );
+                    }
+                })
+            }
+        })
+    })
+</script>
+
+<div class="message" th:if="${error}" th:data="${error}" style="  display: none"></div>
+
+<script th:if="${error}">
+    $( document ).ready(function() {
+        var message = $('.message').attr('data');
+        Swal.fire(
+            'Error',
+            message,
+            'error'
+        )
+    });
+</script>
+
+<div class="message" th:if="${success}" th:data="${success}" style="display: none"></div>
+
+<script th:if="${success}">
+    $( document ).ready(function() {
+        var message = $('.message').attr('data');
+        Swal.fire(
+            'Success',
+            message,
+            'success'
+        )
+    });
+</script>
+
+</body>
+
+</html>

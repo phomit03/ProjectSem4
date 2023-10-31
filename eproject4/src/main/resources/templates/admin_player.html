@@ -57,7 +57,6 @@
                                 </a>
                             </div>
                         </div>
-
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -139,6 +138,89 @@
                 </div>
             </div>
         </div>
+        <div class="container-fluid pt-4 px-4">
+            <div class="row g-4">
+
+                <div class="row g-4 align-items-center">
+                    <div class="col-6">
+                        <div class="input-group">
+
+                        </div>
+                    </div>
+                    <div class="col-6 text-end">
+                        <a>
+                            <button type="button" class="btn btn-primary m-2" style="float: right">
+                                Order
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-12">
+
+                    <div class="bg-secondary rounded h-100 p-4">
+                        <div class="flex-items">
+                            <h6 class="mb-4">LIST ORDER</h6>
+                            <div class="col-6 text-end">
+                                <a>
+                                    <button type="button" class="btn btn-primary m-2" style="float: right">
+                                        Order
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <div>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Total Price</th>
+                                        <th scope="col">Tên người dùng</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="order,iterStat : ${orders}">
+
+                                        <td th:text="${iterStat.index + 1}"></td>
+                                        <td th:text="${order.totalPrice}"></td>
+                                        <td th:text="${order.users.fullName}"></td>
+                                        <td>
+                                            <th:block th:if="${order.status == true}">
+                                                Active
+                                            </th:block>
+                                            <span style="color: #EB1616">
+                                          <th:block th:if="${order.status == false}">
+                                            Inactive
+                                          </th:block>
+                                        </span>
+                                        </td>
+                                        <td>
+                                            <button class="btn">
+                                                <a th:href="@{/admin/order/update/{id} (id=${order.id})}">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div th:unless="${orders != null and not #lists.isEmpty(orders)}">
+                                <p>Not Order</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
     </div>
     <!--/END CONTENT-->
 </div>
