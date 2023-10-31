@@ -7,6 +7,10 @@
     .table-responsive tbody tr td {
         vertical-align: middle;
     }
+    .flex-items {
+        display: flex;
+        justify-content: space-between;
+    }
 </style>
 
 <body>
@@ -30,26 +34,30 @@
                     <div class="col-6">
                         <div class="input-group">
                             <form th:action="@{/admin/player}" method="get">
-                                <label>Name: <input class="form-control" type="text" name="name" th:value="${name}" /></label>
-                                <label>Team: <input class="form-control" type="text" name="team" th:value="${team}" /></label>
-                                <label>National: <input class="form-control" type="text" name="national" th:value="${national}" /></label>
-                                <label>Position: <input class="form-control" type="text" name="position" th:value="${position}" /></label>
+                                <label>Name: <input class="form-control" type="text" name="name" placeholder="Kevin Trap" th:value="${name}" /></label>
+                                <label>Team: <input class="form-control" type="text" name="team" placeholder="Manchester City" th:value="${team}" /></label>
+                                <label>National: <input class="form-control" type="text" name="national" placeholder="France" th:value="${national}" /></label>
+                                <label>Position: <input class="form-control" type="text" name="position" placeholder="Defender" th:value="${position}" /></label>
                                 <button class="btn btn-primary" type="submit">Search</button>
                             </form>
                         </div>
                     </div>
-                    <div class="col-6 text-end">
-                        <a th:href="@{/admin/player/create}">
-                            <button type="button" class="btn btn-primary m-2" style="float: right">
-                                + Player
-                            </button>
-                        </a>
-                    </div>
+
                 </div>
 
                 <div class="col-12">
                     <div class="bg-secondary rounded h-100 p-4">
-                        <h6 class="mb-4">LIST PLAYER</h6>
+                        <div class="flex-items">
+                            <h6 class="mb-4">LIST PLAYER</h6>
+                            <div class="col-6 text-end">
+                                <a th:href="@{/admin/player/create}">
+                                    <button type="button" class="btn btn-primary m-2" style="float: right">
+                                        + Player
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>

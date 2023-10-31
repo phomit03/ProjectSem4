@@ -8,6 +8,11 @@
     tr td {
         vertical-align: middle;
     }
+
+    .flex-items {
+        display: flex;
+        justify-content: space-between;
+    }
 </style>
 <div class="container-fluid position-relative d-flex p-0">
     <!-- Spinner Start -->
@@ -52,17 +57,21 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-6 text-end">
-                        <a th:href="@{/admin/match/new}">
-                            <button type="button" class="btn btn-primary m-2" style="float: right">
-                                + Match
-                            </button>
-                        </a>
-                    </div>
+
                 </div>
                 <div class="col-12">
                     <div class="bg-secondary rounded h-100 p-4">
-                        <h6 class="mb-4">LIST MATCH</h6>
+                        <div class="flex-items">
+                            <h6 class="mb-4">LIST MATCH</h6>
+                            <div class="col-6 text-end">
+                                <a th:href="@{/admin/match/new}">
+                                    <button type="button" class="btn btn-primary m-2" style="float: right">
+                                        + Match
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
