@@ -75,7 +75,7 @@ public class TicketService {
         ticket.setArea_id(areaDTO.getId());
         ticket.setMatch_id(matchId);
         ticket.setQuantity(100);
-        ticket.setPrice(100F);
+        ticket.setPrice(30F);
         ticket.setStatus(1);
 
         ticket = ticketRepository.save(ticket);
@@ -137,14 +137,6 @@ public class TicketService {
         return matchRepository.findMatchesBeforeTimeThreshold(saleTime);
     }
 
-    /*public List<TicketDTO> getAllTicketsByIdMath(int matchid) {
-
-        List<Ticket> tickets = ticketRepository.findByMatchId(matchid);
-
-        return tickets.stream().map(ticket -> modelToDtoConverter.convertToDto(ticket, TicketDTO.class))
-                .collect(Collectors.toList());
-    }*/
-
     public List<Ticket> getAllTicketsByIdMath(int matchid) {
 
         long longValue = (long) matchid;
@@ -154,18 +146,7 @@ public class TicketService {
 
     }
 
-    /*public List<Ticket> getAllTicketsById(int matchid) {
-
-        long longValue = (long) matchid;
-        List<Ticket> tickets = ticketRepository.findByMatchId(matchRepository.findById(longValue));
-        return  tickets;
-
-    }*/
-
-    //    public List<Match> getPastMatches() {
-//        return matchRepository.findPastMatches();
-//    }
-//phan trang
+    //phan trang
     public Page<Ticket> findPaginated(int pageNo, int pageSize) {
 
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);

@@ -25,10 +25,11 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
 
     @Query("SELECT m FROM Match m " +
             "JOIN MatchDetail md ON m.id = md.match_id " +
-            "WHERE m.match_time <= :currentTime " +
+            "WHERE m.match_time >= :currentTime " +
+            "AND m.match_time < :currentTime2 " +
             "AND (md.match_end = 0 OR md.match_end IS NULL) " +
             "ORDER BY m.match_time DESC")
-    List<Match> findLiveMatches(@Param("currentTime") LocalDateTime currentTime);
+    List<Match> findLiveMatches(@Param("currentTime") LocalDateTime currentTime, @Param("currentTime2") LocalDateTime currentTime2);
 
     @Query("SELECT m FROM Match m " +
             "JOIN MatchDetail md ON m.id = md.match_id " +
@@ -78,6 +79,7 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
             " AND (:email is null or email like  CONCAT('%',:email,'%'))", nativeQuery = true)
     List<User> searchUsers(@Param("username") String username, @Param("status") Integer status,
                            @Param("phone") String phone, @Param("email") String email, Pageable pageable);
+
     // search
     @Query(value = "SELECT m.* FROM matches m " +
             "LEFT JOIN team t ON m.home_team_id = t.id " +
@@ -85,7 +87,8 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
             "WHERE (:match_time is null or m.match_time like CONCAT('%',:match_time,'%')) " +
             "AND (:home_team_id is null or t.name like CONCAT('%',:home_team_id,'%')) " +
             "AND (:away_team_id is null or x.name like CONCAT('%',:away_team_id,'%')) " +
-            "AND (:status is null or m.status like CONCAT('%',:status,'%')) ", nativeQuery = true)
+            "AND (:status is null or m.status like CONCAT('%',:status,'%')) " +
+            "ORDER BY match_time DESC", nativeQuery = true)
     List<Match> searchMatches(@Param("match_time") LocalDate matchTime,
                               @Param("home_team_id") String homeTeam,
                               @Param("away_team_id") String awayTeam,
@@ -97,7 +100,8 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
             "WHERE (:match_time is null or m.match_time like CONCAT('%',:match_time,'%')) " +
             "AND (:home_team_id is null or t.name like CONCAT('%',:home_team_id,'%')) " +
             "AND (:away_team_id is null or x.name like CONCAT('%',:away_team_id,'%')) " +
-            "AND (:status is null or m.status like CONCAT('%',:status,'%')) ", nativeQuery = true)
+            "AND (:status is null or m.status like CONCAT('%',:status,'%')) " +
+            "ORDER BY match_time DESC", nativeQuery = true)
     List<Match> searchMatches1(@Param("match_time") LocalDate  matchTime,
                               @Param("home_team_id") String homeTeam,
                               @Param("away_team_id") String awayTeam,

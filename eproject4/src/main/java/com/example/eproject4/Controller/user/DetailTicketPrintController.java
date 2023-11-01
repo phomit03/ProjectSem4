@@ -120,7 +120,7 @@ public class DetailTicketPrintController {
             }
         });
 
-        // Đảo ngược danh sách (từ lớn đến bé)
+        // Đảo ngược danh sách (từ moi đến cu)
         Collections.reverse(listOrder);
 
         List<OrderDetailInfo> listOrderRespond = new ArrayList<>();

@@ -53,7 +53,7 @@ public class AreaService {
         Area area = new Area();
 
         area.setArea_name(areaDTO.getArea_name());
-        area.setStadium(areaDTO.getStadium());
+        area.setStadium_id(areaDTO.getStadium_id());
         area.setStatus(1);
 
         area = areaRepository.save(area);
@@ -65,7 +65,7 @@ public class AreaService {
             Area area = areaRepository.getById(areaDTO.getId());
 
             area.setArea_name(areaDTO.getArea_name());
-            area.setStadium(areaDTO.getStadium());
+            area.setStadium_id(areaDTO.getStadium_id());
             area.setStatus(areaDTO.getStatus());
             area.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
 
