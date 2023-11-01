@@ -60,44 +60,56 @@
             <div class="col-6 title-section">
                 <h2 class="heading" style="color: #ee1e46">The match was over</h2>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 col-xs-12 mb-5" th:each="pastMatch : ${pastMatches}">
-                <a class="stop-selling" href="">
-                    <div class="custom-media d-block text-center"
-                         style="border-radius: 0.25rem; border: 1px solid #4e535a; padding: 1rem">
-                        <div class="img mb-4">
-                            <div>
-                                <img th:src="@{${pastMatch.home_team_id.logo_img}}" alt="Image" class="img-fluid"
-                                     style="height: 100px; width: 100px;">
-                                <span style="margin: 0 20px"> vs </span>
-                                <img th:src="@{${pastMatch.away_team_id.logo_img}}" alt="Image" class="img-fluid"
-                                     style="height: 100px; width: 100px;">
+            <div class="row">
+                <div class="col-lg-4 col-xs-12 mb-5" th:each="pastMatch : ${pastMatches}">
+                    <a class="stop-selling" href="">
+                        <div class="custom-media d-block text-center"
+                             style="border-radius: 0.25rem; border: 1px solid #4e535a; padding: 1rem">
+                            <div class="img mb-4">
+                                <div>
+                                    <img th:src="@{${pastMatch.home_team_id.logo_img}}" alt="Image" class="img-fluid"
+                                         style="height: 100px; width: 100px;">
+                                    <span style="margin: 0 20px"> vs </span>
+                                    <img th:src="@{${pastMatch.away_team_id.logo_img}}" alt="Image" class="img-fluid"
+                                         style="height: 100px; width: 100px;">
+                                </div>
+                            </div>
+                            <div class="text">
+                                <h3 class="mb-2" style="height: 43px;"
+                                    th:text="${pastMatch.home_team_id.name + ' - ' + pastMatch.away_team_id.name}"></h3>
+                                <p class="meta text-white">
+                                    <i style="color: #ca0f33; font-size: large" class="icon-calendar mr-1"></i>
+                                    <span th:text="${#temporals.format(pastMatch.match_time, 'yyyy-MM-dd')}"
+                                          style="font-size: 14px"></span>
+                                    <i style="color: #ca0f33; font-size: large" class="icon-timer ml-2 mr-1"></i>
+                                    <span th:text="${#temporals.format(pastMatch.match_time, 'HH:mm')}"
+                                          style="font-size: 14px"></span>
+                                </p>
+                                <p class="meta text-white ml-1">
+                                    <i style="color: #ca0f33; font-size: large" class="icon-map-marker mr-1"></i>
+                                    <span th:text="${pastMatch.stadium_id.name}" style="font-size: 14px"></span>
+                                </p>
                             </div>
                         </div>
-                        <div class="text">
-                            <h3 class="mb-2" style="height: 43px;"
-                                th:text="${pastMatch.home_team_id.name + ' - ' + pastMatch.away_team_id.name}"></h3>
-                            <p class="meta text-white">
-                                <i style="color: #ca0f33; font-size: large" class="icon-calendar mr-1"></i>
-                                <span th:text="${#temporals.format(pastMatch.match_time, 'yyyy-MM-dd')}"
-                                      style="font-size: 14px"></span>
-                                <i style="color: #ca0f33; font-size: large" class="icon-timer ml-2 mr-1"></i>
-                                <span th:text="${#temporals.format(pastMatch.match_time, 'HH:mm')}"
-                                      style="font-size: 14px"></span>
-                            </p>
-                            <p class="meta text-white ml-1">
-                                <i style="color: #ca0f33; font-size: large" class="icon-map-marker mr-1"></i>
-                                <span th:text="${pastMatch.stadium_id.name}" style="font-size: 14px"></span>
-                            </p>
+                        <div class="position-absolute top-0 ">
+                            <div class="bg-danger text-white p-2" style="border-radius: 0.25rem 0 0.25rem 0">
+                                Stopped selling
+                            </div>
                         </div>
-                    </div>
-                    <div class="position-absolute top-0 ">
-                        <div class="bg-danger text-white p-2" style="border-radius: 0.25rem 0 0.25rem 0">
-                            Stopped selling
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-7 text-center">
+                <div class="custom-pagination">
+                    <span class="ml-2" th:if="${totalPages > 1}" th:each="i: ${#numbers.sequence(1, totalPages)}">
+                        <a class="color-red" th:if="${currentPage != i}" th:href="@{'/list_tickets/' + ${i}}" th:text="${i}"
+                           style="background-color: white; color: #ca0f33"></a>
+                        <span th:unless="${currentPage != i}" th:text="${i}"
+                              style="background-color: #ca0f33; color: white"></span>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
