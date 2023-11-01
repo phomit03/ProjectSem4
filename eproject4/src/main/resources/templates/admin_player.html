@@ -31,13 +31,13 @@
         <div class="container-fluid pt-4 px-4">
             <div class="row g-4">
                 <div class="row g-4 align-items-center">
-                    <div class="col-6">
+                    <div class="col-12">
                         <div class="input-group">
                             <form th:action="@{/admin/player}" method="get">
-                                <label>Name: <input class="form-control" type="text" name="name" placeholder="Kevin Trap" th:value="${name}" /></label>
-                                <label>Team: <input class="form-control" type="text" name="team" placeholder="Manchester City" th:value="${team}" /></label>
-                                <label>National: <input class="form-control" type="text" name="national" placeholder="France" th:value="${national}" /></label>
-                                <label>Position: <input class="form-control" type="text" name="position" placeholder="Defender" th:value="${position}" /></label>
+                                <label>Name: <input class="form-control mt-2" type="text" name="name" placeholder="Kevin Trap" th:value="${name}" /></label>
+                                <label>Team: <input class="form-control mt-2" type="text" name="team" placeholder="Manchester City" th:value="${team}" /></label>
+                                <label>National: <input class="form-control mt-2" type="text" name="national" placeholder="France" th:value="${national}" /></label>
+                                <label>Position: <input class="form-control mt-2" type="text" name="position" placeholder="Defender" th:value="${position}" /></label>
                                 <button class="btn btn-primary" type="submit">Search</button>
                             </form>
                         </div>

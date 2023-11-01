@@ -27,6 +27,7 @@ import javax.servlet.http.HttpSession;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -79,6 +80,9 @@ public class TicketUserController {
 
         //lấy trận đấu
         MatchDTO match = matchService.getMatchById(Long.valueOf(matchid));
+        if (match.getMatch_time().isBefore(LocalDateTime.now())) {
+            return "redirect:/list_tickets";
+        }
         model.addAttribute("match", match);
 
         //lấy danh sách ticket

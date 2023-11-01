@@ -38,7 +38,7 @@
                             <div class="row mb-3">
                                 <label class="col-sm-3 mb-3 col-form-label">Stadium Takes Place</label>
                                 <div class="col-sm-9">
-                                    <select class="form-select" th:field="*{stadium}" aria-label="Stadium" required>
+                                    <select class="form-select" th:field="*{stadium_id}" aria-label="Stadium" required>
                                         <option th:selected="${stadium == stadium.id}" th:each="stadium : ${stadiums}"
                                                 th:value="${stadium.id}" th:text="${stadium.name}"></option>
                                     </select>
