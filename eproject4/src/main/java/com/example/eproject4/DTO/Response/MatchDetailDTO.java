@@ -21,6 +21,8 @@ public class MatchDetailDTO {
     private String passAccuracy;
     private String offSide;
     private String corner;
+    private String yellow_card;
+    private String red_card;
     private Integer match_end;
     private Integer status;
     private Timestamp createdAt;

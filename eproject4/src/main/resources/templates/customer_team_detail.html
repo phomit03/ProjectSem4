@@ -582,6 +582,10 @@
                 updateDataAndType(offSidesData, "offSide")
                 const cornersData = res.matchDetailDTO.corner;
                 updateDataAndType(cornersData, "corner")
+                const yellow = res.matchDetailDTO.yellow_card;
+                updateDataAndType(yellow, "yellow-cards")
+                const red = res.matchDetailDTO.red_card;
+                updateDataAndType(red, "red-cards")
             }
         });
         //call api match event
@@ -618,9 +622,13 @@
 
     function updateDataAndType(matchDetailString, typeString) {
         const [homeData, awayData] = matchDetailString.split(':');
-
-        $('.match-detail-home-' + typeString).empty().text(homeData);
-        $('.match-detail-away-' + typeString).empty().text(awayData);
+        if (typeString === "passAccuracy" || typeString === "possession") {
+            $('.match-detail-home-' + typeString).empty().text(homeData + '%');
+            $('.match-detail-away-' + typeString).empty().text(awayData + '%');
+        } else {
+            $('.match-detail-home-' + typeString).empty().text(homeData);
+            $('.match-detail-away-' + typeString).empty().text(awayData);
+        }
     }
 </script>
 </body>

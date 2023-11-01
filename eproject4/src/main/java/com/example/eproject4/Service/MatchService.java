@@ -67,6 +67,16 @@ public class MatchService {
         MatchDetail matchDetail = new MatchDetail();
         matchDetail.setMatch_id(match.getId());
         matchDetail.setMatch_end(0);
+        matchDetail.setShot("0:0");
+        matchDetail.setShotOnTarget("0:0");
+        matchDetail.setPossession("0:0");
+        matchDetail.setFoul("0:0");
+        matchDetail.setPasses("0:0");
+        matchDetail.setPassAccuracy("0:0");
+        matchDetail.setOffSide("0:0");
+        matchDetail.setCorner("0:0");
+        matchDetail.setYellow_card("0:0");
+        matchDetail.setRed_card("0:0");
         matchDetailRepository.save(matchDetail);
         return modelToDtoConverter.convertToDto(match, MatchDTO.class);
     }

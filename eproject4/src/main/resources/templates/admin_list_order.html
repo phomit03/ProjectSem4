@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Order Details</title>
-</head>
+<head th:replace="admin_fragments::head"></head>
+
 <body>
+
 <h1>Thông tin chi tiết tất cả cá hóa đơn</h1>
 
 <div th:each="orderDetail : ${listOrderRespond}">
@@ -15,16 +15,16 @@
     <h3>tên người dùng</h3>
     <h4><span th:text="${orderDetail.user.fullName}"></span></h4>
 
-    <table>
+    <table class="table">
         <tr>
-            <th>Home Team</th>
-            <th>Ảnh team nhà</th>
-            <th>Away Team</th>
-            <th>Ảnh team khách</th>
-            <th>Day</th>
-            <th>Hour</th>
-            <th>Price</th>
-            <th>Area</th>
+            <th scope="col">Home Team</th>
+            <th scope="col">Ảnh team nhà</th>
+            <th scope="col">Away Team</th>
+            <th scope="col">Ảnh team khách</th>
+            <th scope="col">Day</th>
+            <th scope="col">Hour</th>
+            <th scope="col">Price</th>
+            <th scope="col">Area</th>
         </tr>
         <tr th:each="ticket : ${orderDetail.listTicket}">
             <td th:text="${ticket.name_home}"></td>
@@ -42,5 +42,6 @@
 <div th:unless="${listOrderRespond != null and not #lists.isEmpty(listOrderRespond)}">
     <p>Not Order</p>
 </div>
+
 </body>
 </html>

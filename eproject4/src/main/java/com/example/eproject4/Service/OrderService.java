@@ -59,4 +59,21 @@ public class OrderService {
     public Long countTotalOrders() {
         return orderRepository.countTotalOrders();
     }
+
+    public Order getOrderById(int id) {
+        return orderRepository.findById(id).orElse(null);
+    }
+
+    public void updateOrderStatus(int id, boolean newStatus) {
+        // Tìm đơn hàng theo ID
+        Order order = getOrderById(id);
+
+        if (order != null) {
+            // Cập nhật trạng thái của đơn hàng
+            order.setStatus(newStatus);
+
+            // Lưu đơn hàng đã cập nhật
+            orderRepository.save(order);
+        }
+    }
 }
