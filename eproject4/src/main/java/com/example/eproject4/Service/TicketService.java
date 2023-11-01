@@ -10,6 +10,7 @@ import com.example.eproject4.Repository.TicketRepository;
 import com.example.eproject4.Utils.ModelToDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -152,5 +153,26 @@ public class TicketService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         return this.ticketRepository.findAll(pageable);
     }
+//    public Page<Match> findPaginatedticket(int pageNo, int pageSize, List<Match> matches) {
+//        int start = (pageNo - 1) * pageSize;
+//        int end = Math.min(start + pageSize, matches.size());
+//        List<Match> paginatedMatches = matches.subList(start, end);
+//
+//        return new PageImpl<>(paginatedMatches, PageRequest.of(pageNo - 1, pageSize), matches.size());
+//    }
+
+    public Page<Match> findPaginatedticket(int pageNo, int pageSize, List<Match> matches) {
+        // Tạo một danh sách Pageable từ danh sách các trận đấu
+        List<Match> paginatedMatches = matches.stream()
+                .skip((long) (pageNo - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(paginatedMatches, PageRequest.of(pageNo - 1, pageSize), matches.size());
+    }
+
+
+
+
 }
 

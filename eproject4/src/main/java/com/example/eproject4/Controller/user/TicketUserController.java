@@ -17,6 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,22 +59,49 @@ public class TicketUserController {
         this.orderRepository = orderRepository;
     }
 
-    @RequestMapping("/list_tickets")
-    public String tickets(Model model) {
-        model.addAttribute("overlay_title", "Tickets");
-        model.addAttribute("title", "Tickets");
-        model.addAttribute("description",
-                "Choose to buy tickets for upcoming matches.");
+//    @RequestMapping("/list_tickets")
+//    public String tickets(Model model) {
+//        model.addAttribute("overlay_title", "Tickets");
+//        model.addAttribute("title", "Tickets");
+//        model.addAttribute("description",
+//                "Choose to buy tickets for upcoming matches.");
+//
+//        //Matches that have not yet taken place or are taking place 15 minutes before
+//        List<Match> upcomingMatches = ticketService.getUpcomingMatches();
+//        model.addAttribute("upcomingMatches", upcomingMatches);
+//        //Matches have taken place or are taking place after 15 minutes
+//        List<Match> pastMatches = ticketService.getPastMatches();
+//        model.addAttribute("pastMatches", pastMatches);
+//
+//        return "customer_tickets";
+//    }
+@RequestMapping("/list_tickets")
+public String tickets(Model model) {
+    model.addAttribute("overlay_title", "Tickets");
+    model.addAttribute("title", "Tickets");
+    model.addAttribute("description", "Choose to buy tickets for upcoming matches.");
+    return findPaginated(1, model);
+}
+@RequestMapping("/list_tickets/{pageNo}")
+public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
+    model.addAttribute("overlay_title", "Tickets");
+    model.addAttribute("title", "Tickets");
+    model.addAttribute("description", "Choose to buy tickets for upcoming matches.");
+    List<Match> pastMatchess = ticketService.getPastMatches();
+    List<Match> upcomingMatches = ticketService.getUpcomingMatches();
+    // Lấy danh sách trận đấu đã diễn ra phân trang
+    int pageSize = 6; // Số lượng trận đấu trên mỗi trang
+    Page<Match> page = ticketService.findPaginatedticket(pageNo, pageSize,pastMatchess);
+    List<Match> pastMatches = page.getContent();
 
-        //Matches that have not yet taken place or are taking place 15 minutes before
-        List<Match> upcomingMatches = ticketService.getUpcomingMatches();
-        model.addAttribute("upcomingMatches", upcomingMatches);
-        //Matches have taken place or are taking place after 15 minutes
-        List<Match> pastMatches = ticketService.getPastMatches();
-        model.addAttribute("pastMatches", pastMatches);
+    model.addAttribute("pastMatches", pastMatches);
+    model.addAttribute("upcomingMatches", upcomingMatches);
+    model.addAttribute("currentPage", pageNo);
+    model.addAttribute("totalPages", page.getTotalPages());
+    model.addAttribute("totalItems", page.getTotalElements());
 
-        return "customer_tickets";
-    }
+    return "customer_tickets";
+}
 
     @RequestMapping("/ticket/detail")
     public String ticketDetail(Model model, @RequestParam("matchid") int matchid, HttpSession session) {
