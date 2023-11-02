@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class Eproject4Application {
 
 	public static void main(String[] args) {
-		setupSSHTunnel();
+//		setupSSHTunnel();
 		SpringApplication.run(Eproject4Application.class, args);
 	}
 

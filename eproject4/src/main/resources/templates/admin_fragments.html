@@ -63,9 +63,9 @@
             <a th:href="@{/admin}" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/admin' ? 'active' : ''}">
                 <i class="fa fa-tachometer-alt me-2"></i>Dashboard
             </a>
-            <a th:href="@{/admin/role}" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/role') ? 'active' : ''}">
+            <!--<a th:href="@{/admin/role}" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/role') ? 'active' : ''}">
                 <i class="fa fa-th me-2"></i>Roles
-            </a>
+            </a>-->
             <a th:href="@{/admin/user}" class="nav-item nav-link" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/user') ? 'active' : ''}">
                 <i class="fa fa-th me-2"></i>Users
             </a>
