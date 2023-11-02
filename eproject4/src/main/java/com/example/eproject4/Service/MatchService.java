@@ -155,7 +155,7 @@ public class MatchService {
 
     public List<MatchDTO> getNextMatchesOrLiveMatches(int limit) {
         LocalDateTime currentDateTime = LocalDateTime.now().minusHours(3);
-        LocalDateTime currentDateTime2 = LocalDateTime.now().plusHours(3);
+        LocalDateTime currentDateTime2 = LocalDateTime.now();
         List<Match> matches;
         List<Match> liveMatches = matchRepository.findLiveMatches(currentDateTime, currentDateTime2);
         int typeMatch = liveMatches.isEmpty() ? 2 : 1;
